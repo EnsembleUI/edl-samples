@@ -1,0 +1,119 @@
+View:
+  header:
+    title: Column
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+        - Text:
+            text: Column lays out its children vertically.
+        - Column:
+            styles:
+                gap: 4
+            children:
+                - Smile
+                - Beam
+                - Wink
+
+        - Divider
+            
+
+        - Text:
+            text: Using `mainAxis` property, you can set the position of the Column's children.
+        - Row:
+            styles: {gap: 20, height: 100}
+            children:
+                - Column:
+                    styles:  {mainAxis: start, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+                - Column:
+                    styles: {mainAxis: center, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+                - Column:
+                    styles: {mainAxis: end, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+                - Column:
+                    styles: {mainAxis: spaceBetween, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+                - Column:
+                    styles: {mainAxis: spaceAround, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+                - Column:
+                    styles: {mainAxis: spaceEvenly, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                    children:
+                        - Smile
+                        - Beam
+        - Divider
+            
+
+        - Text:
+            text: Using `crossAxis` property, you can set the alignment of the Column's children.
+        - Row:
+            styles: {gap: 20}
+            children:
+            - Column:
+                styles: {crossAxis: start, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                children:
+                    - BigSmile
+                    - Beam
+            - Column:
+                styles: {crossAxis: center, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                children:
+                    - BigSmile
+                    - Beam
+            - Column:
+                styles: {crossAxis: end, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+                children:
+                    - BigSmile
+                    - Beam
+        - Divider
+
+
+        - Text:
+            text: |
+                You can stretch the cross axis.
+                Just make sure you don't stretch it inside a parent that can grow indefinitely (e.g. Row)
+        - Column:
+            styles: {crossAxis: stretch, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - BigSmile
+                - Beam
+
+
+Smile:
+    Icon:
+        icon: smile
+        library: fontAwesome
+        styles: { color: 0xFFBF569C }
+
+Beam:
+    Icon:
+        icon: smileBeam
+        library: fontAwesome
+        styles: { color: 0xFF3AA76D }
+
+Wink:
+    Icon:
+        icon: smileWink
+        library: fontAwesome
+        styles: { color: 0xFF276EF1 }
+
+
+
+BigSmile:
+    Icon:
+        icon: smile
+        library: fontAwesome
+        styles: { color: 0xFFA1BDCA, size: 60, padding: 8 }

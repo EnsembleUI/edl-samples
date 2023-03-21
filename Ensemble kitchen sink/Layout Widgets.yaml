@@ -1,0 +1,109 @@
+View:
+  header:  
+    title: Layout Widgets
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 8 16 80 16, gap: 8, fontSize: 17}
+    children:
+      - Flow:
+          direction: horizontal
+          styles: { gap: 8, lineGap: 8, margin: 16 0 }
+          children:
+            
+            - Widget:
+                inputs: 
+                  name: Column
+                  screen: Column
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fcolumn.png?alt=media&token=9a91550d-0e14-4a55-8841-74f0fbdd14a5
+          
+            - Widget:
+                inputs: 
+                  name: Row
+                  screen: Row
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Frow.png?alt=media&token=0a6274b6-5d88-4055-9a55-ff1bfdef04ed
+          
+            - Widget:
+                inputs: 
+                  name: Flow
+                  screen: Flow
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow.png?alt=media&token=be2d3c3c-5006-433e-9018-d1a5fe184300
+
+            - Widget:
+                inputs: 
+                  name: Flex
+                  screen: Flex
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflex.png?alt=media&token=72bdda46-43a0-44fb-b81b-4099f92df669
+
+            - Widget:
+                inputs: 
+                  name: ListView
+                  screen: ListView
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Flistview.png?alt=media&token=4e7836e9-f9bf-4b12-a550-c64e8dd44c97
+
+            - Widget:
+                inputs: 
+                  name: GridView
+                  screen: GridView
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fgridview.png?alt=media&token=205f1eaa-42fb-4a1a-80c3-878ec17b2a19
+
+            - Widget:
+                inputs: 
+                  name: Stack
+                  screen: Stack
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fstack.png?alt=media&token=1c7ee8d2-eaa9-4f52-9fcd-367decdf0ba5
+
+            - Widget:
+                inputs: 
+                  name: DataGrid
+                  screen: DataGrid
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdatagrid.png?alt=media&token=a1b5f0eb-db0d-4c51-8042-98ad554c9fc0
+          
+            - Widget:
+                inputs: 
+                  name: TabBar
+                  screen: TabBar
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Ftabbar.png?alt=media&token=2cd0cf0b-e33c-4bb1-9af5-10933b6f4424
+          
+            - Widget:
+                inputs: 
+                  name: Carousel
+                  screen: Carousel
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fcarousel.png?alt=media&token=738bcff9-664f-4596-b37a-b3dd278b4e32
+
+            - Widget:
+                inputs: 
+                  name: Divider
+                  screen: Divider
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdivider.png?alt=media&token=005c1fc9-581f-4517-8e15-94a8d89f9897
+          
+            - Widget:
+                inputs:
+                  name: Spacer
+                  screen: Spacer
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fspacer.png?alt=media&token=422e84f0-5e09-4a8f-b25e-2b88885646fd
+
+
+Widget:
+  inputs: [name, screen, thumbnail]
+  Column:
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    styles: 
+        crossAxis: center
+        backgroundColor: 0x11218EA4
+        borderRadius: 10
+        padding: 16
+        gap: 10
+        height: 100
+        width: "${Math.floor(device.width / 2) - 20}"
+    children:
+    - Image:
+        styles: { height: 36, width: 36 }
+        source: ${thumbnail}
+
+    - Text:
+        text: ${name}
+        styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15, textAlign: center }

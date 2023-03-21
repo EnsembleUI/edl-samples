@@ -1,0 +1,150 @@
+View:
+  header:
+    title: DataGrid
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - DataGrid: 
+          headingTextStyle: 
+            fontWeight: bold
+            color: 0xFF0BA182
+            fontSize: 18
+            lineHeight: 20
+            font: 'heading'
+          horizontalMargin: 20
+          dataRowHeight: 80
+          headingRowHeight: 120
+          columnSpacing: 50
+          dividerThickness: 10
+          dataTextStyle:
+            fontWeight: bold
+            color: 0xFF0BA182
+            fontSize: 20
+            lineHeight: 100
+            textStyle: italic
+            font: 'subtitle'
+          border: 
+            borderRadius: 200
+            top: 
+              color: red
+              width: 6
+            bottom:
+              color: blue
+              width: 8
+            left: 
+              color: amber
+              width: 10
+            right: 
+              color: yellow
+              width: 10
+            horizontalInside: 
+              color: grey
+              width: 2
+            verticalInside: 
+              color: blue
+              width: 8
+          DataColumns:
+            - label: Hotel Name
+              type: text
+              tooltip: Hotel Name
+            - label: Location
+              type: text
+              tooltip: Location
+            - label: Price
+              type: number
+              tooltip: Price
+            - label: Action
+              type: button
+              tooltip: Action
+          children:
+            - DataRow:
+                children:
+                  - Text:
+                      text: My Hardcoded Hotel
+                  - Text:
+                      style: {font: subtitle}
+                      text: Hardcoded Location
+                  - Text:
+                      text: 1000.00
+                  - Text
+
+            - DataRow:
+                styles: {font: subtitle}
+                children:
+                  - Text:
+                      text: My Hardcoded Hotel
+                  - Text:
+                      style: {font: subtitle}
+                      text: Hardcoded Location
+                  - Text:
+                      text: 1002.00   
+                  - Text
+
+          item-template:
+            data: ${getHotels.body.hotels}
+            name: hotel            
+            template:
+              DataRow:
+                children:
+                  - Text:
+                      text: ${hotel.name}
+                  - Text:
+                      style: {font: subtitle}
+                      text: ${hotel.location}
+                  - Text:
+                      text: ${hotel.price}
+                  - Button:
+                      label: Remove
+                      onTap:
+                        action: invokeAPI
+                        name: removeHotel
+                        inputs:
+                          id: ${hotel.id}
+      - Text:
+          id: status
+      - Button:
+          styles: { borderRadius: 5}
+          label: Load dynamic data
+          onTap:
+            invokeAPI:
+              name: getHotels
+              inputs:
+                loc: ${a.value}
+                fromDate: ${b.value.start}
+                toDate: ${b.value.end}
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home
+
+
+API:
+  getHotels:
+    authorization: none
+    uri: 'https://dc7ghx6kqg.execute-api.us-west-1.amazonaws.com/dev/hotels/search'
+    method: 'POST'
+    parameters:
+      loc:
+      fromDate:
+      toDate:
+
+  removeHotel:
+    authorization: none
+    uri: 'https://dc7ghx6kqg.execute-api.us-west-1.amazonaws.com/dev/hotels/search'
+    method: 'POST'
+    parameters:
+    onResponse: |
+      //@code
+      // assume it's working
+      status.text = 'r@ensemblelive.gobtn';
+      //status.text = 'Removing ...'
+      ensemble.invokeAPI("getHotels");

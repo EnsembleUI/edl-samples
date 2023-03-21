@@ -1,0 +1,11 @@
+View:
+  header:
+    title: Video
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Video:
+          source: https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4
+    

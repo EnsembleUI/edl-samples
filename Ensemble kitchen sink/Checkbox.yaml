@@ -1,0 +1,58 @@
+View:
+  header:
+    title: Checkbox
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Checkbox:
+          trailingText: I am a checkbox
+
+      - Checkbox:
+          trailingText: I can be set to checked
+          value: true
+
+      - Checkbox:
+          trailingText: I can be disabled
+          value: true
+          enabled: false
+
+      - Checkbox:
+          trailingText: I can trigger action on change
+          onChange: 
+            executeCode:
+              body: |-
+                //@code
+                a.text = 'Some code executed!';
+
+      - Text:
+          id: a
+
+
+      - Text:
+          text: To place multiple checkboxes in a Row, set each checkbox expanded to true so they can share the available space.
+      - Row:
+          children:
+            - Checkbox:
+                trailingText: item 1
+                styles: { expanded: true }
+            - Checkbox:
+                trailingText: item 2
+                styles: { expanded: true }
+            - Checkbox:
+                trailingText: item 3
+                styles: { expanded: true }
+
+      
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home
+      

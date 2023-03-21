@@ -1,0 +1,181 @@
+View:
+  
+  header:
+    title: String Functions
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Markdown:
+          text: |
+            #### indexOf(str)
+            
+            `'Hello World'.indexOf('l')` 
+            
+            > ${'Hello World'.indexOf('l')}
+      - Divider
+      - Markdown:
+          text: |
+            #### lastIndexOf(str)
+            
+            `'Hello World'.lastIndexOf('l')` 
+            
+            > ${'Hello World'.lastIndexOf('l')}
+      - Divider
+      - Markdown:
+          text: |
+            #### charAt(index)
+
+            `'Hello World'.charAt(6)` 
+            
+            > ${'Hello World'.charAt(6)}
+      - Divider
+      - Markdown:
+          text: |
+            #### startsWith(str)
+
+            `'Hello World'.startsWith('Hello')` 
+            
+            > ${'Hello World'.startsWith('Hello')}
+      - Divider
+      - Markdown:
+          text: |
+            #### endsWith(str)
+
+            `'Hello World'.endsWith('Hello')` 
+            
+            > ${'Hello World'.endsWith('Hello')}
+      - Divider
+      - Markdown:
+          text: |
+            #### includes(str)
+
+            `'Hello World'.includes('World')` 
+            
+            > ${'Hello World'.includes('World')}
+      - Divider
+      - Markdown:
+          text: |
+            #### toLowerCase()
+
+            `'Hello World'.toLowerCase()` 
+            
+            > ${'Hello World'.toLowerCase()}
+      - Divider
+      - Markdown:
+          text: |
+            #### toUpperCase()
+
+            `'Hello World'.toUpperCase()` 
+            
+            > ${'Hello World'.toUpperCase()}
+      - Divider        
+      - Markdown:
+          text: |
+            #### str.match(regexp)
+
+            `'Hello World'.match(/[A-Z]/g)` 
+            
+            > ${'Hello World'.match(/[A-Z]/g)}
+      - Divider
+      - Markdown:
+          text: |
+            #### str.matchAll(regexp)
+
+            `'Hello World'.matchAll(/[A-Z]/g)` 
+            
+            > ${'Hello World'.matchAll(/[A-Z]/g)}
+      - Divider 
+      - Markdown:
+          text: |
+            #### str.padStart(targetLength, padString)
+
+            `'Hello'.padStart(4,'*')`             
+            > ${'Hello'.padStart(12,'*')}
+      - Divider
+      - Markdown:
+          text: |
+            #### str.padEnd(targetLength, padString)
+
+            `'Hello'.padEnd(4,'*')`             
+            > ${'Hello'.padEnd(12,'*')}
+      - Divider
+
+      - Markdown:
+          text: |
+            #### substring(start, [end=-1])
+            
+            `'Hello World'.substring(6,11)` 
+            
+            > ${'Hello World'.substring(6,11)}
+      - Divider
+      
+      - Markdown:
+          text: |
+            #### split(str)
+
+            `'Hello World'.split(' ')[0]` 
+            
+            > ${'Hello World'.split(' ')[0]}
+      - Divider     
+      
+      - Markdown:
+          text: |
+            #### strAmount.prettyCurrency()
+
+            `'2500'.prettyCurrency()`             
+            > ${'2500'.prettyCurrency()}
+      - Divider
+      - Markdown:
+          text: |
+            #### strDate.prettyDate()
+
+            `'2023-03-08T18:30:00.020Z'.prettyDate()`             
+            > ${'2023-03-08T18:30:00.020Z'.prettyDate()}
+      - Divider
+      - Markdown:
+          text: |
+            #### strDateTime.prettyDateTime()
+
+            `'2023-03-08T18:30:00.020Z'.prettyDateTime()`             
+            > ${'2023-03-08T18:30:00.020Z'.prettyDateTime()}
+      - Divider
+      - Markdown:
+          text: |
+            #### strDateTime.prettyTime()
+
+            `'2023-03-08T18:30:00.020Z'.prettyTime()`             
+            > ${'2023-03-08T18:30:00.020Z'.prettyTime()}
+      - Divider
+      - Markdown:
+          text: |
+            #### int.tryParseInt()
+
+            `'12345'.tryParseInt()`             
+            > ${'12345'.tryParseInt()}
+      - Divider     
+      - Markdown:
+          text: |
+            #### double.tryParseDouble()
+
+            `'123.45'.tryParseDouble()`             
+            > ${'123.45'.tryParseDouble()}
+      - Divider
+      - Markdown:
+          text: |
+            #### btoa(encStr)
+
+            `btoa('Pass@123')`            
+            > ${btoa('Pass@123')}
+      - Divider
+      - Markdown:
+          text: |
+            #### atob(decStr)
+
+            `atob('UGFzc0AxMjM=')`            
+            > ${atob('UGFzc0AxMjM=')}
+      - Divider
+     

@@ -1,0 +1,88 @@
+View:
+  header:  
+    title: Actions & events
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 24, fontSize: 17 }
+    children:
+
+      - Capability:
+          inputs:
+            name: invokeAPI
+            desc: Call APIs, pass data to widgets, handle responses and errors
+            screen: 'Action: invokeAPI'
+
+      - Capability:
+          inputs:
+            name: executeCode
+            desc: Run a body of code, and optionally set a follow up action to run once code is executed
+            screen: 'Action: executeCode'
+
+      - Capability:
+          inputs:
+            name: openUrl
+            desc: Open a URL in current app or deep link to another app
+            screen: 'Action: openUrl'
+
+      - Capability:
+          inputs:
+            name: startTimer
+            desc: Start a timer to perform other actions once or on a recurring basis
+            screen: 'Action: startTimer'
+      - Capability:
+          inputs:
+            name: showDialog
+            desc: Show a dialog that can render any widget in a pop up.
+            screen: 'Action: showDialog'
+
+      - Capability:
+          inputs:
+            name: navigateScreen
+            desc: Navigate to another screen
+            screen: 'Action: navigateScreen'
+
+      - Capability:
+          inputs:
+            name: navigateBack
+            desc: Navigate to back screen
+            screen: 'Action: navigateBack'       
+      - Capability:
+          inputs:
+            name: navigateModalScreen
+            desc: Show modal screen
+            screen: 'Action: navigateModalScreen'
+      - Capability:
+          inputs:
+            name: onLoad
+            desc: You can set onLoad on the View or any Custom widget  you created.
+            screen: 'Event: onLoad'
+      - Capability:
+          inputs:
+            name: uploadFiles
+            desc: Upload files from device using an API
+            screen: 'Action: uploadFiles'
+      - Capability:
+          inputs:
+            name: Chain actions
+            desc: Run actions in a sequence
+            screen: 'Action: chaining example' 
+
+Capability:
+  inputs: [name, screen, desc]
+  Column:
+    styles: { gap: 8, padding: 8 0, crossAxis: stretch }
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    children:
+      - Text:
+          text: ${name}
+          styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 17 }
+      - Text:
+          text: ${desc}
+          styles: { color: 0xFF909090, fontSize: 14 }
+      - Divider:
+          styles:
+            margin: 16 0 0 0

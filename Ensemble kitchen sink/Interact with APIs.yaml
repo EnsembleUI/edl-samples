@@ -1,0 +1,54 @@
+View:
+  header:  
+    title: Interact with APIs
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 24, fontSize: 17 }
+    children:
+
+      - Markdown:
+          text: |
+            You can define APIs in your Ensemble screens, and call them on events such as `onLoad`, `onTap`, etc.
+
+      - Divider:
+          styles:
+            margin: 16 0 0 0
+
+      - Capability:
+          inputs:
+            name: GET example
+            desc: Invoke a GET API and bind to a widget to display the API response
+            screen: 'APIs: GET'
+
+      - Capability:
+          inputs:
+            name: POST example
+            desc: Invoke a POST API to submit a form data
+            screen: 'APIs: POST'
+
+      - Capability:
+          inputs:
+            name: Call API in Code block
+            desc: Invoke an API from code
+            screen: 'APIs: code'
+
+
+Capability:
+  inputs: [name, screen, desc]
+  Column:
+    styles: { gap: 8, padding: 8 0, crossAxis: stretch }
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    children:
+      - Text:
+          text: ${name}
+          styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 17 }
+      - Text:
+          text: ${desc}
+          styles: { color: 0xFF909090, fontSize: 14 }
+      - Divider:
+          styles:
+            margin: 16 0 0 0

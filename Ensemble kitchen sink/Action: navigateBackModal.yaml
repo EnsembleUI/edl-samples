@@ -1,0 +1,35 @@
+View:
+  title: "Action: navigateBackModal"
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Column:
+          styles: { gap: 16}
+          children:                       
+            - Row:
+                styles: {gap: 8}
+                children:            
+                  - Icon:
+                      icon: arrow_back
+                      styles: { size: 18, color: 0xFF0D0D0D }
+                      onTap:
+                        navigateBack:
+                  - Text:
+                      text: Back 
+            - Markdown:
+                text: You can navigate to back screen using action `navigateScreen`
+            - Divider
+            - Row:
+                styles: { mainAxis: spaceAround }
+                children:
+                - Button:
+                    styles: { borderRadius: 100 , padding: 20 10}
+                    label: Back to the main screen
+                    onTap:
+                        navigateBack:
+            
+                      
+  

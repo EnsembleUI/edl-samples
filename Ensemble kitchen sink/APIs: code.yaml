@@ -1,0 +1,53 @@
+View:
+  header:
+    title: "APIs: code"
+  styles:
+    scrollableView: true
+
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Markdown:
+          text: You can invoke APIs from code blocks using `ensemble.invokeAPI(apiName)`.
+      - Button:
+          label: Call API
+          onTap:
+            executeCode:
+              body: |-
+                //@code
+        
+                // no inputs
+                ensemble.invokeAPI("getPeople");
+
+                // pass inputs
+                // ensemble.invokeAPI("createToDo", { "name": "API call from code" } );
+      - Column:
+          visible: "${getPeople.body == null ? false : true }"
+          children:
+            - Text:
+                text: ${getPeople.body.results.length} records were retrieved from API
+            - Markdown:
+                text: |
+                  Here's the API response body:
+                  ```
+                  ${getPeople.body}
+                  ```
+        
+
+API:
+
+  getPeople:
+    uri: https://randomuser.me/api/?results=6
+    method: GET
+
+
+  createToDo:
+    inputs:
+      - name
+    uri: 'https://api.airtable.com/v0/appDbkGS4VOiPVQR5/ToDo?api_key=keyyWz426zsnMKavb'
+    method: 'POST'
+    body:
+      records:
+        - fields:
+            desc: "${name}"

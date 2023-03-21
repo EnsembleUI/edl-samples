@@ -1,0 +1,113 @@
+View:
+  header:
+    title: Image
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+            
+        # 1
+        - Text:
+            text: Example 1
+        - Image:
+            source: https://i.imgur.com/Tf67Bu6.png
+
+
+        # 2
+        - Text:
+            text: Example 2
+        
+        - Image:
+            styles:
+                borderColor: blue
+                borderWidth: 2
+                borderRadius: 100
+                width: 100
+                height: 100
+                fit: cover
+            
+            source: https://i.imgur.com/Tf67Bu6.png
+    
+        - Divider
+        
+        ##### styles fit
+
+        - Text:
+            text: fit options
+            styles: { fontWeight: bold}
+
+        ## fitWidth
+        - Row:
+            styles: { gap: 10 }
+            children:
+            - Image:
+                styles: { height: 120, width: 100, borderWidth: 1, fit: fitWidth}
+                source: https://i.imgur.com/Tf67Bu6.png
+            - Text:
+                text: fitWidth
+
+
+        ## fitHeight        
+        - Row:
+            styles: { gap: 10 }   
+            children:
+            - Image:
+                styles: { height: 120, width: 100, borderWidth: 1, fit: fitHeight}
+                source: https://i.imgur.com/Tf67Bu6.png
+            - Text:
+                text: fitHeight
+
+
+        ## contain 
+        - Row:
+            styles: { gap: 10 }      
+            children:
+            - Image:
+                styles: { height: 120, width: 100, borderWidth: 1, fit: contain}
+                source: https://i.imgur.com/Tf67Bu6.png
+            - Text:
+                text: contain
+
+        
+        ## cover
+        - Row:
+            styles: { gap: 10 }     
+            children:
+            - Image:
+                styles: { height: 120, width: 100, borderWidth: 1, fit: cover}
+                source: https://i.imgur.com/Tf67Bu6.png
+            - Text:
+                text: cover
+
+        - Divider
+
+        # Image as background
+        - Text:
+            text: Image as background
+
+        - Column:
+            styles: 
+            gap: 10
+            width: 300
+            backgroundImage:
+                source: https://i.imgur.com/Tf67Bu6.png
+                fit: scaleDown
+            children:
+            - Spacer:
+                styles:
+                    size: 100
+            
+
+
+        
+        - Divider
+        - Row:
+            styles: { mainAxis: spaceAround }
+            children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home

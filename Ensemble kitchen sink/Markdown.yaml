@@ -1,0 +1,41 @@
+View:
+  title: Markdown
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Markdown:
+          text: |
+            # Header 1
+            ## Header 2
+            ### Header 3
+            #### Header 4
+            ##### Header 5
+
+            🚩 Here's some text that can include **bold**, or _italic_, and also [inline links](https://ensembleui.com)!
+
+            This is how you link to a [screen created in Ensemble](navigateScreen:Home)
+
+            ```
+            {
+              id: 1
+              name: "Ensemble"
+            }
+            ```
+
+            | Table header | Table header |
+            |-|-|
+            | Cell content | Cell content |
+            | Cell content | Cell content |
+
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home
+      

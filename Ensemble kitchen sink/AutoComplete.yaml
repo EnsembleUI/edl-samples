@@ -1,0 +1,45 @@
+View:
+
+  header:
+    title: AutoComplete
+  
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getNYCPopulation
+      onResponse: |
+        //@code
+        var list = [];
+        response.body.records.map(function(item) {
+          list.push({
+            "label": item.fields.Year,
+            "value": item.fields.Year
+          });
+        });
+        yearSelection.items = list;
+      
+  Column: 
+    styles: 
+      gap: 24
+      padding: 24
+        
+    children:
+
+      - Markdown:
+          text: |
+            Any Dropdown widget can be configured to provide auto complete functionality by setting `autoComplete: true`. 
+
+
+      - Dropdown:
+          id: yearSelection
+          label: Year
+          hintText: Select something
+          autoComplete: true          
+API:
+  getNYCPopulation:
+    authorization: none
+    uri: 'https://api.airtable.com/v0/appdtgVzmD077CbHB/ChartData?api_key=keyyWz426zsnMKavb&sort%5B0%5D%5Bfield%5D=Year&sort%5B0%5D%5Bdirection%5D=asc'
+    method: 'GET'
+

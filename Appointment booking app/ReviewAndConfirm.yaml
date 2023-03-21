@@ -1,0 +1,296 @@
+View:       
+  header:
+    styles:
+      color: black
+      backgroundColor: 0xFFF4D66C
+    title: Review and confirm
+  styles:
+    scrollableView: true
+    backgroundColor: 0xFFFEFAF3
+  onLoad:
+    executeCode:
+      body: |-
+        //@code
+        // get user details to show on contact details
+        ensemble.invokeAPI('getUser');                 
+
+  Column:
+    styles: { padding: 24 24 60 24, gap: 24, crossAxis: stretch }      
+    children:       
+      - DoctorCard
+      - CardPatient
+      - ContactDetails
+      - Insurence         
+      - Checkbox:     
+          styles: { fontSize: 16 , fontWeight: w400 }        
+          id: certifyCheckbox
+          trailingText: I certify that the insurance or payment selected is the one that I will be using when I see the medical professional.
+      - Button:
+          styles: {fontSize: 18}
+          label: Book Appointment
+          enabled: ${certifyCheckbox.value}
+          onTap:
+            invokeAPI:
+              name: bookAppointment
+              inputs:
+                bookingStatus: 'Pending'
+                userID: ${ensemble.storage.get("uid")}
+                docID: ${doctor.id}
+                slotID: ${slot.id} 
+              onResponse:
+                navigateScreen:
+                  name: AppointmentBooked  
+                  inputs:
+                      doctor: ${doctor}
+                      slot: ${slot}
+
+
+DoctorCard:
+  Column:
+    styles:
+      shadowColor: 0xFFEEEBDC      
+      shadowRadius: 4
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFF2F9F3   
+      height: 372
+    children:
+      - Row:
+           styles: { gap: 12, padding: 16 }
+           children:
+             - Image:
+                styles: {  height: 72, borderRadius: 72 }
+                source: ${doctor.doc_photo_path}
+             - Column:
+                 styles: { gap: 4 }
+                 children:
+                  - Text:
+                      styles : {color: 0xFF404040, fontSize: 18, fontWeight: w500 }  
+                      text: ${doctor.name}
+                  - Text:
+                      styles : {color: 0xFF404040, fontSize: 14, fontWeight: w400 }  
+                      text: ${doctor.doc_type}
+                  - Row:
+                      styles: { gap: 12 }
+                      children:
+                        - Row:                           
+                            styles: { gap: 5, crossAxis: center }
+                            children:
+                              - Icon:
+                                  styles: { size: 15, color: 0xFF61BDAB }
+                                  icon: verified_user
+                              - Text:
+                                  styles: { fontSize: 12, fontWeight: w500 , color: 0xFFA0A2B3 }
+                                  text: In-network
+                        - Row:                           
+                            styles: { gap: 5, crossAxis: center }
+                            children:
+                              - Icon:
+                                  styles: { size: 15, color: 0xFFFFA873 }
+                                  icon: star
+                              - Text:
+                                  styles: { fontSize: 12, color: 0xFFA0A2B3 }
+                                  text: ${doctor.rate}  
+      - Divider
+      - Column:
+          styles: { gap: 2, padding: 10, mainAxis: start, crossAxis: start ,textAlign: start}
+          children:
+            - Text:
+                styles: {color: 0xFF404040, fontWeight: w400, fontSize: 18 }
+                text: ${slot.appointment_date.prettyDate()} at ${slot.time_slot}
+            - Text:
+                text: ${doctor.address}
+                styles: {color: 0xFFA0A2B3, fontWeight: w500, fontSize: 14}
+      - Map:
+          id: docMap
+          styles: { expanded: true, markerWidth: 60, markerHeight: 24 }
+          currentLocation:
+            enabled: true
+          markers:
+            data: ${doctor}
+            name: doc
+            location:
+              lat: ${doc.lat}
+              lng: ${doc.lng}
+            widget:
+              Column:
+                styles: { backgroundColor: white, borderRadius: 100, padding: 4, shadowColor: 0xFFDDDDDD, shadowOffset: [0,1], shadowRadius: 4, crossAxis: center }
+                children:
+                  - Text:
+                      text: ${doc.name}
+                      styles: { fontWeight: bold }
+            selectedWidget:
+              Column:
+                styles: { backgroundColor: blue, borderRadius: 100, padding: 4, shadowColor: 0xFFDDDDDD, shadowOffset: [0,1], shadowRadius: 4, crossAxis: center }
+                children:
+                  - Text:
+                      text: ${doc.name}
+                      styles: { fontWeight: bold, color: white }
+            selectedWidgetOverlay:
+              Row:
+                styles: { fontSize: 13, backgroundColor: white, borderWidth: 1, borderColor: 0xFFE7E7E7 }
+                children:
+                  - Image:
+                      source: ${doc.doc_photo_path}
+                      styles: { width: 120 }
+                  - Column:
+                      styles: { padding: 16, gap: 4 }
+                      children:
+                        - Text:
+                            text: ${doc.name}
+                            styles: { fontWeight: bold, fontSize: 15 }
+                        - Text:
+                            text: ${doc.doc_type}
+                            styles: { fontSize: 15 }               
+
+CardPatient: 
+  Column:
+    children:
+      - Text:
+          text: Patient
+          styles: {color: 0xFF777A95, fontSize: 18 , fontWeight: w500, textAlign: start}  
+      - Column: 
+          styles: { gap: 16, padding: 16, margin: 10 0
+             , borderRadius: 16,shadowColor: 0xFFEEEBDC, shadowOffset: [ 1, 1 ], shadowRadius: 4, backgroundColor: 0xFFFFFFFF}
+          children:            
+            - Form:
+                children:
+                  - TextInput:
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500}  
+                      value: ${getUser.body[0].document.fields.name.stringValue}
+                      label: Name
+                      hintText: Name 
+                      required: true
+                  - Date:
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500} 
+                      label: Date of birth
+                      hintText: Date 
+                      required: true
+                  - Dropdown:
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500} 
+                      label: Gender
+                      hintText: Select Gender
+                      value: ${getUser.body[0].document.fields.gender.stringValue}
+                      items:
+                        - He
+                        - She
+                        - They
+
+ContactDetails: 
+  Column:
+    children:
+      - Text:
+          text: Contact Details
+          styles: { color: 0xFF777A95, fontSize: 18 , fontWeight: w500, textAlign: start}
+      - Column:
+          styles: { gap: 16, padding: 16, margin: 10 0, borderRadius: 16,shadowColor: 0xFFEEEBDC, shadowOffset: [ 1, 1 ], shadowRadius: 4, backgroundColor: 0xFFFFFFFF }
+          children:
+             - Form:
+                styles:
+                  color: black
+                children:
+                  - TextInput:
+                      label: Email
+                      hintText: Email 
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500} 
+                      required: true
+                      value: ${getUser.body[0].document.fields.email.stringValue}
+                  - TextInput:
+                      label: Phone
+                      hintText: +91 99999 99999
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500} 
+                      value: ${getUser.body[0].document.fields.mobile_no.stringValue}
+
+Insurence: 
+  onLoad:
+    invokeAPI:
+      name: getProviders    
+  Column:
+    children:
+      - Text:
+          text: Insurence
+          styles: {color: 0xFF777A95, fontSize: 18 , fontWeight: w500, textAlign: start}
+      - Column:
+          styles: {gap: 16, padding: 16, margin: 10 0, borderRadius: 16,shadowColor: 0xFFEEEBDC, shadowOffset: [ 1, 1 ], shadowRadius: 4, backgroundColor: 0xFFFFFFFF }
+          children:     
+            - Form:
+                styles:
+                  color: black
+                children:
+                  - Dropdown:
+                      label: Provider
+                      hintText: Health insurance provider
+                      # autoComplete: true
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500} 
+                      required: true
+                      id: providersItems   
+                      value: ${getUser.body[0].document.fields.insurance_provider_id.integerValue}
+                  - TextInput:
+                      label: ID Number 
+                      hintText: 99999 99999
+                      value: ${getUser.body[0].document.fields.insurance_id_number.stringValue}
+                      styles : {color: 0xFF404040, fontSize: 16, fontWeight: w500}  
+      
+API:
+  getUser:
+    uri: ${env.APIBaseURL}:runQuery
+    method: 'POST'
+    headers:
+      'Authorization': 'Bearer ${ensemble.storage.get("idToken")}'
+    body:
+      "structuredQuery": {
+        "from": [{
+          "collectionId": "users",
+          "allDescendants": true
+        }],
+        "where": {
+          "fieldFilter": {
+            "field": {
+              "fieldPath": "uid"
+            },
+            "op": "EQUAL",
+            "value": {
+              "stringValue": '${ensemble.storage.get("uid")}'
+            }
+          }
+        }
+      }
+
+
+
+  getProviders:
+    uri: ${env.APIBaseURL}:runQuery
+    method: 'POST'
+    body: 
+      "structuredQuery": {
+         "from": [{
+          "collectionId": "insuranceProviders"         
+         }],
+         "orderBy": [{"direction": "ASCENDING", "field": {"fieldPath": "Name"}}]       
+        }        
+    onResponse: |
+      //@code           
+      var list = [];
+      response.body.map(function(item) {
+        list.push({
+          "label": item.document.fields.Name.stringValue,
+          "value": item.document.fields.insurance_provider_id.integerValue,
+        });
+      });
+      providersItems.items = list;
+ 
+  bookAppointment:
+    inputs: [ bookingStatus, userID, docID, slotID ]    
+    uri: ${env.APIBaseURL}/doctors/${docID}/appointments/${slotID}?updateMask.fieldPaths=booking_status&updateMask.fieldPaths=booked_uid
+    method: 'PATCH'
+    headers:
+      'Authorization': 'Bearer ${ensemble.storage.get("idToken")}'
+    body:
+      "fields": {        
+        "booking_status": {
+            "stringValue": "${bookingStatus}"
+        },
+        "booked_uid": {
+            "stringValue": "${userID}"
+        }
+      }

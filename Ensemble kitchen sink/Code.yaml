@@ -1,0 +1,64 @@
+View:
+  header:  
+    title: Code
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 8 24 80 24, gap: 8, fontSize: 17}
+    children:
+      - Capability:
+          inputs:
+            name: Code Examples
+            desc: 'Variables, if/else, looping through arrays and functions, etc.'
+            screen: Code Examples
+
+      - Capability:
+          inputs:
+            name: Global Functions
+            desc: 'Define reusable JavaScript functions'
+            screen: 'Code: Global functions'
+
+      - Capability:
+          inputs:
+            name: Date Functions
+            desc: 'Get current date and format it'
+            screen: 'Code: date and time'
+
+      - Capability:
+          inputs:
+            name: String Functions
+            desc: Split, get index, etc.
+            screen: 'Code: strings'
+              
+      - Capability:
+          inputs:
+            name: Local Storage
+            desc: 'Store variables you want to access across the app'
+            screen: Local Storage
+              
+      - Capability:
+          inputs:
+            name: JSON path
+            desc: 'Grab values from a JSON object'
+            screen: 'Code: JSON path'
+
+
+Capability:
+  inputs: [name, screen, desc]
+  Column:
+    children:
+        - Column:
+            styles: { gap: 4, padding: 16 0, crossAxis: stretch }
+            onTap:
+                navigateScreen:
+                  name: ${screen}
+            children:
+                - Text:
+                    text: ${name}
+                    styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 17 }
+                - Text:
+                    text: ${desc}
+                    styles: { color: 0xFF909090, fontSize: 14 }
+        - Divider
+

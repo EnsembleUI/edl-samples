@@ -1,0 +1,69 @@
+View:
+  header:
+    title: Dialog
+  onLoad:
+    showDialog:
+      widget: MyStartingDialog
+  Column:
+    styles: { margin: 10, gap: 5 }
+    children:
+
+      # use inline widget
+      - Text:
+          text: Your dialog can also be an inline widget
+      - Button:
+          label: Show Dialog
+          onTap:
+            showDialog:
+              widget:
+                Text:
+                  text: This dialog declares the widget inline and uses the default style.
+
+      - Spacer:
+          styles:
+            size: 20
+
+      # use custom styling
+      - Text:
+          text: You can customize the dialog style
+      - Button:
+          label: Show Custom Dialog
+          onTap:
+            showDialog:
+              widget: MyCustomDialog
+              options:
+                # no default style - zero margin/padding, no background color
+                style: none
+                # move it up half way between the top and the center of the screen
+                verticalOffset: -0.5
+
+
+
+# Custom Widget   
+MyStartingDialog:
+  Column:
+    styles:
+      gap: 10
+    children:
+      - Text:
+          text: Welcome to Ensemble
+          styles:
+            fontSize: 16
+            fontWeight: bold
+      - Text:
+          text: This dialog pops up when the user first visits the page.
+
+MyCustomDialog:
+  Column:
+    styles:
+      gap: 10
+      backgroundColor: 0xffD7BFA8
+      borderRadius: 10
+      margin: 20
+      padding: 20
+    children:
+      - Text:
+          text: |-
+            This dialog set its own margin/padding and background color.
+
+            It also offset the dialog position vertically. 

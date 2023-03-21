@@ -1,0 +1,53 @@
+View:
+  header:
+    title: "Action: chaining example"
+  styles:
+    scrollableView: true
+  Column: 
+    styles: 
+      gap: 16
+      padding: 24
+    children:
+      - Text:
+          text: Change the value of dropdown to see the chained actions fire
+      - Dropdown:
+          label: Select API response code to get back
+          items: 
+            - "label": "200 - success"
+              "value": "200"
+            - "label": "401 - Unauthorized"
+              "value": "401"
+            - "label": "500 - Internal Server Error"
+              "value": "500"
+          onChange:
+            executeCode:
+              body: |
+                //@code
+                status.text = '';
+                loading.visible = true;
+              onComplete:
+                invokeAPI:
+                  name: getData
+                  inputs:
+                    code: ${this.value}
+                  onResponse: |
+                    //@code
+                    status.text = 'Got a success back';
+                    loading.visible = false;
+                  onError: |
+                    //@code
+                    status.text = 'Something went wrong';
+                    loading.visible = false;
+
+      - Progress:
+          display: circular
+          id: loading
+          visible: false
+      - Text:
+          id: status
+
+API:
+  getData:
+    inputs: [ code ]
+    uri: https://httpstat.us/${code}?sleep=5000
+    method: GET

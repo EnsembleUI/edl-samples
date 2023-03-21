@@ -1,0 +1,56 @@
+View:
+  header:
+    title: Location Service
+  styles:
+    scrollableView: true
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - Text:
+          text: Get location via Map widget
+          styles:
+            font: subtitle
+      - Markdown:
+          text: |-
+            Map widget can request user location access using *currentLocation* attribute. This will automatically put the current location marker on the map, plus save the last location to be accessed using *device.lastLocation*
+      - Map:
+          styles: { height: 250, markerHeight: 50, markerWidth: 300}
+          currentLocation:
+            enabled: true
+      - Button:
+          label: Show my last location
+          onTap: |
+            //@code
+            locationStatus.text = 'Lat: ' + device.lastLocation.latitude + ', Lng: ' + device.lastLocation.longitude;
+      - Text:
+          id: locationStatus
+
+
+      - Divider
+
+      # location with Action
+      - Text:
+          text: Get location via Action
+          styles:
+            font: subtitle
+      - Markdown:
+          text: Use `getLocation` Action to get the location, with the option to continuously get location change updates.
+      - Button:
+          label: Listen for location changes
+          onTap:
+            getLocation:
+              options:
+                recurring: true    # while on this page, location changes will continue to execute onLocationReceived    
+                recurringDistanceFilter: 50   # only dispatch if the new location is more than 50 meters away from the previous location
+              onLocationReceived: |-
+                //@code
+                status.text = 'Lat: ' + latitude + ', Lng: ' + longitude;        
+              onError: |-
+                //@code
+                status.text = reason;
+      - Text:
+          id: status
+
+      
+      

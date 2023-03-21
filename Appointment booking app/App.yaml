@@ -1,0 +1,17 @@
+ViewGroup:
+  BottomNavBar:
+    styles:
+      backgroundColor: white
+    items:
+      - icon: search
+        label: Search
+        page: Home
+      - icon: assignment
+        label: Appointments
+        page: MyAppointments
+      - icon: list
+        label: My Doctors
+        page: MyDoctors       
+      - icon: account_circle
+        label: Profile
+        page: Profile

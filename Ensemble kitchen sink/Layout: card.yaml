@@ -1,0 +1,171 @@
+View:
+
+  header:
+    title: "Layout: cards"
+  
+  styles:
+    scrollableView: true
+    backgroundColor: white
+
+  onLoad:
+    invokeAPI:
+      name: getUser
+
+  Column:
+    styles: { padding: 16, gap: 16 }
+    children:
+      - CardStyle1:
+          inputs:
+            p: ${getUser.body.results[0]}
+      - CardStyle2:
+          inputs:
+            p: ${getUser.body.results[0]}
+
+CardStyle1:
+  inputs:
+    - p
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF
+    children:
+      - Row:
+          styles: { gap: 12, padding: 16 }
+          children:
+            - Image:
+                styles: {  height: 50, width: 50, borderRadius: 50 }
+                source: ${p.picture.medium}
+            - Column:
+                styles: { padding: 8 0, gap: 2 }
+                children:
+                  - Text:
+                      styles: 
+                        fontWeight: bold
+                      text: ${p.name.first} ${p.name.last}
+                  - Text:
+                      styles:
+                        textAlign: center
+                      text: ${p.location.country}
+            - Spacer
+            - Icon:
+                icon: heart
+                library: fontAwesome
+                styles: { size: 20, color: blue }
+      - Row:
+          styles: { backgroundColor: 0xFFf7f7f7, mainAxis: spaceEvenly, padding: 16 8, borderRadius: 0 0 16 16 }
+          children:
+            - CustomButton:
+                inputs:
+                  icon: phone
+                  label: Call
+            - CustomButton:
+                inputs:
+                  icon: email
+                  label: Email
+            - CustomButton:
+                inputs:
+                  icon: chat
+                  label: Message
+            - CustomButton:
+                inputs:
+                  icon: map
+                  label: Address
+
+
+CardStyle2:
+  inputs:
+    - p
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF
+    children:
+
+      # top
+      - Row:
+          styles: { gap: 16, padding: 16, crossAxis: center }
+          children:
+            - Image:
+                styles: {  height: 50, borderRadius: 50 }
+                source: ${p.picture.medium}
+            - Text:
+                styles: { fontSize: 17, fontWeight: bold }
+                text: ${p.name.first} ${p.name.last}
+      
+      # details
+      - Column:
+          styles: { gap: 12, padding: 4 16 16 16, crossAxis: center }
+          children:
+            - IconTextRow:
+                inputs:
+                  icon: email
+                  label: ${p.email}
+            - IconTextRow:
+                inputs:
+                  icon: person
+                  label: ${p.login.username}
+            - IconTextRow:
+                inputs:
+                  icon: map
+                  label: ${p.location.city}, ${p.location.country}
+
+      # buttons
+      - Row:
+          styles: { backgroundColor: 0xFFf7f7f7, mainAxis: spaceEvenly, padding: 8, borderRadius: 0 0 16 16 }
+          children:
+            - Button:
+                styles: { borderColor: 0xFFf7f7f7, outline: true }
+                label: Add to Favorites
+
+
+
+CustomButton:
+  inputs:
+    - icon
+    - label
+  Column:
+    
+    # add an action here
+    # onTap:
+    #   action:
+
+    styles: { gap: 6, expanded: true, crossAxis: center }
+    children:
+      - Column:
+          styles: { backgroundColor: white , borderColor: 0xFFF0F0F0, borderWidth: 2, borderRadius: 50, padding: 12 }
+          children:                                      
+            - Icon:
+                icon: ${icon}
+                styles: { size: 18, color: blue }                                  
+      - Text:
+          styles: { fontWeight: w500, color: 0xFF707070, fontSize: 13, textAlign: center}
+          text: ${label} 
+
+
+IconTextRow:
+  inputs:
+    - icon
+    - label
+  Row:
+    styles: { gap: 8, crossAxis: center }
+    children:
+      - Icon:
+          styles: { size: 15, color: grey }
+          icon: ${icon}
+      - Text:
+          styles: { fontSize: 13, color: 0xFF707070 }
+          text: ${label}
+
+
+API:
+  getUser:
+    uri: https://randomuser.me/api/
+    method: GET

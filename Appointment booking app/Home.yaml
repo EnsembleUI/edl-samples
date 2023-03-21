@@ -1,0 +1,298 @@
+View:
+
+  # For demo purposes, we skip sign in page and log user in with a test account
+  onLoad:
+    invokeAPI:
+      name: login
+      
+  # Set the view to be scrollable
+  styles:
+    scrollableView: true
+  
+  # This is the parent widget for all screen content
+  Column:
+    styles:
+      backgroundGradient: 
+        colors: [ 0xFFF4D66C, 0xFFFEFAF3, 0xFFFFFFFF ]
+        start: topLeft
+        end: bottomRight
+      
+    children:
+      - Hero
+      - SearchForm
+      - MostSearched
+
+
+Hero:
+  Column:
+    styles: { height: 200, margin: "${device.safeAreaTop} 24 0 24" }
+    children:
+
+      # Using stack, we place the animation on top of the text
+      - Stack:
+          styles:
+            alignment: centerLeft
+          children:
+            - Text: 
+                styles: { fontSize: 27, fontFamily: 'Clarika', lineHeight: 1.3, color: 0xFF404040 }
+                text: |
+
+                  Find local doctors 
+                  who take
+                  your insurance
+            - Row:
+                styles: { height: 220 }
+                children: 
+                  - Spacer:
+                      styles: { size: 120 }
+                  - Lottie:
+                      source: https://lottie.host/a78d2893-0be0-41f9-8b61-f955c65ef664/BYJYnBnEGv.json
+                      styles: { width: 320, height: 320 }
+            
+
+SearchForm:
+  onLoad:
+    invokeAPI:
+      name: getInsuranceProviders
+  Column:
+    styles: 
+      margin: 0 24 16 24
+      padding: 16 24 24 24
+      gap: 12
+      crossAxis: stretch
+      borderRadius: 16
+      backgroundColor: white
+      shadowColor: 0xFFEEEBDC
+      shadowOffset: [0,2]
+      shadowRadius: 4
+    children:
+      - Dropdown:
+          id: typeInput
+          icon: person
+          hintText: Care type
+          autoComplete: true
+          items:
+            - Annual Physical
+            - Nutrition Specialist
+            - Dental Cleaning
+          value: Annual Physical
+          required: true
+            
+      - TextInput:
+          id: locationInput
+          icon: pin_drop
+          hintText: Near me
+      - Date:
+          id: dateInput
+          icon: calendar_today
+          showCalendarIcon: false
+          hintText: date              
+      - Dropdown:
+          icon: local_atm
+          hintText: Health insurance provider
+          autoComplete: true
+          id: providersItems
+      - Spacer:
+          styles:
+            size: 1
+      - Button:
+          styles: { fontWeight: w600, fontSize: 17 }
+          label: Find Care
+          validateForm: true
+          onTap:
+            navigateScreen:
+              name: SearchResults
+              inputs:
+                doc_type: ${typeInput.value}
+                location: ${locationInput.value}
+                appointment_date: ${dateInput.value}
+
+
+# This is the parent widget for most searched cards
+# This parent widget displays a set of cards on a carousel and pass each the properties they need
+MostSearched:
+  Column:
+    styles: { margin: 8 0, gap: 12 }
+    children:
+      - Column:
+          styles: { padding: 0 24 }
+          children:
+            - Text:
+                text: Most-searched
+                styles: {fontWeight: w600, fontSize: 18 }
+      - Carousel:
+          styles: { gap: 8, padding: 0 0 0 24, height: 154, layout: multiple, multipleItemWidthRatio: 0.36, trailingGap: 24  }
+          children:                  
+            - MostSearchedCard:
+                inputs:
+                  image: https://firebasestorage.googleapis.com/v0/b/appointment-booking-app-ecf27.appspot.com/o/medical_annual.png?alt=media&token=aea1cd15-64c5-4194-9c9e-659f8a01f222
+                  title: Annual Physical
+                  subTitle: 24 in-network
+                  bgColor: 0xFFEBE9FF
+            - MostSearchedCard:
+                inputs:
+                  image: https://firebasestorage.googleapis.com/v0/b/appointment-booking-app-ecf27.appspot.com/o/medical_nutrition.png?alt=media&token=9c3e4ad4-9165-4968-b0ea-4aa92a4da215
+                  title: Nutrition Specialist
+                  subTitle: 5 in-network
+                  bgColor: 0xFFFCF1E5
+            - MostSearchedCard:
+                  inputs:
+                    image: https://firebasestorage.googleapis.com/v0/b/appointment-booking-app-ecf27.appspot.com/o/medical_dental.png?alt=media&token=af334c1a-03a6-473d-9237-d236c586d308
+                    title: Dental Cleaning
+                    subTitle: 5 in-network
+                    bgColor: 0xFFE3EFFA
+            - MostSearchedCard:
+                  inputs:
+                    image: https://firebasestorage.googleapis.com/v0/b/appointment-booking-app-ecf27.appspot.com/o/medical_vaccination.png?alt=media&token=c4d6b63b-b291-43af-8bc5-3fef8dd125eb
+                    title: Covid vaccination
+                    subTitle: 5 in-network
+                    bgColor: 0xFFD9F8EC
+            - MostSearchedCard:
+                  inputs:
+                    image: https://firebasestorage.googleapis.com/v0/b/appointment-booking-app-ecf27.appspot.com/o/medical_prenatal.png?alt=media&token=0220327b-4838-40e6-9465-8043e1a74d32
+                    title: Prenatal care
+                    subTitle: 5 in-network
+                    bgColor: 0xFFF9F7C7
+      - Spacer:
+          styles: { size: 40 }
+
+MostSearchedCard:
+  inputs:    
+    - image
+    - title
+    - subTitle
+    - bgColor
+  Column:
+    onTap:
+      navigateScreen:
+        name: SearchResults
+        inputs:
+          doc_type: ${title}
+          location:  ''
+          appointment_date: ''
+    styles:
+      backgroundColor: ${bgColor}
+      borderRadius: 16 50 16 16
+      padding: 16 8
+    children:
+      - Image:
+          source: ${image}
+          styles: { width: 48 } 
+      - Text:
+          styles: {fontSize: 15, fontWeight: w600, margin: 8 6 0 6 }
+          text: ${title}
+      - Text:
+          styles: { fontSize: 12, fontWeight: w600, color: 0xFF949596, margin: 8 6 0 6 }
+          text: ${subTitle}      
+
+
+# this widget loads all doctors
+FavoriteDoctors:
+  onLoad:
+    invokeAPI:
+      name: getDoctors
+  Column:
+    styles: { margin: 8 0, gap: 12 }
+    children:
+      - Text:
+          text: Your care team
+          styles: {fontWeight: w600, fontSize: 18, margin: 0 24 }
+      - Carousel:
+          styles: { gap: 8, padding: 0 0 0 24, height: 172, layout: multiple, multipleItemWidthRatio: 0.44  }
+          item-template:
+            data: ${getDoctors.body[0].favorite_doctors}
+            name: doctor
+            template:
+              DoctorCard:
+                inputs:
+                  doctor: ${doctor}
+
+
+DoctorCard:
+  inputs: [ doctor ]
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 8
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF      
+    onTap:
+      navigateModalScreen:
+        name: DoctorProfile
+        inputs:
+          id: ${doctor.id}
+          
+    children:
+      - Image:
+          styles: { height: 68, borderRadius: 68, margin: 8, placeholderColor: .transparent }
+          source: ${doctor.doc_photo_path}
+      - Text:
+          styles: { fontWeight: bold, textAlign: center, overflow: ellipsis, margin: 8 }
+          text: ${doctor.name}
+      - Text:
+          styles: { textAlign: center }
+          text: ${doctor.doc_type}
+      - Row:                           
+          styles: { gap: 4, crossAxis: center, mainAxis: center, margin: 8 }
+          children:
+            - Icon:
+                styles: { size: 15, color: 0xFFFFA873 }
+                icon: star
+            - Text:
+                styles: { fontSize: 13, color: 0xFFA0A2B3 }
+                text: ${doctor.rate}
+
+
+
+API:
+
+  # This API is called on the view's onload so we can skip logging in manually
+  login:
+    uri: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBHH7crKsWUBZTAFmc3T-sCIkwrSJJmjRA'
+    method: 'POST'
+    parameters:
+      email: "demo@ensembleui.com"
+      password: "password"
+      returnSecureToken: true
+
+    onResponse: |-
+      //@code
+      ensemble.storage.set('email', response.body.email);
+      ensemble.storage.set('displayName', response.body.displayName);
+      ensemble.storage.set('idToken', response.body.idToken);
+      ensemble.storage.set('refreshToken', response.body.refreshToken);
+      ensemble.storage.set('uid', response.body.localId);
+
+
+  # This API provides the data for Insurance Provider dropdown
+  getInsuranceProviders:
+    uri: ${env.APIBaseURL}:runQuery
+    method: 'POST'
+    body: 
+      "structuredQuery": {
+         "from": [{
+          "collectionId": "insuranceProviders"         
+         }],
+         "orderBy": [{"direction": "ASCENDING", "field": {"fieldPath": "Name"}}]       
+        }        
+    onResponse: |
+      //@code           
+      var list = [];
+      response.body.map(function(item) {
+        list.push({
+          "label": item.document.fields.Name.stringValue,
+          "value": item.document.fields.insurance_provider_id.integerValue,
+        });
+      });
+      providersItems.items = list;
+
+
+  # filter favorite doctors on the response
+  getDoctors:
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/myFavouriteDoctors?uid=${ensemble.storage.get("uid")}
+    method: "GET"   
+    onError:      
+      navigateScreen:
+        name: Home 

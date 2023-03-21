@@ -1,0 +1,53 @@
+View:  
+  header:
+    title: WidgetHeader
+    styles:
+      backgroundColor: 0xFFF4D66C
+      showNavigationIcon: true
+      navigationIconPosition: end
+  menu:
+    Drawer:
+      items:
+        - label: Home
+          icon: home
+          page: Home
+        - label: App Header
+          icon: input
+          page: App Header
+    
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Markdown:
+          text: |
+            Use View's header property to set and customize the app header
+      - Markdown:
+          text: |
+            This page includes Header that takes a widget as the title, and include a separate menu icon. Tapping the menu exposes a drawer menu.
+
+
+
+# this widget is passed to the screen header
+WidgetHeader: 
+
+    Row:      
+      children:       
+        - Row:
+            styles: { mainAxis: center }
+            children:
+              # - Icon:
+              #     icon: arrow_back
+              #     styles: { size: 18, color: 0xFF0D0D0D, padding: 16 12 0 }
+              #     onTap:
+              #       action: navigateScreen
+              #       name: App Header
+              - Column:
+                  styles: {padding: 12 , gap: 8 }
+                  children:              
+                    - Text:
+                        styles: {fontWeight: bold, fontSize: 20, color: black }
+                        text: Header - widget as title
+                    - Text:
+                        styles: {fontSize: 15, color: green, textAlign: end }
+                        text: Sub title
+        

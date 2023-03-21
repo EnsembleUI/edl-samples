@@ -1,0 +1,42 @@
+View:
+  title: Form
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+            
+        - Form:
+            styles: { gap: 24 }
+            children:
+            - TextInput:
+                label: Input
+                labelHint: Hello
+                required: true
+            - Dropdown:
+                label: Dropdown
+                required: true
+                items:
+                    - Red
+                    - Blue
+                    - Green
+            - Button:
+                label: Submit
+                validateForm: true
+
+
+        - Form:
+            styles: { gap: 24, labelPosition: start }
+            children:
+            - TextInput:
+                label: Input
+                labelHint: Tooltip for the label
+                required: true
+            - Dropdown:
+                label: Dropdown
+                required: true
+                items:
+                    - Red
+                    - Blue
+                    - Green
+            - Button:
+                label: Submit
+                validateForm: true

@@ -1,0 +1,37 @@
+View:
+
+  header:
+    title: "Layout: error message"
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles:
+      padding: 24
+      gap: 24
+    children:
+      - Text:
+          text: "Below is a custom widget to represent an error message:"
+      - ErrorWidget:
+          inputs:
+            message: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+
+
+ErrorWidget:
+  inputs:
+    - message
+  Row:
+    styles: 
+      gap: 8
+      padding: 8
+      backgroundColor: 0xFFFBE2D6
+      borderColor: 0xFFF7BFA5
+      borderRadius: 8
+    children:
+      - Icon:
+          icon: warning
+          styles: { color: 0xFFB45427 }
+      - Text:
+          text: ${message}
+          styles: { expanded: true }

@@ -1,0 +1,111 @@
+View:
+  header:
+    title: Local Storage
+  styles:
+    scrollableView: true
+    backgroundColor: white
+  Column: 
+    children:
+      - Intro
+      - Cart
+
+
+Intro:
+  Column:
+    styles: { padding: 16 }
+    children:
+      - Markdown:
+          text: |
+            Local storage allows you to store data locally on the device. On web, it uses [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). You can access local storage in code blocks and bind widgets to their values.
+
+            #### Store value
+            ```
+            //@code
+            ensemble.storage.set('key', 'value');
+            ensemble.storage.key = 'value';
+            ```
+
+            #### Get value
+            ```
+            //@code
+            var myKey = ensemble.storage.get('key', 'value');
+            var myKey = ensemble.storage.key;
+
+          
+# show cart content
+Cart:
+  Column:
+    styles: { margin: 16, gap: 16, padding: 16 24, backgroundColor: 0xFFCCDFE5, borderRadius: 16 }
+    children:
+      - Row:
+          styles:
+            gap: 10
+            crossAxis: center
+          children:
+            - Markdown:
+                styles:
+                  textStyle:
+                    fontSize: 18
+                text: __My Cart__ (${ensemble.storage.cartItems.length} items)                  
+            - Button:
+                label: Clear cart
+                onTap: |
+                  //@code
+                  ensemble.storage.cartItems = [];
+      - Column:
+          item-template:
+            data: ${ensemble.storage.cartItems}
+            name: item
+            template:
+              Row:
+                styles:
+                  crossAxis: center
+                  margin: 8 0
+                  gap: 8
+                children:
+                  - Icon:
+                      icon: delete
+                      onTap: |
+                        //@code
+                        var items = ensemble.storage.cartItems;
+                        items = items.filter(function(e) {
+                          return e != item;
+                        });
+                        ensemble.storage.cartItems = items;
+                        
+                  - Text:
+                      text: ${item}
+
+      - Form:
+          onSubmit: |
+            //@code
+            var items = ensemble.storage.cartItems;
+            items.push(name.value);
+
+            // write back
+            ensemble.storage.cartItems = items;
+
+            // clear input
+            name.value = '';
+
+          children:
+            - Text:
+                styles:
+                  fontSize: 18
+                  fontWeight: bold
+                text: Add a new item
+            - TextInput:
+                id: name
+                hintText: Enter the item name ...
+                required: true
+            - Button:
+                label: Add to Cart
+                submitForm: true
+
+
+Global: |-
+  //@code
+  if (ensemble.storage.cartItems == null) {
+    ensemble.storage.cartItems = [];
+  }
+

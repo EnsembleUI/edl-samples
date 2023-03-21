@@ -1,0 +1,60 @@
+View:
+  header:
+    title: "ListView"
+  onLoad:
+    invokeAPI:
+      name: getPeople
+
+  Column:
+    #styles: { padding: 16 16 10 16 }
+    children:
+      - ListView:
+          id: listView
+          onItemTap:
+            navigateScreen:
+              name: ListView - Detail Page
+              inputs:
+                doc_type: ${getPeople.body.users[this.selectedItemIndex]}
+              
+          styles: {expanded: true }
+          #sepratorColor: 0xffB2BEB5, sepratorWidth: 4,sepratorPadding: 16 10 20 10, height: 300, backgroundColor: white, borderColor: black , borderRadius: 10, boderWidth: 5, padding: 10  10 4}
+          item-template:
+            data: ${getPeople.body.users}
+            name: users
+            template:
+              MyRow:
+                inputs:
+                  p: ${users}
+                      
+MyRow:
+  inputs:
+    - p
+  Column:
+    children:
+      - Row:
+          styles: 
+            gap: 12
+            crossAxis: center
+            padding: 8 0
+          children:
+            - Image:
+                styles: {  height: 50, borderRadius: 50 }
+                source: ${p.image}
+            - Column:
+                styles: { gap: 2 }
+                children:
+                  - Text:
+                      styles: { fontWeight: bold }
+                      text: ${p.firstName} ${p.lastName}
+                  - Text:
+                      text: ${p.email}
+            - Spacer
+            - Icon:
+                icon: chevron_right
+                styles: { size: 20, color: black }
+      
+      
+API:
+  getPeople:
+    uri:  https://dummyjson.com/users
+    method: GET

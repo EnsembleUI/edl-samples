@@ -1,0 +1,36 @@
+View:
+  
+  header:
+    title: 'Styling: background'
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 16, padding: 24, crossAxis: stretch }
+
+    children:
+
+        - Text:
+            text: Gradient background
+        - Column:
+            styles:
+              backgroundGradient:
+                colors: [ 0xFF051937, 0xFF004d7a, 0xFF008793, 0xFF00bf72, 0xFFa8eb12 ]
+                start: topLeft
+                end: bottomRight
+            children:
+              - Spacer:
+                  styles:
+                    size: 200
+
+        - Text:
+            text: Image as background
+        - Column:
+            styles:
+              backgroundImage:
+                source: https://www.freecodecamp.org/news/content/images/2021/06/w-qjCHPZbeXCQ-unsplash.jpg
+            children:
+              - Spacer:
+                  styles:
+                    size: 200

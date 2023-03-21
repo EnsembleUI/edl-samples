@@ -1,0 +1,23 @@
+View:
+  title: "Menu: bottomNavBar"
+  menu:
+    BottomNavBar:
+      items:
+        - label: Home
+          icon: home
+          page: Home
+        - label: Button
+          icon: input
+          page: Button
+        - label: Settings
+          icon: settings
+          page: Settings
+          selected: true
+
+  Column: 
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Markdown:
+          text: |
+            This page includes menu displayed as bottomNavBar
+

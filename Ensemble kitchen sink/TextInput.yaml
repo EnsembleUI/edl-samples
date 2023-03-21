@@ -1,0 +1,132 @@
+View:
+
+  header:
+    title: TextInput
+
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: 
+        gap: 24
+        padding: 24
+        
+    children:
+        - Basic
+        - Multiline
+        - Styling
+        - Events
+
+Basic:
+  Column:
+    styles:
+        gap: 16
+    children:
+        - Markdown:
+            text: |
+              ## Basic examples
+
+        # 1
+        - TextInput:
+            label: Example 1
+            hintText: Placeholder value
+            required: true
+            
+        # 2
+        - TextInput:
+            label: Example 2
+            value: Default value
+
+
+        #3 
+        - TextInput:
+            label: Example 3
+            value: Default value
+            enabled: false
+    
+        # 4
+        - TextInput:
+            label: Example 4 - obscureText
+            obscureText: true
+            obscureToggle: true
+
+        - Divider
+
+Multiline:
+  Column:
+    styles:
+        gap: 16
+    children:
+        - Markdown:
+            text: |
+                ## Multi-line, aka TextArea
+
+        - TextInput:
+            hintText: Write on multiple lines
+            multiline: true
+            maxLines: 5
+            styles:
+                variant: box
+                borderRadius: 4
+                fillColor: 0xFFEDEDED
+                contentPadding: 16
+        
+        - Divider
+
+Styling:
+  Column:
+    styles:
+        gap: 16
+    children:
+        - Markdown:
+            text: |
+              ## Styling
+
+        - TextInput:
+            label: Username
+            icon: person
+
+        - TextInput:
+            label: Username
+            styles:
+              variant: box
+              contentPadding: 16
+
+        - TextInput:
+            styles:
+              variant: box
+              contentPadding: 16
+              fillColor: 0xFFEDEDED
+
+        - Divider
+
+
+Events:
+  Column:
+    styles:
+        gap: 16
+    children:
+        - Markdown:
+            text: |
+              ## Events
+
+        
+        - TextInput:
+            label: onChange
+            hintText: Type something and tab out
+            onChange: |
+                //@code
+                onChangeDemo.text = 'You entered: ' + this.value;
+        - Text:
+            id: onChangeDemo
+
+
+        - TextInput:
+            label: onKeyPress
+            hintText: Type something
+            onKeyPress: |
+                //@code
+                onKeyPressDemo.text = 'You entered: ' + this.value;
+
+        - Text:
+            id: onKeyPressDemo

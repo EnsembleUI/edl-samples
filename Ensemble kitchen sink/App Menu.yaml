@@ -1,0 +1,52 @@
+View:
+  header:  
+    title: App Menu
+  styles:
+    backgroundColor: white
+    scrollableView: true
+  Column:
+    styles: { padding: 24, gap: 16, fontSize: 17 }
+    children:
+      - HeaderType:
+          inputs:
+            name: "bottomNavBar"
+            screen: "Menu: bottomNavBar"
+            thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fnav-bar.jpg?alt=media&token=b9fab779-278e-434d-82ae-aea16243637e
+    
+    
+      - HeaderType:
+          inputs:
+            name: "Menu: drawer"
+            screen: "Menu: drawer"
+            thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fnav-drawer.jpg?alt=media&token=5411efd7-a2c1-4413-a524-a9e28ae575af
+
+      - HeaderType:
+          inputs:
+              name: "Scrollable"
+              screen: "Scrollable"
+              thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fscrollable.jpg?alt=media&token=054987d3-c8b4-4025-a4e0-37323e5aeb53
+
+HeaderType:
+  inputs: [name, screen, thumbnail]
+  Column:
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    styles: 
+        crossAxis: center
+        mainAxis: spaceAround
+        mainAxisSize: max
+        backgroundColor: 0xFFF6F6F6
+        borderRadius: 10
+        padding: 16
+        gap: 16
+        width: "${device.width - 48}"
+    children:
+      - Image:
+          styles: { width: 180 }
+          source: ${thumbnail}
+
+      - Text:
+          text: ${name}
+          styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15 }
+

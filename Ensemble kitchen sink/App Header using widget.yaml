@@ -1,0 +1,41 @@
+View:  
+  header:
+    title: WidgetHeader
+    styles:
+      backgroundColor: 0xFFF4D66C
+      showNavigationIcon: true
+      titleBarHeight: 80
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Markdown:
+          text: |
+            This page has a Header widget that accepts a TextInput as the title.
+
+
+
+# this widget is passed to the screen header
+WidgetHeader: 
+    Row:
+      styles:
+          crossAxis: center
+          margin: 12
+          padding: 12
+          gap: 12
+          borderRadius: 60
+          # height: 60
+          backgroundColor: 0xFFF4FAF4
+          shadowColor: 0x20000000
+          shadowOffset: [0, 1]
+          shadowRadius: 4
+      children:       
+        - Column:
+            styles: { mainAxis: center}
+            children:
+              - Text:
+                  styles: {fontSize: 15, color: black }
+                  text: Search here...
+              - TextInput:
+                  styles: {fontSize: 15, color: green, textAlign: end }
+                  value: Search here...
+        

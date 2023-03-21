@@ -1,0 +1,49 @@
+View:
+  header:
+    title: "Code: Global functions"
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - TextInput:
+          id: secondsInput
+          label: Seconds
+          value: 28565
+      - Button:
+          label: Convert to hours and minutes
+          onTap:
+            executeCode:
+              body: |-
+                //@code
+                results.text = convertSecondsToHours(secondsInput.value);
+
+      - Text:
+          id: results
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+          - Button:
+              styles: { outline: true, padding: 20 }
+              label: View all available widgets
+              onTap:
+                navigateScreen:
+                  name: Home
+          
+Global: |-
+
+  function convertSecondsToHours (s) {
+
+    // convert str to int
+    var totalSeconds = s.tryParseInt();
+    
+    var hours = Math.floor(totalSeconds / 3600);
+    totalSeconds = totalSeconds % 3600;
+    var minutes = Math.floor(totalSeconds / 60);
+    var seconds = totalSeconds % 60;
+
+    return(hours + " : " + minutes + " : " + seconds);
+  }

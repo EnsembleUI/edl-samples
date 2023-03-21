@@ -1,0 +1,77 @@
+View:
+  header:
+    title: "APIs: POST"
+  styles:
+    scrollableView: true
+
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:       
+     
+
+      - Text:
+          text: POST data from a form
+
+      - Form:
+          children:
+            - TextInput:
+                id: todoItem
+                label: ToDo item
+                hintText: e.g. Build app with Ensemble
+                required: true
+            - Button:
+                label: Submit
+                validateForm: true
+                submitForm: true
+                onTap:
+                  invokeAPI:
+                    name: createToDo
+                    inputs:
+                      name: ${todoItem.value}
+                    onResponse: |
+                      //@code
+                      var id = response.body.records[0].id;
+                      postStatus.text = 'Record created: ' + id;
+      - Text:
+          id: postStatus
+      - Divider
+
+
+      - Text:
+          text: 4. Handle error
+      - Button:
+          label: Call API
+          onTap:
+            invokeAPI:
+              name: createToDoError
+              onResponse: |
+                //@code
+                apiStatus.text = 'Call was successful';
+              onError: |
+                //@code
+                apiStatus.text = 'API returned an error';
+
+      - Text:
+          id: apiStatus
+        
+
+API:
+
+  createToDo:
+    inputs:
+      - name
+    uri: 'https://api.airtable.com/v0/appDbkGS4VOiPVQR5/ToDo?api_key=keyyWz426zsnMKavb'
+    method: 'POST'
+    body:
+      records:
+        - fields:
+            desc: "${name}"
+
+  createToDoError:
+    inputs:
+      - name
+    uri: 'https://api.airtable.com/v0/appDbkGS4VOiPVQR5/ToDo?api_key=keyyWz426zsnMKavb'
+    method: 'POST'
+    body:
+      records: "this is not what the API expects"

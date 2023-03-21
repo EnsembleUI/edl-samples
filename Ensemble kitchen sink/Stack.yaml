@@ -1,0 +1,20 @@
+View:
+  header:
+    title: Stack
+  styles:
+    scrollableView: true
+    
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Stack:
+          styles:
+            alignment: center
+          children:
+            - Column:
+                styles: { backgroundColor: blue, width: 300, height: 200, padding: 20 }
+                children:
+                  - Text:
+                      text: Column
+            - Button:
+                label: Button stacked on top

@@ -1,0 +1,28 @@
+View:
+  header:
+    title: Lottie
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+
+    children:
+      - Row:
+          styles: { gap: 8, crossAxis: center }
+          children:
+            - Icon:
+                icon: warning
+                styles: { color: orange }
+            - Text:
+                text: Lottie widget must have explicit width and height for web (this includes the preview in the editor). You do not need to specify width or height for native apps. If width or height is not specified for webapp (html renderer), it defaults to 250 for both
+                styles: { overflow: wrap, expanded: true }
+      - Lottie:
+          source: https://assets6.lottiefiles.com/private_files/lf30_rnpgzd17.json
+          styles:
+            width: 300
+            height: 200
+      - Lottie:
+          source: https://assets3.lottiefiles.com/packages/lf20_lzpnnin5.json
+          styles:
+            width: 200
+            height: 200

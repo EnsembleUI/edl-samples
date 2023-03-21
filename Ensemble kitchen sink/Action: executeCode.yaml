@@ -1,0 +1,48 @@
+View:
+  header:
+    title: "Action: executeCode"
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Markdown:
+          text: |
+            Use the `executeCode` action to write your own TypeScript code. If you need to perform a follow-up action when the code execution is completed, use the `onComplete` property.
+
+            Keep in mind that you need to use **//@code** so Ensemble knows to treat the lines that follow as TypeScript.
+      
+      - Button:
+          label: Execute Code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                codeExecuted.text = 'Code block under body is executed';
+              onComplete: |
+                //@code
+                onCompleteCodeExecuted.text = 'Code block under onComplete is executed';
+
+      - Text:
+          id: codeExecuted
+
+      - Text:
+          id: onCompleteCodeExecuted
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+          - Button:
+              styles: { outline: true, padding: 20 }
+              label: View all available widgets
+              onTap:
+                navigateScreen:
+                  name: Home
+          
+
+API:
+  getNYCTime:
+    authentication: none
+    method: GET
+    uri: https://worldtimeapi.org/api/timezone/America/New_York

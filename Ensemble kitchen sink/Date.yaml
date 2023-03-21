@@ -1,0 +1,36 @@
+View:
+  styles:
+    scrollableView: true
+  header:
+    title: Date
+  Column:
+    styles: { gap: 24, padding: 24 }
+    children:
+
+
+        # DateRange Selector
+        # 1
+        - Date:
+            label: Example 1 - Date picker
+            hintText: Placeholder value
+            required: true
+
+
+        # 2
+        - Date:
+            label: Example 2 - Date picker with restricted range
+            initialValue: 2021-01-20
+            firstDate: 2021-01-15
+            lastDate: 2021-01-25
+
+
+        # 3 onChange
+        - Date:
+            label: Example 3 - onChange
+            hintText: Select a date
+            onChange: |
+                //@code
+                onChangeDemo.text = 'You selected: ' + this.value;
+
+        - Text:
+            id: onChangeDemo

@@ -1,0 +1,39 @@
+View:
+  styles:
+    scrollableView: true
+  header:
+    title: DateRange
+  Column:
+    styles: { gap: 24, padding: 24 }
+    children:
+
+        # DateRange Selector
+        # 1
+        - DateRange:
+            label: Example 1
+            hintText: Placeholder value
+            required: true
+
+
+        # 2
+        - DateRange:
+            label: Example 2
+            enabled: false
+        
+
+        # 3
+        - DateRange:
+            label: Example 3
+            icon: person
+    
+
+        # 4 onChange
+        - DateRange:
+            label: Example 4
+            hintText: Select a date
+            onChange: |
+                //@code
+                onChangeDemo.text = 'You selected: ' + this.value;
+
+        - Text:
+            id: onChangeDemo

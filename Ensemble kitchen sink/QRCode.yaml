@@ -1,0 +1,33 @@
+View:
+  title: QRCode
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - QRCode:
+          id: myQrCode
+          value: 'https://www.google.com'      
+      - TextInput:
+          label: QR Code value
+          value: 'https://www.google.com'
+          id: myQrCodeTextField
+      - Button:
+          label: Update QR Code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                myQrCode.value = myQrCodeTextField.value;
+      - QRCode:
+          id: myQrCode2
+          value: 'initial value'              
+      - TextInput:
+          label: QR Code value
+          value: https://ensembleui.com
+          id: myQrCodeTextField2
+      - Button:
+          label: Update QR Code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                myQrCode2.value = myQrCodeTextField2.value;

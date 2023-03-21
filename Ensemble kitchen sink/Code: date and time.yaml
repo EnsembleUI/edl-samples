@@ -1,0 +1,54 @@
+View:
+  header:
+    title: "Code: date and time"
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Text:
+          text: |
+            Your local date and time is:
+            ${ensemble.formatter.now().prettyDateTime()}
+
+            The local date is:
+            ${ensemble.formatter.now().prettyDate()}
+
+            The ISO date:
+            ${ensemble.formatter.now().getDate()}
+
+            The ISO date time:
+            ${ensemble.formatter.now().getDateTime()}
+
+            The current day of week is 
+            (1 for Monday, 7 for Sunday):
+            ${ensemble.formatter.now().getDayOfWeek()}
+            
+            The current day of month is:
+            ${ensemble.formatter.now().getDay()}
+
+            The current month is:
+            ${ensemble.formatter.now().getMonth()}
+
+            The current year is:
+            ${ensemble.formatter.now().getYear()}
+
+            The current hour is:
+            ${ensemble.formatter.now().getHour()}
+
+            The current minute is:
+            ${ensemble.formatter.now().getMinute()}
+
+            The current second is:
+            ${ensemble.formatter.now().getSecond()}
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home

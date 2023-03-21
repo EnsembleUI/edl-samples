@@ -1,0 +1,118 @@
+View:
+  header:  
+    title: Form Widgets
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 8 16 80 16, gap: 8 }
+    children:
+
+      - Flow:
+          direction: horizontal
+          styles: { gap: 8, lineGap: 8, margin: 16 0 }
+          children:
+
+            - Widget:
+                inputs:
+                  name: Form
+                  screen: Form
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fform.png?alt=media&token=0225c2ab-f6d7-447f-972e-638c3c84449f
+              
+            - Widget:
+                inputs:
+                  name: TextInput
+                  screen: TextInput
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Ftextinput.png?alt=media&token=6c67cf8f-bde0-490c-afc3-f77c0a4ff9bd
+                
+            - Widget:
+                inputs:
+                  name: Button
+                  screen: Button
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fbutton.png?alt=media&token=aafdb8d2-e58b-43b7-bcaa-a604dc8c315b
+              
+            - Widget:
+                inputs:
+                    name: Dropdown
+                    screen: Dropdown
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdropdown.png?alt=media&token=3089abeb-9428-4e2c-9340-55eecb03c9e8
+
+            - Widget:
+                inputs:
+                    name: AutoComplete
+                    screen: AutoComplete
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdropdown.png?alt=media&token=3089abeb-9428-4e2c-9340-55eecb03c9e8
+                
+            - Widget:
+                inputs:
+                    name: Checkbox
+                    screen: Checkbox
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fcheckbox.png?alt=media&token=48772144-f0d5-4ce5-a27e-57699b609dba
+                
+            - Widget:
+                inputs:
+                    name: Switch
+                    screen: Switch
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fswitch.png?alt=media&token=cd2979a8-d177-4637-b46e-a5a3a130045c
+                
+            - Widget:
+                inputs:
+                    name: Date
+                    screen: Date
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdate.png?alt=media&token=257cb3d7-a41b-4d91-bd72-ed9842bfb103
+
+            - Widget:
+                inputs:
+                    name: DateRange
+                    screen: DateRange
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fdaterange.png?alt=media&token=1d4870e3-9b5f-4fa4-94e7-766cc5a642bc
+                
+            - Widget:
+                inputs:
+                    name: Time
+                    screen: Time
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Ftime.png?alt=media&token=8472b6d4-b226-43dc-8931-dad7cf3715ee
+
+                
+            - Widget:
+                inputs:
+                    name: PasswordInput
+                    screen: PasswordInput
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fpasswordinput.png?alt=media&token=5fb67152-1595-4d73-969d-4b97600384e0
+                
+            - Widget:
+                inputs: 
+                    name: Signature
+                    screen: Signature
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fsignature.png?alt=media&token=70f135a4-8ad8-41ea-a821-803226c87c65
+                    
+            - Widget:
+                inputs: 
+                    name: WeeklyScheduler
+                    screen: WeeklyScheduler
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fweeklyscheduler.png?alt=media&token=cb1f36e6-0250-4244-aac5-a69e8bce022e
+
+
+Widget:
+  inputs: [name, screen, thumbnail]
+  Column:
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    styles: 
+        crossAxis: center
+        backgroundColor: 0x11218EA4
+        borderRadius: 10
+        padding: 16
+        gap: 10
+        height: 100
+        width: "${Math.floor(device.width / 2) - 20}"
+    children:
+    - Image:
+        styles: { height: 36, width: 36 }
+        source: ${thumbnail}
+
+    - Text:
+        text: ${name}
+        styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15, textAlign: center }
+

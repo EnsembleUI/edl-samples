@@ -1,0 +1,228 @@
+View:
+  header:
+    title: CustomHeader
+    flexibleBackground: HeaderBackground
+    styles:
+      backgroundColor: 0xFFEBF5F7
+      flexibleMaxHeight: 250
+      titleBarHeight: 80
+      shadowColor: 0xFFEBF5F7
+
+  styles:
+    scrollableView : true
+    backgroundColor: 0xFFEBF5F7
+    useSafeArea: true
+
+  Column:
+    styles:
+      backgroundColor: 0xFFFFFFFF
+      borderRadius: 40 40 0 0
+    children:
+
+      - Column:
+          styles:
+            padding: 16 24 8 24
+          children:
+            - ListHeader:
+                inputs:
+                  header: Layout your screens
+                  color: 0xFF218EA4
+            - Column:
+                styles: { crossAxis: stretch }
+                children:
+                  - Flow:
+                      styles: { gap: 8, lineGap: 8, mainAxis: center }
+                      children:
+                        - ListItem:
+                            inputs:
+                              name: Content Widgets
+                              color: 0x11218EA4
+                        - ListItem:
+                            inputs:
+                              name: Form Widgets
+                              color: 0x11218EA4
+                        - ListItem:
+                            inputs:
+                              name: Layout Widgets
+                              color: 0x11218EA4
+                        - ListItem:
+                            inputs:
+                              name: App Menu
+                              color: 0x11218EA4
+                        - ListItem:
+                            inputs:
+                              name: App Header
+                              color: 0x11218EA4
+                        - ListItem:
+                            inputs:
+                              name: Example screens
+                              color: 0x11218EA4
+ 
+      - Column:
+          styles:
+            padding: 8 24
+          children:
+            - ListHeader:
+                inputs:
+                  header: Handle data
+                  color: 0xFF7356BF
+            - Column:
+                styles: { crossAxis: stretch }
+                children:
+                  - Flow:
+                      styles: { gap: 8, lineGap: 8, mainAxis: center }
+                      children:
+                        - ListItem:
+                            inputs:
+                              name: Interact with APIs
+                              color: 0x117356BF
+                        - ListItem:
+                            inputs:
+                              name: Item template
+                              color: 0x117356BF
+                        - ListItem:
+                            inputs:
+                              name: Local Storage
+                              color: 0x117356BF
+
+
+      - Column:
+          styles:
+            padding: 8 24
+            gap: 8
+          children:
+            - ListHeader:
+                inputs:
+                  header: Make it interactive
+                  color: 0xFFBF569C
+            - Column:
+                styles: { crossAxis: stretch }
+                children:
+                  - Flow:
+                      styles: { gap: 8, lineGap: 8, mainAxis: center }
+                      children:
+                        - ListItem:
+                            inputs:
+                              name: Actions & events
+                              color: 0x11BF569C
+                        - ListItem:
+                            inputs:
+                              name: Device capabilities
+                              color: 0x11BF569C
+                        - ListItem:
+                            inputs:
+                              name: Code
+                              color: 0x11BF569C
+
+
+      - DiscordPromo
+
+DiscordPromo:
+  Column:
+    styles:
+      padding: 24
+      gap: 16
+      crossAxis: center
+      mainAxis: center
+      width: ${device.width}
+    children:
+      - Text:
+          text: Couldn't find what you were looking for?
+          styles:
+            textAlign: center
+      - Row:
+          onTap:
+            openUrl:
+              url: https://discord.gg/R8Csg5ajz2
+              openInExternalApp: true
+          styles: 
+            padding: 12
+            width: 250
+            mainAxis: center
+            crossAxis: center
+            borderColor: 0xFF000000
+            borderRadius: 4
+            borderWidth: 2
+            gap: 16
+          children:
+            - Icon:
+                icon: discord
+                library: fontAwesome
+                styles:
+                  size: 18
+            - Text:
+                text: Chat with us on Discord
+                styles:
+                  fontWeight: bold
+
+      - Spacer:
+          styles:
+            size: 60
+
+
+CustomHeader:
+  Column:
+    styles: 
+      crossAxis: center
+      gap: 4
+    children:
+      - Text:
+          text: Ensemble Kitchen Sink
+          styles: { fontSize: 17, color: black, fontWeight: w500 }
+      - Text:
+          text: |
+            Try out Ensemble widgets and capabilities.
+          styles: { fontSize: 14, color: 0xFF6C7C83, textAlign: center, lineHeight: 1.25, margin: 0 24 }
+
+ListItem:
+  inputs:
+    - name
+    - color
+  Column:
+    styles:
+      crossAxis: center
+      mainAxis: center
+      borderRadius: 8
+      backgroundColor: ${color}
+      padding: 8
+      width: ${ Math.trunc(device.width / 3) - 32 }
+      height: 80
+    onTap:
+      navigateScreen:
+        name: ${name}
+    children:
+      - Text:
+          text: ${name}
+          styles: 
+            fontSize: 14
+            lineHeight: 1.25
+            textAlign: center
+
+
+ListHeader:
+  inputs:
+    - header
+    - color
+  Text:
+    text: ${header}
+    styles:
+      fontSize: 13
+      width: ${device.width}
+      textAlign: center
+      fontWeight: w600
+      color: ${color}
+      padding: 8 0
+
+
+HeaderBackground:
+  Column:
+    styles:
+      crossAxis: center
+    children:
+      - Spacer:
+          styles:
+            size: ${ device.safeAreaTop + 80 }
+      - Lottie:
+          source: https://assets4.lottiefiles.com/packages/lf20_zvcyhdqv.json
+          styles:
+            height: 160

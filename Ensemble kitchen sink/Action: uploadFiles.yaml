@@ -1,0 +1,119 @@
+View:
+  header:
+    title: "Action: uploadFiles"
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+      - Markdown:
+          text: |
+            Use the `uploadFiles`  action to pick files from gallery and upload it to specify `uploadApi`. 
+             
+            Then use the `onComplete`  properties to execute other actions once the timer finishes. 
+
+     
+      - Button:
+          label: Upload File
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                loading.visible = true;
+                fileUploadStatus.text = "<will show file length here after upload>";
+                
+              onComplete:
+                uploadFiles:
+                  id: fileUploader
+                  uploadApi: fileUploadApi
+                  inputs:
+                    url: https://en09cdal5asztm.x.pipedream.net
+                  onComplete: |
+                    //@code
+                    fileUploadStatus.text = fileUploader.files.length;
+                    loading.visible = false;
+                  onError: |
+                    //@code
+                    fileUploadStatus.text = 'Fail to upload file';
+                    loading.visible = false;
+                  options:
+                    maxFileSize: 100
+                    overMaxFileSizeMessage: Please select files less than 100kb
+
+              
+      - Text:
+          id: fileUploadStatus
+          text: <will show file length here after upload>
+
+      - Progress:
+          display: circular
+          id: loading
+          visible: false
+
+
+      - Divider
+
+              
+      - Markdown:
+          text: |
+            `uploadFiles`  also comes with option such as:
+              - allowMultiple : To allow muliple file selection from gallery picker default (false)
+              - allowCompression : It will allow media to apply the default OS compression (default True)
+              - allowedExtensions : To filter file picking based on extensions like jpg, png, pdf...
+              - maxFileSize: File size that is allowed in kb (default 100 mb), If multiple is allow then sum of all files
+              - overMaxFileSizeMessage: Error message to show when selected files size is above maxFileSize.
+              
+
+      - Button:
+          label: Multiple images
+          onTap:
+            uploadFiles:
+              id: fileUploader
+              uploadApi: fileUploadApi
+              fieldName: files
+              inputs:
+                  url: https://en09cdal5asztm.x.pipedream.net
+              onComplete: |
+                //@code
+                responseBody.text = fileUploader.body;
+              onError: |
+                //@code
+                ensemble.debug('Fail to upload file')
+
+              options:
+                allowMultiple: true
+                allowCompression: false
+                allowedExtensions:
+                  - jpg
+                  - png
+                maxFileSize: 100 # in kb
+                overMaxFileSizeMessage: Please select files less than 100kb
+              
+
+
+      - Markdown:
+          id : responseBody
+      - Divider
+      
+      - Markdown:
+          text: |
+            _Side Note: If you are using default uploadURL it's using RequestBin_
+            
+            _RequestBin has maxFileSize of __100 kb__ above it will fail._
+            
+            _You can see you API request [here](https://requestbin.com/r/en09cdal5asztm/2Lzx3lZ071EFF9dFKZCXJTnkJHS)_
+
+      - Divider
+            
+
+API:
+
+  fileUploadApi:
+    inputs:
+      - url
+    uri: ${url}
+    method: POST
+    
+

@@ -1,0 +1,57 @@
+View:
+  
+  header:
+    title: 'Styling: shadows'
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+
+        - Flow:
+            direction: horizontal
+            styles: { gap: 24, lineGap: 24 }
+            children:
+              - Column:
+                  styles:
+                    backgroundColor: 0xFFEDEDED
+                    borderRadius: 12
+                    shadowColor: 0x66000000
+                    shadowOffset: [ 0, 0 ]
+                    shadowRadius: 4
+                  children:
+                    - Spacer:
+                        styles: { size: 100 }
+              - Column:
+                  styles:
+                    backgroundColor: 0xFFEDEDED
+                    borderRadius: 12
+                    shadowColor: 0x66000000
+                    shadowOffset: [ 4, 4 ]
+                    shadowRadius: 4
+                  children:
+                    - Spacer:
+                        styles: { size: 100 }
+              - Column:
+                  styles:
+                    backgroundColor: 0xFFEDEDED
+                    borderRadius: 12
+                    shadowColor: 0x66000000
+                    shadowOffset: [ 0, 4 ]
+                    shadowRadius: 4
+                  children:
+                    - Spacer:
+                        styles: { size: 100 }
+              - Column:
+                  styles:
+                    backgroundColor: 0xFFEDEDED
+                    borderRadius: 12
+                    shadowColor: 0x66000000
+                    shadowOffset: [ -4, -4 ]
+                    shadowRadius: 4
+                  children:
+                    - Spacer:
+                        styles: { size: 100 }
+

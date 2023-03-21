@@ -1,0 +1,71 @@
+View:
+  header:
+    title: Toast
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - Button:
+          label: Show Success
+          onTap: 
+            showToast:
+              message: Success! by default at screen's top right
+              options:
+                dismissable: true
+                type: success
+                duration: 3
+              styles:
+                backgroundColor: 0xFFEDEDED
+                padding: 16 24
+                icon: home
+                iconLibrary: default
+              
+      - Button:
+          label: Show Error
+          onTap: 
+            showToast:
+              message: I got an error !
+              options:
+                type: error
+                position: topLeft
+                duration: 5
+      - Button:
+          label: Show Warning
+          onTap: 
+            showToast:
+              message: I warned you 
+              options:
+                type: warning
+                position: center
+                duration: 5
+      - Button:
+          label: Show Info
+          onTap: 
+            showToast:
+              message: only informational 
+              options:
+                type: info
+                position: bottom
+                duration: 5
+      - Button:
+          label: Show Custom Toast
+          onTap: 
+            showToast:
+              widget: CustomToast
+              styles:
+                padding: 0
+              options:
+                type: custom
+                duration: 5
+
+              
+CustomToast:
+  Column:
+    styles: {backgroundColor: red, padding: 10, borderRadius: 10}
+    children:
+      - Text:
+          text: I am a custom toast
+    

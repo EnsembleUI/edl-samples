@@ -1,0 +1,48 @@
+View:
+  header:
+    title: Divider
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+        - Text:
+            text: Divider does not require any parameters.
+
+        - Divider:
+            
+        
+        ##### color
+        - Text: 
+            text: but can take color,
+        - Divider:
+            styles: { color: 0xFFFF0000 }
+
+
+        ##### thickness
+        - Text:
+            text: thickness,
+
+        - Divider:
+            styles: { thickness: 4 }
+
+
+        ##### endIndent
+        - Text:
+            text: and gap after the line ends
+
+        - Divider:
+            styles: { endIndent: 20 }
+
+
+        - Row:
+            styles: { mainAxis: spaceAround }
+            children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home
+

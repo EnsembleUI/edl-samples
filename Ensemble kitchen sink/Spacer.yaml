@@ -1,0 +1,40 @@
+View:
+  header:
+    title: Spacer
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 24, padding: 24 }
+    children:
+
+        - Text:
+            text: Spacer
+            styles: { font: title }
+
+
+        - Text:
+            text: Spacer does not require any parameters. Here we use a Spacer so the text and button are spaced out
+
+        - Row:
+            children:
+            - Text:
+                text: Text
+            - Spacer
+            
+            - Button:
+                label: Button
+
+        
+        - Text:
+            text: Here we use a Spacer of size 50 so there's a gap of 50 between the two widgets
+
+        - Row:
+            children:
+            - Text:
+                text: Text
+            - Spacer:
+                styles: { size: 50 }
+            - Button:
+                label: Button
+

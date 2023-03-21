@@ -1,0 +1,190 @@
+View:
+  # For demo purposes, we skip sign in page and log user in with a test account
+  onLoad:
+    executeCode:
+      body: |
+        //@code
+        if(ensemble.storage.get('uid') == null)
+          ensemble.invokeAPI('login');
+        else
+          ensemble.invokeAPI('getDoctors');
+      
+  styles:
+    scrollableView: true
+    backgroundColor: 0xFFFEFAF3
+    showNavigationIcon: false
+  header:
+    title: My Doctors
+    styles:
+      backgroundColor: 0xFFF4D66C
+      color: black
+      
+   
+  Column:
+    styles: 
+      padding: 24
+
+    children:
+      # loading widget displayed before getDoctors API response is ready
+      - Column:
+          visible: "${ getDoctors.body != null ? false : true }"
+          children:
+            - Row:
+                styles: { mainAxis: center }
+                children:
+                  - Progress 
+                  
+      - Column:
+          visible: "${getDoctors.body[0].favorite_doctors.length == 0 ? true : false}"
+          styles: { crossAxis: stretch, gap: 16, padding: 24 }
+          children:            
+            - Text:
+                visible: "${ getDoctors.body == null ? false : true }"
+                text: We could not find any favorite doctors.
+                styles: { textAlign: center } 
+      - Column:     
+          id: listView   
+          styles: {  gap: 12 }
+          item-template:
+            data: ${getDoctors.body[0].favorite_doctors}
+            name: doctor
+            template:
+               DoctorCard:
+                inputs:
+                  doctor: ${doctor}               
+
+# Doctor widget to show doctor details
+DoctorCard:
+  inputs: [ doctor ]
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF      
+    children:
+      - Row:          
+          styles: { gap: 12, padding: 16 16 0 16 }
+          children:
+            - Row:
+                onTap:
+                  navigateModalScreen:
+                    name: DoctorProfile
+                    inputs:
+                      id: ${doctor.id} 
+                styles: { gap: 12 }
+                children:                  
+                  - Image:
+                      styles: { height: 50, borderRadius: 50 }
+                      source: ${doctor.doc_photo_path}
+                  - Column:                      
+                      styles: { gap: 4 }
+                      children:
+                      - Text:
+                          styles: { fontWeight: bold }
+                          text: ${doctor.name}
+                      - Text:
+                          styles: { textAlign: center }
+                          text: ${doctor.doc_type}
+                      - Row:
+                          styles: { padding: 8 0, gap: 10 }
+                          children:
+                            - Row:                           
+                                styles: { gap: 4, crossAxis: center }
+                                children:
+                                  - Icon:
+                                      styles: { size: 15, color: 0xFF6CD1BD }
+                                      icon: verified_user
+                                  - Text:
+                                      styles: { fontSize: 12, color: 0xFFA0A2B3 }
+                                      text: In-network
+                            - Row:                           
+                                styles: { gap: 4, crossAxis: center }
+                                children:
+                                  - Icon:
+                                      styles: { size: 15, color: 0xFFFFA873 }
+                                      icon: star
+                                  - Text:
+                                      styles: { fontSize: 12, color: 0xFFA0A2B3 }
+                                      text: ${doctor.rate}                  
+            - Spacer
+            - Icon:
+                onTap:
+                  invokeAPI:
+                    name: ReomveFavourite
+                    inputs:
+                      docID: ${doctor.id}  
+                      docName: ${doctor.name}                
+                    onResponse:
+                      invokeAPI:
+                        name: getDoctors 
+                icon: solidHeart
+                library: fontAwesome
+                styles: { size: 20, color: 0xFFF19D39 } 
+      - Divider:
+          styles: { color: 0xFFEDEDED }
+      - Row:
+          styles: { padding: 16 }
+          children:
+            - Column:
+                visible: "${doctor.appointments.length > 0 ? true : false}"
+                styles: { gap: 4 }
+                children:
+                  - Text:
+                      styles: { fontWeight: w400, color: 0xFFA0A2B3, fontSize: 12 }
+                      text: Upcoming appointment    
+                  - Text:
+                      styles: { fontWeight: w400, color: 0xFF404040, fontSize: 15 }
+                      text: ${doctor.appointments[0].appointment_date.prettyDate()} at ${doctor.appointments[0].time_slot}
+            - Column:
+                visible: "${doctor.appointments.length > 0 ? false : true}"
+                styles: { gap: 4 }
+                children:
+                  - Text:
+                      styles: { fontWeight: w400, color: 0xFFA0A2B3, fontSize: 12 }
+                      text: No upcoming appointment
+                  - Text:
+                      styles: { fontWeight: w400, color: 0xFF404040, fontSize: 15 }
+                      text: Schedule now
+
+
+API:  
+
+  # Remove from favourite 
+  ReomveFavourite:
+    inputs: [docID,docName]    
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/DeleteFromFavouriteDoctor?doctor_id=${docID}&uid=${ensemble.storage.get("uid")}
+    method:  "GET" 
+    onResponse:
+      showToast:
+        message: ${docName} was removed from your favorite doctors
+        options:
+          dismissable: true
+          type: warning
+          duration: 5
+
+  
+  getDoctors:
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/myFavouriteDoctors?uid=${ensemble.storage.get("uid")}
+    method: "GET"   
+    onError:      
+      navigateScreen:
+        name: Home 
+      
+  login:
+    uri: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBHH7crKsWUBZTAFmc3T-sCIkwrSJJmjRA'
+    method: 'POST'
+    parameters:
+      email: "demo@ensembleui.com"
+      password: "password"
+      returnSecureToken: true
+    onResponse: |-
+      //@code
+      ensemble.storage.set('email', response.body.email);
+      ensemble.storage.set('displayName', response.body.displayName);
+      ensemble.storage.set('idToken', response.body.idToken);
+      ensemble.storage.set('refreshToken', response.body.refreshToken);
+      ensemble.storage.set('uid', response.body.localId);
+      ensemble.invokeAPI('getDoctors');

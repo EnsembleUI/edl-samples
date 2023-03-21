@@ -1,0 +1,130 @@
+View:
+  header:
+    title: "Action: invokeAPI"
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getPeople
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:       
+      ## Example 1
+      - Text:
+          text: 1. GET on load and display a value
+      - Text:
+          text: ${getPeople.body.results.length} records were retrieved from API
+      - Markdown:
+          text: |
+            Here's the API response body:
+            ```
+            ${getPeople.body}
+            ```
+
+      - Divider
+      
+      ## Example 2
+      - Text:
+          text: 2. GET and bind to an item-template
+      - Button:
+          label: Call API
+          onTap:
+            invokeAPI:
+              name: getPeople2
+      - Column:
+          item-template:
+            data: ${getPeople2.body.results}
+            name: item
+            template:
+              Text:
+                text: ${item.name.first}
+      - Divider
+
+      ## Example 3
+      - Text:
+          text: 3. POST with custom body
+      - Button:
+          label: Call API
+          onTap:
+            invokeAPI:
+              name: createToDo
+              inputs:
+                name: 'some value'            
+              onResponse: |
+                //@code
+                var id = response.body.records[0].id;
+                postStatus.text = 'Record created: ' + id;
+      - Text:
+          id: postStatus
+      - Divider
+
+      ## Example 4
+      - Text:
+          text: 4. Handle error
+      - Button:
+          label: Call API
+          onTap:
+            invokeAPI:
+              name: createToDoError
+              onResponse: |
+                //@code
+                apiStatus.text = 'Call was successful';
+              onError: |
+                //@code
+                apiStatus.text = 'API returned an error';
+      - Text:
+          id: apiStatus
+      - Divider
+
+      ## Example 5
+      - Text:
+          text: 5. Call API in code
+      - Button:
+          label: Call API
+          onTap:
+            executeCode:
+              body: |
+                //@code
+          
+                // no inputs
+                ensemble.invokeAPI("getNewYorkTime");
+      - Text:
+          visible: ${getNewYorkTime.body != null}
+          text: Current time in NYC is ${getNewYorkTime.body.datetime}
+
+
+
+API:
+
+  getPeople:
+    uri: https://randomuser.me/api/?results=6
+    method: GET
+
+  getPeople2:
+    uri: https://randomuser.me/api/?results=5
+    method: GET
+
+  createToDo:
+    inputs:
+      - name
+    uri: 'https://api.airtable.com/v0/appDbkGS4VOiPVQR5/ToDo?api_key=keyyWz426zsnMKavb'
+    method: 'POST'
+    body:
+      records:
+        - fields:
+            desc: "${name}"
+
+  createToDoError:
+    inputs:
+      - name
+    uri: 'https://api.airtable.com/v0/appDbkGS4VOiPVQR5/ToDo?api_key=keyyWz426zsnMKavb'
+    method: 'POST'
+    body:
+      records: "this is not what the API expects"
+
+
+  getNewYorkTime:
+    uri: https://worldtimeapi.org/api/timezone/America/New_York
+    method: GET

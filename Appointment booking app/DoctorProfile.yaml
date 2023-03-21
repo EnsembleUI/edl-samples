@@ -1,0 +1,205 @@
+View:
+
+  onLoad:
+    executeCode:
+      body: |-
+
+        //@code
+        // id is passed by previous screen
+        // if no id, set one for demo purposes                 
+        
+        if (id == null)
+          id = '0d1T2LTgRXfRzGrBd72u';
+
+        ensemble.invokeAPI('getDrProfile',{'id': id});
+
+
+  header:
+    title: CustomHeader
+    styles:
+      backgroundColor: 0xFFF4D66C
+      titleBarHeight: 172
+      showNavigationIcon: false
+
+  styles:
+    scrollableView: true
+    backgroundColor: white
+
+  Column:
+    styles: { padding: 24 }
+    children:
+
+      # loading widget displayed before getDrProfile API response is ready
+      - Column:
+          visible: "${ getDrProfile.body == null ? true : false }"
+          children:
+            - Row:
+                styles: { mainAxis: center }
+                children:
+                  - Progress
+
+      # main displayed after getDrProfile API response is ready
+      - Column:
+          styles: { gap: 24 }
+          visible: "${ getDrProfile.body == null ? false : true }"
+          children:
+            - About
+            - AppointmentSlots
+            - Reviews
+            - WorkingTime
+            - Location
+
+
+CustomHeader:
+  Column:
+    visible: "${ getDrProfile.body == null ? false : true }"
+    styles: {mainAxis: center, crossAxis: center, gap: 8 }
+    children:
+      - Image:
+          source: ${getDrProfile.body.doct.doc_photo_path}
+          styles: { borderRadius: 72, width: 72, height: 72 }
+      - Text:
+          text: ${getDrProfile.body.doct.name} 
+          styles: {color: black, textAlign: center, fontWeight: bold, fontSize: 22 }
+      - Text:
+          text: ${getDrProfile.body.doct.doc_type}
+          styles: {color: black, fontSize: 17 }
+
+
+About:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Text:
+          text: About Doctor
+          styles: { color: 0xFF404040, fontSize: 20, fontWeight: bold }
+      - Text:
+          text: ${getDrProfile.body.doct.about}
+          styles: { color: 0xFF404040, lineHeight: 1.25 }
+
+
+AppointmentSlots:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Text:
+          text: Book an appointment
+          styles: { color: 0xFF404040, fontSize: 20, fontWeight: bold }
+      - Carousel:
+          styles: { gap: 8, height: 64, layout: multiple, multipleItemWidthRatio: 0.3  }
+          children:
+            - Column:
+                styles: { gap: 2, padding: 4, borderColor: 0xFFF4D66C, mainAxis: center, crossAxis: center, borderRadius: 4 }
+                children:
+                  - Text:
+                      text: Feb
+                  - Text:
+                      text: 18
+                      styles: { fontSize: 20 }
+            - Column:
+                styles: { gap: 2, padding: 8, borderColor: 0xFFF4D66C, mainAxis: center, crossAxis: center, borderRadius: 4 }
+                children:
+                  - Text:
+                      text: Feb
+                  - Text:
+                      text: 22
+                      styles: { fontSize: 20 }
+            - Column:
+                styles: { gap: 2, padding: 8, borderColor: 0xFFF4D66C, mainAxis: center, crossAxis: center, borderRadius: 4 }
+                children:
+                  - Text:
+                      text: Feb
+                  - Text:
+                      text: 23
+                      styles: { fontSize: 20 }
+
+            - Column:
+                styles: { gap: 2, padding: 8, borderColor: 0xFFF4D66C, mainAxis: center, crossAxis: center, borderRadius: 4 }
+                children:
+                  - Text:
+                      text: Feb
+                  - Text:
+                      text: 27
+                      styles: { fontSize: 20 }
+Reviews:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Text:
+          text: Reviews
+          styles: { color: 0xFF404040, fontSize: 20, fontWeight: bold }
+      - Row:
+          styles: { gap: 4 }
+          children:
+            - Icon:
+                icon: star
+                styles: { color: 0xFFF19D39 }
+            - Text:
+                text: ${getDrProfile.body.doct.rate}
+                styles: { fontSize: 17 }
+      - Carousel:
+          styles:
+            margin: 0
+            gap: 8
+            layout: multiple
+            multipleItemWidthRatio: .7
+            height: 200
+          item-template:
+            data: ${getDrProfile.body.reviews}
+            name: review
+            template:
+              ReviewCard:
+                inputs:
+                  review: ${review}
+
+
+ReviewCard:
+  inputs: [review]
+  Column:
+    styles:
+      padding: 16
+      backgroundColor: 0xFFF9E08
+      borderRadius: 12
+      gap: 8
+      borderColor: white
+    children:
+      - Text:
+          text: ${review.review_data}
+          styles: {color: 0xFF404040, fontSize: 15}
+      - Text:
+          text: ${review.user_name}
+          styles:
+            color: 0xFFA3A3A3
+            fontSize: 17
+
+WorkingTime:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Text:
+          text: Working time
+          styles: { color: 0xFF404040, fontSize: 20, fontWeight: bold }
+      - Text:
+          text: ${getDrProfile.body.doct.availability_days}
+      - Text:
+          text: ${getDrProfile.body.doct.availability_time}
+
+
+
+Location:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Text:
+          text: Location
+          styles: { color: 0xFF404040, fontSize: 20, fontWeight: bold }
+      - Text:
+          text: ${getDrProfile.body.doct.address}
+
+
+API:
+
+  getDrProfile:
+    inputs: [id]
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/doctorProfile?doc_id=${id}
+    method: "GET"

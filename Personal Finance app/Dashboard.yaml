@@ -1,0 +1,426 @@
+View:
+
+  styles:
+    backgroundColor: 0xFF0F0E1C
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getAccounts
+      onResponse:
+        invokeAPI:
+          name: getTransactions
+
+  header:
+    title: CustomHeader
+    styles:
+      backgroundColor: 0xFF0F0E1C
+      titleBarHeight: 78
+      showNavigationIcon: false
+
+  # main content
+  Column:
+    children:
+      - AccountsSummary
+      - Spending
+      - Accounts
+
+
+CustomHeader:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Row:
+          styles: { mainAxis: spaceBetween, crossAxis: center }
+          children:
+          
+            - Column:
+                styles: { gap: 4 }
+                children:
+                  - Text:
+                      text: Net worth
+                      styles: { fontSize: 14, color: 0xFFAAAAAA }
+                  - Text:
+                      text: ${getAccounts.body.summary.netWorth.prettyCurrency()}
+                      styles: { fontSize: 24 }
+
+            - Column:
+                onTap:
+                  navigateModalScreen:
+                    name: Menu
+                children:
+                  - Image:
+                      source: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Fmenu.png?alt=media&token=d8b7e6fe-64ae-45d3-a2e5-37ed8fe0a4fc
+                      styles: { width: 24 }
+
+
+AccountsSummary:
+  Carousel:
+    styles:
+      padding: 0 0 16 8
+      gap: 4
+      layout: multiple
+      multipleItemWidthRatio: .33
+      height: 62
+    children:
+      - AccountSubSummary:
+          inputs: 
+            label: Cash
+            value: "${getAccounts.body == null ? '' : getAccounts.body.summary.depository.prettyCurrency()}"
+            color: 0xFF17847D
+      - AccountSubSummary:
+          inputs:
+            label: Investments
+            value: "${getAccounts.body == null ? '' : getAccounts.body.summary.investment.prettyCurrency()}"
+            color: 0xFF17847D
+      - AccountSubSummary:
+          inputs:
+            label: Credit Cards
+            value: "${getAccounts.body == null ? '' : getAccounts.body.summary.credit.prettyCurrency()}"
+            color: 0xFFd05c45
+      - AccountSubSummary:
+          inputs:
+            label: Loans
+            value: "${getAccounts.body == null ? '' : getAccounts.body.summary.loan.prettyCurrency()}"
+            color: 0xFFd05c45
+
+                
+AccountSubSummary:
+  inputs: [ label, value, color ]
+  Column:
+    styles: 
+      backgroundColor: 0xCC1A182A
+      padding: 12
+      borderRadius: 4
+      gap: 4
+    children:
+      - Text:
+          text: ${label}
+          styles: 
+            fontSize: 13
+            color: ${color}
+
+      - Text:
+          text: ${value}
+          styles:
+            fontSize: 15
+
+
+Spending:
+  Column:
+    styles:
+      backgroundColor: 0x11FFFFFF
+      padding: 16
+      borderRadius: 8
+      margin: 0 12 8 12
+    children:
+      - Text:
+          text: Spending
+          styles: 
+            fontSize: 22
+            color: white
+      - TabBar:
+          styles:
+            tabPadding: 0 16 0 0
+            activeTabColor: 0xFFFFFFFF
+            inactiveTabColor: 0x66FFFFFF
+            indicatorColor: 0xFF51AE55
+          items:
+            - label: Categories
+              body: SpendingCategories
+            - label: Trends
+              body: Trend
+
+
+SpendingCategories:
+  Column:
+    styles:
+      padding: 24 0 0 0
+    children:
+      - Stack:
+          styles:
+            alignment: topRight
+          children:
+            - Column:
+                styles:
+                  gap: 16
+                children:
+                  - Row:
+                      children:
+                        - Column:
+                            styles: { gap: 6 }
+                            children:
+                              - Legend:
+                                  inputs:
+                                    image: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Ficon-food.png?alt=media&token=9cddec1a-d877-488e-a7bf-dc42d3ade11e
+                                    label: Food & Drink
+                                    value: $606
+                              - Legend:
+                                  inputs:
+                                    image: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Ficon-groceries.png?alt=media&token=61a49bf7-f84f-4b80-a851-4e7b6f868179
+                                    label: Groceries
+                                    value: $590
+                              - Legend:
+                                  inputs:
+                                    image: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Ficon-travel.png?alt=media&token=c623a223-c67e-4779-8af8-847d484522b5
+                                    label: Travel
+                                    value: $200
+                              - Legend:
+                                  inputs:
+                                    image: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Ficon-health.png?alt=media&token=2e32591e-9267-4cbf-9468-d85d76d10af8
+                                    label: Health
+                                    value: $79
+
+                  - Divider:
+                      styles:
+                        color: 0x11FFFFFF
+                  - Row:
+                      styles: { crossAxis: center, gap: 4}
+                      children:
+                        - Text:
+                            text: $163 in other categories
+                        - Spacer
+                        - Column:
+                            onTap:
+                              navigateScreen:
+                                name: Transactions
+                            children:
+                              - Text:
+                                  text: View all
+                                  styles: { color: 0xFF51AE55 }
+
+            - Row:
+                styles: { crossAxis: center }
+                children:
+                  - Spacer:
+                      styles: { size: 150 }
+                  - Stack:
+                      styles: { alignment: center }
+                      children:
+                        - ChartJs:
+                            styles: { width: 150, height: 150 }
+                            config: |
+                              {
+                                type: 'doughnut',
+                                data: {
+                                  labels: [
+                                    'Food & Drink',
+                                    'Groceries',
+                                    'Travel',
+                                    'Health',
+                                    'Other',
+                                  ],
+                                  datasets: [{
+                                    data: [608, 590, 200, 79, 163],
+                                    backgroundColor: ['#FCA06B','#C66CFC','#8145FF', '#29CB90', '#4DA9CC'],
+                                    hoverOffset: 2,
+                                    borderWidth: 0
+                                  }]
+                                },
+                                options: {
+                                  aspectRatio: 1,
+                                  cutout: 60 ,
+                                  plugins: {
+                                    legend: {
+                                      display: false
+                                    }
+                                  },
+                                  layout: {
+                                    padding: 0
+                                  }
+                                }
+                              }
+                          
+                        - Text:
+                            styles: { fontSize: 22 }
+                            text: |
+
+                              $1,648
+
+
+Legend:
+  inputs: [ label, value, image]
+  Row:
+    styles: { gap: 12, crossAxis: center}
+    children:
+      - Image:
+          source: ${image}
+          styles: { width: 24 }
+      - Column:
+          children:
+            - Text:
+                text: ${label}
+                styles: { color: 0x66FFFFFF, fontSize: 11 }
+            - Text:
+                text: ${value}
+                styles: { fontSize: 16 }
+
+
+Trend:
+  Column:
+    styles:
+      padding: 16 0 0 0
+      gap: 12
+    children:
+      - Markdown:
+          text: Your avg monthly spending is **$1,302**.
+        
+      - ChartJs:
+          styles: { width: 400, height: 162 }
+          config: |
+            {
+              data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'],
+                datasets: [
+                  {
+                    type: 'line',
+                    label: 'Monthly budget',
+                    data: [1250, 1250, 1250, 1250, 1250, 1250, 1250, 1250, 1250],
+                    borderColor: ['#FCA06B'],
+                    pointRadius: 0,
+                    borderWidth: .5
+                  },{
+                    type: 'bar',
+                    label: 'Monthly spending',
+                    data: [1420, 1092, 1106, 1209, 1730, 1250, 1348, 1233, 850],
+                    backgroundColor: ['rgba(118,170,113,0.2)'],
+                    borderColor: ['#51AE55'],
+                    borderWidth: 1,
+                    barThickness: 15,
+                    borderRadius: 15
+                  }
+                ]
+              }, 
+              options: {
+                plugins: {
+                  legend: {
+                    display: false
+                  }
+                },
+                layout: {
+                  padding: 0
+                },
+                scales: {
+                  x: {
+                    grid: { display: false }
+                  },
+                  y: {
+                    display: false,
+                    grid: { display: false },
+                    ticks: { display: false }
+                  }
+                }
+              }
+            }
+
+      - Divider:
+          styles:
+            color: 0x11FFFFFF
+      - Row:
+          styles: { crossAxis: center, gap: 4}
+          children:
+            - Text:
+                text: $1,250 month budget
+            - Spacer
+            - Column:
+                onTap:
+                  navigateScreen:
+                    name: Transactions
+                children:
+                  - Text:
+                      text: Update budget
+                      styles: { color: 0xFF51AE55 }
+
+
+Accounts:
+  Column:
+    styles:
+      backgroundColor: 0x11FFFFFF
+      padding: 16
+      margin: 6 12
+      borderRadius: 8
+    children:
+      - Text:
+          text: Accounts
+          styles: { fontSize: 22 }
+      - Column:
+          styles: { margin: 8 0 }
+          item-template:
+            data: ${getAccounts.body.data}
+            name: account
+            template:
+              AccountCard:  
+                inputs:
+                  account: ${account}
+
+
+AccountCard:
+  inputs: [ account ]
+  Column:
+    children:
+      - Row:
+          styles: { mainAxis: spaceBetween, crossAxis: center, padding: 8 0 }
+          children:
+            - Column:
+                children:
+                  - Text:
+                      text: ${account.name}
+                      styles: { color: white }
+                  - Text:
+                      text: ${account.subtype}
+                      styles: { fontSize: 13, color: 0xFFBBBBBB }  
+            - Spacer
+            - Text:
+                text: ${account.current_balance.prettyCurrency()}
+                styles: { color: white }
+            # - Icon:
+            #     icon: chevron_right
+            #     styles: { color: 0xDDFFFFFF, size: 20 }
+            
+      - Divider:
+          styles:
+            color: 0x11FFFFFF
+
+
+API:
+  getTransactions:
+    uri: https://us-central1-fir-apps-services.cloudfunctions.net/transactions
+    method: GET
+
+  getAccounts:
+    uri: https://us-central1-fir-apps-services.cloudfunctions.net/accounts
+    method: GET
+    onResponse: |
+      //@code
+      var s = {
+        'depository': 0,
+        'investment': 0,
+        'loan': 0,
+        'credit': 0,
+        'assets': 0,
+        'liabilities': 0,
+        'netWorth': 0
+      }
+
+      response.body.data.map( function(a) {
+        if (a.subtype == 'credit card')
+          s.credit = s.credit + a.current_balance;
+        else if (a.subtype == 'ira')
+          s.investment = s.investment + a.current_balance;
+        else if (a.subtype == '401k')
+          s.investment = s.investment + a.current_balance;
+        else if (a.subtype == 'student')
+          s.loan = s.loan + a.current_balance;
+        else if(a.subtype == 'mortgage')
+          s.loan = s.loan + a.current_balance;
+        else
+          s.depository = s.depository + a.current_balance;
+      });
+
+      s.assets = s.investment + s.depository;
+      s.liabilities = s.credit + s.loan;
+      s.netWorth = s.assets - s.liabilities;
+
+      response.body.summary = s;
+
+

@@ -1,0 +1,166 @@
+View:
+  header:  
+    title: Content Widgets
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 8 16 80 16, gap: 8 }
+    children:
+      - HeaderRow:
+          inputs:
+              title: Basic Content
+
+      - Flow:
+          direction: horizontal
+          styles: { gap: 8, lineGap: 8, margin: 16 0 }
+          children:
+            - Widget:
+                inputs:
+                  name: Text
+                  screen: Text
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Ftext.png?alt=media&token=37668a96-a9ee-4f39-88f1-150d686b3192
+          
+            - Widget:
+                inputs:
+                  name: Image
+                  screen: Image
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fimage.png?alt=media&token=fc446767-d8d2-4711-aff9-95a5132dacb4
+          
+            - Widget:
+                inputs: 
+                  name: Icon
+                  screen: Icon
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Ficon.png?alt=media&token=eab3552d-09c1-4c97-853c-336aac668554
+          
+            - Widget:
+                inputs:
+                  name: Map
+                  screen: Map
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fmao.png?alt=media&token=2732feb3-7ca8-4da6-a95c-80d4347afee3
+
+
+            - Widget:
+                inputs: 
+                  name: QRCode
+                  screen: QRCode
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fqrcode.png?alt=media&token=dca94aef-5f88-4ddf-b6d4-36b645261c16
+          
+            - Widget:
+                inputs: 
+                  name: Video
+                  screen: Video
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fvideo.png?alt=media&token=51a9f03e-1f61-4105-a9a8-5259542186e1
+
+            - Widget:
+                inputs: 
+                  name: Progress
+                  screen: Progress
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fprogress.png?alt=media&token=6c8299df-f0ae-4fb0-b500-61c00dca602c
+
+            - Widget:
+                inputs: 
+                  name: Lottie Animation
+                  screen: Lottie
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Flottie.png?alt=media&token=4fe2303a-e90e-4320-a213-7dc3988b5876
+
+            - Widget:
+                inputs: 
+                  name: Markdown
+                  screen: Markdown
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fmarkdown.png?alt=media&token=fda289f8-3a6b-425d-a317-ede3cd687a0e
+
+            - Widget:
+                inputs: 
+                  name: HTML
+                  screen: Html content
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fhtml.png?alt=media&token=13fe6093-5d89-4b3a-bed9-cb3b6ee4f69f
+
+            - Widget:
+                inputs: 
+                  name: WebView
+                  screen: WebView
+                  thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fwebview.png?alt=media&token=dade898c-59b7-4fe7-a2df-8cae6f031ef6
+                  
+
+      - HeaderRow:
+          inputs:
+              title: Data visualization widgets
+
+      - Flow:
+          direction: horizontal
+          styles: { gap: 8, lineGap: 8, margin: 16 0 }
+          children:
+              
+            - Widget:
+                inputs:
+                    name: ChartJs
+                    screen: ChartJs
+                    thumbnail: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fchartjs.png?alt=media&token=63bbf021-04c9-4a43-acbe-dfc9a4bd385c
+
+                      
+      - HeaderRow:
+          inputs:
+              title: Custom widgets
+
+      - Flow:
+          direction: horizontal
+          styles: { gap: 8, lineGap: 8, margin: 16 0 }
+          children: 
+            -   Column:
+                  onTap:
+                    navigateScreen:
+                      name: Ensemble widget
+                  styles: 
+                      crossAxis: center
+                      backgroundColor: 0x11218EA4
+                      borderRadius: 10
+                      padding: 16
+                      gap: 10
+                      height: 120
+                      width: "${Math.floor(device.width / 2) - 28}"
+                  children:
+                  - Image:
+                      styles: { height: 36, width: 36 }
+                      source: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fcustom.png?alt=media&token=20075be0-b44a-41cb-a12a-01deb627bb0a
+
+                  - Text:
+                      text: Widget defined in Ensemble
+                      styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15, textAlign: center, lineHeight: 1.5 }
+
+
+
+Widget:
+  inputs: [name, screen, thumbnail]
+  Column:
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    styles: 
+        crossAxis: center
+        backgroundColor: 0x11218EA4
+        borderRadius: 10
+        padding: 16
+        gap: 10
+        height: 100
+        width: "${Math.floor(device.width / 2) - 20}"
+    children:
+    - Image:
+        styles: { height: 36, width: 36 }
+        source: ${thumbnail}
+
+    - Text:
+        text: ${name}
+        styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15, textAlign: center }
+
+
+
+HeaderRow:
+  inputs: [ title ]
+  Column:
+    styles: 
+        padding: 16 0 4 0
+    children:
+        - Text:
+            text: ${title}
+            styles: { fontSize: 20, fontWeight: bold }

@@ -1,0 +1,45 @@
+View:
+  header:
+    title: 'Code: Math Operations'
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+      - Markdown:
+          text: |
+            `device.width` 
+            
+            > ${device.width}
+      - Divider
+
+      - Markdown:
+          text: |
+            `device.width * 3` 
+            
+            > ${device.width * 3}
+      - Divider
+
+      - Markdown:
+          text: |
+            `device.width / 2` 
+            
+            > ${device.width / 2}
+      - Divider
+
+      - Markdown:
+          text: |
+            `Math.floor(device.width / 2)` 
+            
+            > ${Math.floor(device.width / 2)}
+      - Divider
+
+      - Markdown:
+          text: |
+            `device.width % 2` 
+            
+            > ${device.width % 2}
+      - Divider
+

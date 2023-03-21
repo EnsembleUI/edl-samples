@@ -1,0 +1,15 @@
+View:
+  styles:
+    ignoreSafeArea: true
+  header:
+    title: App Header
+    styles:
+      titleBarHeight: 90
+      backgroundColor: 0xFFF4D66C
+      color: black
+      showNavigationIcon: true
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Text:
+          text: Use View's header property to set and customize the app header

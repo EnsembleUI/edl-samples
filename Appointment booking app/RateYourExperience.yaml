@@ -1,0 +1,162 @@
+View:
+
+  header:
+    styles:
+      color: black
+      backgroundColor: 0xFFF4D66C
+    title: Write a Review
+  
+  styles:
+    scrollableView: true
+    backgroundColor: 0xFFFEFAF3
+  
+  onLoad:
+    invokeAPI:
+      name: getUser
+      inputs:
+        id: ${ensemble.storage.get("uid")}
+  
+  Column:
+    
+    styles: 
+      padding: 24 24 60 24
+      crossAxis: stretch
+    
+    children:  
+      
+      # loading widget displayed before login API response is ready
+      - Column:
+          id: loading
+          visible: "${ getUser.body == null ? true : false }"
+          children:
+            - Row:
+                styles: 
+                  mainAxis: center
+                children:
+                  - Progress   
+      
+      # main content displayed after login API response is ready 
+      - Column:
+          visible: "${ getUser.body == null ? false : true }"
+          id: content
+          styles: 
+            mainAxis: center
+            crossAxis: stretch
+            gap: 16
+          children:
+
+            - Image:
+                source: ${doctor.doc_photo_path}
+                styles: 
+                  borderRadius: 78
+                  width: 78
+                  height: 78
+                  margin: 10 0 
+
+            - Text:
+                styles: 
+                  font: subtitle
+                  fontWeight: w500
+                  fontSize: 24
+                  textAlign: center
+                text: How was your experinece with ${doctor.name}?
+            - Form:
+                styles:
+                  crossAxis: stretch
+                  gap: 16
+                children:
+                  - TextInput:
+                      id: txtReview
+                      hintText: Write a comment
+                      multiline: true
+                      maxLines: 5
+                      styles:
+                        variant: box
+                        borderRadius: 4
+                        fillColor: 0xFFEDEDED
+                        contentPadding: 16
+                      validator:
+                        minLength: 5
+                        maxLength: 450
+                      required: true
+                      onKeyPress:
+                        executeCode:
+                          body: |
+                            //@code
+                            var charLeft = 500 - this.value.length;
+                            charCounter.text = charLeft + ' characters';
+                  - Row:
+                      styles: 
+                        mainAxis: end
+                      children:
+                        - Text:
+                            styles: 
+                              color: 0xFFA0A2B3
+                            text: 500 characters
+                            id: charCounter
+                  - Checkbox:
+                      trailingText: Would you recommend ${doctor.name} to your friends?
+                      value: true
+                      id: switchRecommend
+
+                  - Button:
+                      styles: 
+                        fontSize: 17
+                        width: ${device.width}
+                      label: Submit Review               
+                      validateForm: true
+                      onTap:
+                        invokeAPI:
+                          name: addReview
+                          inputs:
+                            docID:  ${doctor.id}
+                            userID: ${ensemble.storage.get("uid")}
+                            reviewData: ${txtReview.value}
+                            userName: ${getUser.body[0].document.fields.name.stringValue}
+                            isRecommended: ${switchRecommend.value}
+                          onResponse:
+                            navigateScreen:
+                              name: MyAppointments  
+
+
+API:
+  addReview:
+    inputs: [ docID, userID, reviewData, userName,isRecommended ]    
+    uri: ${env.APIBaseURL}/doctors/${docID}/reviews
+    method: 'POST'
+    headers:
+      'Authorization': 'Bearer ${ensemble.storage.get("idToken")}'
+    body:
+      "fields":
+        "uid":
+          "stringValue": "${userID}"
+        "review_data":
+          "stringValue": "${reviewData}"
+        "user_name":
+          "stringValue": "${userName}"
+        "is_recommended":
+          "booleanValue": "${isRecommended}"
+
+  getUser:
+    inputs:
+      - id
+    uri: ${env.APIBaseURL}:runQuery
+    method: POST
+    headers:
+      Authorization: 'Bearer ${ensemble.storage.get("idToken")}'
+    body:
+      "structuredQuery":
+        "from":
+          - "collectionId": "users"
+            "allDescendants": true
+        "where":
+          "fieldFilter":
+            "field":
+              "fieldPath": "uid"
+            "op": "EQUAL"
+            "value":
+              "stringValue": '${id}'
+
+      
+            
+  

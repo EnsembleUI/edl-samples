@@ -1,0 +1,43 @@
+View:
+  title: Icon
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+    # 1
+    - Text:
+        text: Example 1
+    - Icon:
+        icon: star
+
+    # 2
+    - Text:
+        text: Example 2
+    - Icon:
+        icon: star
+        styles: { color: 0xFFFF0000 }
+
+    # 3
+    - Text:
+        text: Example 3
+    - Icon:
+        icon: star
+        styles: { size: 60 }
+
+    # 4 use fontAwesome
+    - Text:
+        text: Example 4 - use fontAwesome
+    - Icon:
+        icon: star
+        library: fontAwesome
+        styles: { size: 80 }
+
+    - Divider
+    - Row:
+        styles: { mainAxis: spaceAround }
+        children:
+          - Button:
+              styles: { outline: true, padding: 20 }
+              label: View all available widgets
+              onTap:
+                navigateScreen:
+                    name: Home

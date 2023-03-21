@@ -1,0 +1,50 @@
+View:
+  title: Switch
+  Column:
+    styles: { gap: 24, padding: 24, scrollable: true }
+    children:
+
+        - Switch:
+            leadingText: Leading text
+        
+        - Switch:
+            trailingText: Trailing text
+
+        - Switch:
+            trailingText: Set to true and requred
+            required: true
+            value: true
+        
+        - Switch:
+            trailingText: Disabled
+            value: true
+            enabled: false
+
+        - Switch:
+            id: buttonSwitch
+            trailingText: I control whether the button is enabled
+            value: false
+
+        - Button:
+            label: Test button
+            enabled: ${buttonSwitch.value}
+
+        - Switch:
+            trailingText: Toggle to view onChange action
+            onChange: |
+                //@code
+                onChangeDemo.text = 'Switch value is: ' + this.value;
+
+        - Text:
+            id: onChangeDemo
+
+        - Divider
+        - Row:
+            styles: { mainAxis: spaceAround }
+            children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home

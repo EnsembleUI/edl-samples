@@ -1,0 +1,18 @@
+View:
+  title: Drawer menu
+  menu:
+    Drawer:
+      items:
+        - label: Home
+          icon: home
+          page: Home
+        - label: Button
+          icon: input
+          page: Button
+
+  Column: 
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Markdown:
+          text: |
+            This page includes menu displayed as drawer

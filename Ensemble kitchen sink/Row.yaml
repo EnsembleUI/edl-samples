@@ -1,0 +1,125 @@
+View:
+  header:
+    title: Row
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 8, padding: 24 }
+
+    children:
+
+        - Text:
+            text: Row lays out its children horizontally.
+        - Row:
+            styles:
+                gap: 4
+            children:
+                - Smile
+                - Beam
+                - Wink
+
+        - Divider:
+            styles: { margin: 8 0}
+            
+        - Markdown:
+            text: Using `mainAxis` property, you can set the position of the Row's children.
+        - Row:
+            styles: { mainAxis: spaceBetween, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - Smile
+                - Beam
+        - Row:
+            styles: { mainAxis: spaceAround, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - Smile
+                - Beam
+
+        - Row:
+            styles: { mainAxis: center, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - Smile
+                - Beam
+        - Row:
+            styles: { mainAxis: end, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - Smile
+                - Beam
+
+        - Divider:
+            styles: { margin: 8 0}
+
+            
+        - Markdown:
+            text: Using `crossAxis` property, you can set the alignment of the Row's children.
+
+        - Row:
+            styles: { crossAxis: start, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - BigSmile
+                - Beam
+
+        - Row:
+            styles: { crossAxis: center, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - BigSmile
+                - Beam
+        - Row:
+            styles: { crossAxis: end, backgroundColor: 0xFFCCDFE5, padding: 4, borderRadius: 4 }
+            children:
+                - BigSmile
+                - Beam
+
+        - Divider:
+            styles: { margin: 8 0 }
+            
+        - Markdown:
+            text: |
+                When a child widget is given the property of `expanded: true`, that child will try to take as much space as possible.
+        - Row:
+            styles: { gap: 8 }
+            children:
+            - Button:
+                label: First button
+                styles: { expanded: true }
+            - Button:
+                label: Second button
+
+        - Markdown:
+            text: |
+                When you want the children widget to be of equal size, assign the property of `expanded: true` to all the child widgets.
+        - Row:
+            styles: { gap: 8 }
+            children:
+            - Button:
+                label: First button
+                styles: { expanded: true }
+            - Button:
+                label: Second button
+                styles: { expanded: true }
+
+
+Smile:
+    Icon:
+        icon: smile
+        library: fontAwesome
+        styles: { color: 0xFFBF569C }
+
+Beam:
+    Icon:
+        icon: smileBeam
+        library: fontAwesome
+        styles: { color: 0xFF3AA76D }
+
+Wink:
+    Icon:
+        icon: smileWink
+        library: fontAwesome
+        styles: { color: 0xFF276EF1 }
+
+
+
+BigSmile:
+    Icon:
+        icon: smile
+        library: fontAwesome
+        styles: { color: 0xFFA1BDCA, size: 60, padding: 8 }

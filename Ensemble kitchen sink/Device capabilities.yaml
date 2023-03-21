@@ -1,0 +1,35 @@
+View:
+  header:  
+    title: Device capabilities
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 24, fontSize: 17 }
+    children:
+
+      - Capability:
+          inputs:
+            name: Location
+            desc: Get device location, display on map, and request continuous updates 
+            screen: 'Location Service'
+
+
+
+Capability:
+  inputs: [name, screen, desc]
+  Column:
+    styles: { gap: 8, padding: 8 0, crossAxis: stretch }
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    children:
+      - Text:
+          text: ${name}
+          styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 17 }
+      - Text:
+          text: ${desc}
+          styles: { color: 0xFF909090, fontSize: 14 }
+      - Divider:
+          styles:
+            margin: 16 0 0 0

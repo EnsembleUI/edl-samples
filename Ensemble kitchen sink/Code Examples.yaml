@@ -1,0 +1,143 @@
+View:
+  header:
+    title: Code Examples
+  styles:
+    scrollableView: true
+    
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - Text:
+          text: Defining variables
+      - Button:
+          label: Say hello to Jane
+          onTap: |
+            //@code
+            var name = "Jane";
+            hello.text = "Hi " + name;
+      - Text:
+          id: hello
+      - Divider
+          
+
+      - Text:
+          text: If statements
+      - Switch:
+          trailingText: Status
+          onChange: |
+            //@code
+            if(this.value)
+              result.text = "The switch is on";
+            else
+              result.text = "The switch is off";
+      - Text:
+          id: result
+      - Divider
+          
+
+      - Text:
+          text: Iterate through object keys
+      - Button:
+          label: Run
+          onTap: |
+            //@code
+            var obj = {
+              "a": { "value": 1 },
+              "b": { "value": 2 }
+            }
+
+            var sum = 0;
+            objSum.text = sum;
+
+            for (key in obj) {
+              sum = sum + obj[key].value;
+            }
+            
+            objSum.text = sum;
+      - Text:
+          id: objSum
+      - Divider
+
+      - Text:
+          text: Call API through code
+      - Button:
+          label: Call API
+          onTap: |
+            //@code
+            ensemble.invokeAPI('getNYCTime');
+      - Text:
+          text: |
+              What's the time in NYC?
+              ${getNYCTime.body.datetime}
+      - Divider
+          
+      - Text:
+          text: regex
+      - TextInput:
+          label: Text Input
+          value: Include at least one number here
+          onKeyPress: 
+            executeCode:
+              body: |
+                //@code
+                var regex = /\d+/;
+                if (regex.test(this.value) == true)
+                  regextest.text = 'Regex test result is true';
+                else
+                  regextest.text = 'Regex test result is false';
+
+      - Text:
+          id: regextest
+          text: Regex test result is false
+          styles: { color: grey, fontWeight: bold }
+
+
+      - Divider
+      - Text:
+          text: Perform Ensemble actions using code
+      - Button:
+          label: Navigate to Home using code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                ensemble.navigateScreen('Home');
+      - Button:
+          label: Navigate to Home in a modal using code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                ensemble.navigateModalScreen('Home');
+      - Button:
+          label: Show Dialog Using Code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                ensemble.showDialog('MySampleWidget');
+
+      - Divider
+      - Text:
+          text: Console log
+      - Button:
+          label: Log to console
+          onTap: |
+            //@code
+            var name = "Jane";
+            console.log("Hi " + name);
+
+
+MySampleWidget:
+  Column:
+    children:
+      - Text:
+          text: Hello there!
+
+
+API:
+  getNYCTime:
+    authentication: none
+    method: GET
+    uri: https://worldtimeapi.org/api/timezone/America/New_York

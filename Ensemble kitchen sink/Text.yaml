@@ -1,0 +1,135 @@
+View:
+
+  header:
+    title: Text
+
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: 
+        gap: 16
+        padding: 24
+        
+    children:
+
+        - Text:
+            text: Here's a simple text
+
+        - Text:
+            text: | 
+                Here's some text on
+                multiple
+                lines
+
+                including empty lines!
+
+        - Divider
+              
+        ##### styles fontWeight
+
+        - Text:
+            text: Here's a bold text with custom size and color
+            styles: {  fontWeight: bold, color: 0xFF0BA182, fontSize: 18 }
+
+
+        - Divider
+
+        - Text:
+            id: myText
+            text: Just text with attitude
+            styles:
+                backgroundColor: blue
+                padding: 10
+                margin: 10
+                borderRadius: 10 5
+                borderColor: black
+                borderWidth: 5
+                color: black
+
+        - Divider
+            
+        ##### styles overflow
+
+        - Text:
+            text: overflow examples
+
+        - Text:
+            styles: { fontWeight: bold, color: 0xFF808080 }
+            text: "wrap"
+        - Text:
+            styles: { overflow: wrap  }
+            text: 'Use overflow: wrap so that long text is wrapped into multiple lines depending on the available space.'
+
+        - Text:
+            styles: { fontWeight: bold, color: 0xFF808080 }
+            text: "ellipsis"
+        - Text:
+            styles: { overflow: ellipsis  }
+            text: 'Use overflow: ellipsis so that long text is clipped and appended with ...'
+        
+        - Text:
+            styles: { fontWeight: bold, color: 0xFF808080 }
+            text: "clip"
+        - Text:
+            styles: { overflow: clip  }
+            text: 'Use overflow: clip so that long text is clipped depending on the available space'
+        
+        - Divider:
+
+        
+        
+        ##### styles textStyle
+
+        - Text:
+            text: textStyles examples
+
+        ## italic
+        - Text:
+            styles: { textStyle: italic  }
+            text: Italic text
+
+        ## strikethrough
+        - Text:
+            styles: { textStyle: strikethrough  }
+            text: Strikethrough text
+
+        ## underline
+        - Text:
+            styles: { textStyle: underline }
+            text: Underline text
+
+        ## italic_underline
+        - Text:
+            styles: { textStyle: italic_underline }
+            text: Italic and underline text
+
+        ## italic_strikethrough
+        - Text:
+            styles: { textStyle: italic_strikethrough }
+            text: Italic and strikethrough text
+
+
+        - Divider
+
+        ##### styles textAlign
+
+        - Text:
+            text: textStyles examples
+
+        ## start
+        - Text:
+            styles: { textAlign: start  }
+            text: By default, the text is aligned to the left for LTR languages and right for for the RTL languages
+
+        - Text:
+            styles: { textAlign: justify  }
+            text: Text can be justified so as it wraps to multiple lines, each line would be filled by content. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+        - Text:
+            styles: { textAlign: end  }
+            text: Here's an example when the textAlign property is set to "end". Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    
+        - Text:
+            styles: { textAlign: center  }
+            text: Here's an example when the textAlign property is set to "center". Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

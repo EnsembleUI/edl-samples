@@ -1,0 +1,74 @@
+View:
+  header:
+    title: WebView (native) / iFrame (web)
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 0 }
+
+    children:
+      - Column:
+          styles: { padding: 0 24, gap: 16 }
+          children:
+            - Markdown:
+                text: |
+                  WebView widget appears as WebView (embedded browser) on native apps while it appears as an iFrame on webapps. 
+                  
+                  **Note:** The events associated with the WebView such as onPageStart, onPageFinished and onNavigationRequest are only available on native iOS and native Android. They are not dispatched for WebView (iFrame) inside a webapp
+            - TextInput:
+                label: URL
+                id: uri
+                value: https://ensembleui.com/
+            - Button:
+                label: Set URL of the WebView
+                onTap: |
+                  //@code
+                  webview.uri = uri.value;            
+            - TextInput:
+                label: Prevents navigation for a url with this string in it
+                id: prevent
+                value: demo
+            - Markdown:
+                text: | 
+                  *works only on iOS and Android native apps. On Android, only the navigation within the WebView is prevented. On iOS, setting the url of the WebView is prevented as well if it has this string in it*
+            - Text:
+                id: debugTxt
+                styles: {fontSize: 10}
+      - WebView:
+          id: webview
+          uri: https://ensembleui.com/
+          styles:
+            height: 400
+          #the onPageStart, onPageFinished and onNavigationRequest events are only available
+          #in webviews in a native app on iOS and Android. They are not dispatched in a webapp
+          onPageStart:
+            executeCode:
+              body: |
+                //@code
+                debugTxt.text = 'onPageStart:'+event.data.url;
+                ensemble.debug('onPageStart:'+event.data.url);
+
+          onPageFinished:
+            executeCode:
+              body: |
+                //@code
+                debugTxt.text = 'onPageFinished:'+event.data.url;
+                ensemble.debug('onPageFinished:'+event.data.url);
+          onNavigationRequest:
+            #on iOS, this event is fired even when you set the url of the webview directly. 
+            #on the other hand, on Android, this event is only fired when you navigate within the page. It 
+            # is not fired when you set the url. 
+            executeCode:
+              body: | 
+                //@code
+                debugTxt.text = 'onNavigationRequest:'+event.data.url;
+                ensemble.debug('onNavigationRequest:'+event.data.url);
+                if ( event.data.url.includes(prevent.value) ) {
+                  event.allowNavigation = false;
+                  debugTxt.text += ' ;prevented navigation for '+prevent.value;
+                  ensemble.debug('prevented navigation for '+prevent.value);
+                }
+              
+              
+

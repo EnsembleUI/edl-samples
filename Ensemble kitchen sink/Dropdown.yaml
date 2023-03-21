@@ -1,0 +1,145 @@
+View:
+
+  header:
+    title: Dropdown
+  
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getNYCPopulation
+      onResponse: |
+        //@code
+        var list = [];
+        response.body.records.map(function(item) {
+          list.push({
+            "label": item.fields.Year,
+            "value": item.fields.Year
+          });
+        });
+        dynamicItems.items = list;
+        autoComplete.items = list;
+      
+  Column: 
+    styles: 
+      gap: 24
+      padding: 24
+        
+    children:
+
+      - Markdown:
+          text: |
+            ## Basic examples
+    
+      # 1
+      - Dropdown:
+          label: 1 - array of strings
+          hintText: Select something
+          items:
+            - Red
+            - Blue
+            - Green
+
+
+      # 2
+      - Dropdown:
+          label: 2 - array of objects
+          hintText: Select something
+          items:
+            - { "label": "Red", "value": "red"}
+            - { "label": "Blue", "value": "blue" }
+            - { "label": "Green", "value": "green" }
+          
+      # 3
+      - Dropdown:
+          label: 3 - set the value
+          value: red
+          items:
+            - { "label": "Red", "value": "red" }
+            - { "label": "Blue", "value": "blue" }
+            - { "label": "Green", "value": "green" }
+
+
+      # 4 dynamic items
+      - Dropdown:
+          label: 4 - dynamic items
+          id: dynamicItems
+
+      # 5 items from string
+      - Dropdown:
+          label: 5 - items from string
+          itemsFromString: "a,b,c,d,e"
+
+
+      - Divider:
+          styles:
+            margin: 16 0
+
+      - Markdown:
+          text: |
+            ## AutoCompplete
+
+      # 4 autocomplete
+      - Dropdown:
+          hintText: Select the year
+          id: autoComplete
+          autoComplete: true
+
+      - Divider:
+          styles:
+            margin: 16 0
+
+      - Markdown:
+          text: |
+            ## Styling
+
+      - Dropdown:
+          label: 5 - with icons
+          value: blue
+          items:
+            - { "label": "Red - no icon", "value": "red"}
+            - { "label": "Blue - home icon with size 30", "value": "blue", "icon": {"name": "home", "size": 30}}
+            - { "label": "Green - star icon with default size", "value": "green", "icon": {"name": "star"}}
+
+      - Dropdown:
+          label: Label
+          items:
+            - Red
+            - Blue
+            - Green
+          styles:
+            variant: box
+            contentPadding: 16
+
+
+
+      - Divider:
+          styles:
+            margin: 16 0
+
+      - Markdown:
+          text: |
+            ## Events
+
+      - Dropdown:
+          label: onChange
+          hintText: Select something
+          items:
+            - { "label": "Red", "value": "red" }
+            - { "label": "Blue", "value": "blue" }
+            - { "label": "Green", "value": "green" }
+          onChange: |
+            //@code
+            onChangeDemo.text = 'You selected: ' +this.value;
+
+      - Text:
+          id: onChangeDemo
+
+
+API:
+  getNYCPopulation:
+    authorization: none
+    uri: 'https://api.airtable.com/v0/appdtgVzmD077CbHB/ChartData?api_key=keyyWz426zsnMKavb&sort%5B0%5D%5Bfield%5D=Year&sort%5B0%5D%5Bdirection%5D=asc'
+    method: 'GET'
+

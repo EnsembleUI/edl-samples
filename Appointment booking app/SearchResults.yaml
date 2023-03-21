@@ -1,0 +1,328 @@
+View:
+
+  # Use inputs from Home screen search form to get data from server
+  # when accessing this page directly, click on the Search in the nav bar to the pass inputs
+  onLoad:
+    invokeAPI:
+      name: getDoctors
+      inputs:
+        doc_type_val: ${doc_type}
+        location: ${location}
+        appointment_date: 2023-07-31
+        # appointment_date: ${appointment_date}
+
+
+  styles:
+    useSafeArea: true
+
+  AppScroller:
+    id: appScroller
+    styles:
+      fixedHeaderHeight: 92
+      expandedHeight: 350
+
+    onHeaderStretch: |-
+      //@code
+      this.stretchExpandedHeight(94);
+    onExpandedHeightReset: |-
+      //@code
+      docMap.selectedMarker = null;
+    fixedHeader: FixedHeader
+    body: SearchResultList
+    flexibleBackground: MapView
+
+FixedHeader:
+  Column:
+    styles:
+      backgroundColor: 0xFFF4D66C
+    children:
+      - Row:
+          styles:
+            crossAxis: center
+            margin: 12
+            padding: 12
+            gap: 10
+            borderRadius: 60
+            height: 60
+            backgroundColor: 0xFFF4FAF4
+            shadowColor: 0x20000000
+            shadowOffset: [0, 2]
+            shadowRadius: 2
+          children:
+            - Icon:
+                icon: arrow_back
+                styles: { size: 18, color: 0xFF0D0D0D }
+                onTap:
+                  navigateScreen:
+                    name: Home
+            - Column:
+                styles: { mainAxis: center }
+                children:
+                  - Text:
+                      text: ${doc_type}
+                      styles: { fontWeight: w500, fontSize: 14, color: 0xFF404040 }
+                  - Text: 
+                      text: Near me
+                      styles: { fontSize: 13, color: 0xFF777A95 }                   
+
+
+
+MapView:
+  Map:
+    id: docMap
+    styles: { boundaryPadding: 200 10 120 10, markerWidth: 48, markerHeight: 48 }
+    currentLocation:
+      enabled: true
+    onMarkerTap: |-
+      //@code
+      appScroller.stretchExpandedHeight(80);
+    markers:
+      data: ${getDoctors.body}
+      name: doc
+      location:
+        lat: ${doc.lat}
+        lng: ${doc.lng}
+      widget:
+        Image:
+          styles: { borderRadius: 48, borderColor: 0xFFF4D66C, borderWidth: 4 }
+          source: ${doc.doc_photo_path}
+      selectedWidget:
+        Image:
+          styles: { borderRadius: 48, borderColor: 0xFFF19D39, borderWidth: 4 }
+          source: ${doc.doc_photo_path}
+      selectedWidgetOverlay:
+        Column:
+          styles:
+            padding: 10
+            backgroundColor: white
+            borderWidth: 1
+            borderColor: 0xFFE7E7E7
+            borderRadius: 8
+          children: 
+            - Text:
+                text: ${doc.name}
+                styles: { fontWeight: bold, fontSize: 14 }
+            - Markdown:
+                text: |
+                  #### ${doc.doc_type}
+                styles: { fontSize: 13 }
+
+
+
+SearchResultList:
+  Column:
+    styles: { backgroundColor: 0xFFFEFAF3, padding: 16 0, borderRadius: 24 24 0 0 }
+    children:
+      # loading indicator
+      # set visible to true when getDoctors API has no data
+      - Row:
+          visible: "${getDoctors.body == null ? true : false}"
+          styles: { mainAxis: spaceAround, crossAxis: center, padding: 100 }
+          children:
+            - Progress:
+                display: circular
+                styles:
+                  backgroundColor: 0xFFF4F0FF
+                  thickness: 5
+
+      # search result
+      # set visible to true when getDoctors data is available
+      - Column:
+          id: searchResult
+          visible: "${getDoctors.body.length > 0 ? true : false}"
+          styles: { mainAxisSize: max, gap: 16, padding: 0 24 }
+          item-template:
+            data: ${getDoctors.body}
+            name: doctor
+            template:
+              DoctorCard:
+                inputs:
+                  doctor: ${doctor}   
+
+      # search result has no content
+      # set visible to true when getDoctors data length is 0
+      - Column:
+          id: searchResult
+          visible: "${getDoctors.body.length == 0 ? true : false}"
+          styles: { crossAxis: stretch, gap: 16, padding: 24 }
+          children:
+            - Text:
+                visible: "${ getDoctors.body == null ? false : true }"
+                text: We could not find any available doctors.
+                styles: { textAlign: center }
+            - Button:
+                label: Go back and search again
+                onTap:
+                  navigateScreen:
+                    name: Home
+
+
+DoctorCard:
+  inputs: [doctor] 
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF
+      gap: 8
+
+    children:
+      - Row:
+          onTap:
+              navigateModalScreen:
+                name: DoctorProfile
+                inputs:
+                  id: ${doctor.id}
+          styles: { gap: 12, padding: 16 16 0 16 }
+          children:
+            - Image:
+                styles: { height: 50, borderRadius: 50 }
+                source: ${doctor.doc_photo_path}
+            - Column:
+                styles: { gap: 4 }
+                children:
+                  - Text:
+                      styles:
+                        fontWeight: bold
+                      text: ${doctor.name}
+                  - Text:
+                      styles:
+                        textAlign: center
+                      text: ${doctor.doc_type}
+                  - Row:
+                      styles: { gap: 12 }
+                      children:
+                        - Row:
+                            styles: { gap: 4, crossAxis: center }
+                            children:
+                              - Icon:
+                                  styles: { size: 15, color: 0xFF6CD1BD }
+                                  icon: verified_user
+                              - Text:
+                                  styles: { fontSize: 12, color: 0xFFA0A2B3 }
+                                  text: In-network
+                        - Row:
+                            styles: { gap: 4, crossAxis: center }
+                            children:
+                              - Icon:
+                                  styles: { size: 15, color: 0xFFFFA873 }
+                                  icon: star
+                              - Text:
+                                  styles: { fontSize: 12, color: 0xFFA0A2B3 }
+                                  text: ${doctor.rate}
+            - Spacer
+            - Icon:
+                visible: "${doctor.is_favorite==false ? true : false}"
+                onTap:
+                  invokeAPI:
+                    name: AddToFavourite
+                    inputs:
+                      docID: ${doctor.id}
+                      docName: ${doctor.name}
+                    onResponse:
+                      invokeAPI:
+                        name: getDoctors
+                        inputs:
+                          doc_type_val: ${doc_type}
+                          location: ${location}
+                          appointment_date: 2023-07-31
+                          # appointment_date: ${appointment_date}
+                icon: heart
+                library: fontAwesome
+                styles: { size: 20, color: 0xFFF19D39 }
+            - Icon:
+                visible: "${doctor.is_favorite==false ? false : true}"
+                onTap:
+                  invokeAPI:
+                    name: ReomveFavourite
+                    inputs:
+                      docID: ${doctor.id}  
+                      docName: ${doctor.name}                 
+                    onResponse:
+                      invokeAPI:
+                        name: getDoctors
+                        inputs:
+                          doc_type_val: ${doc_type}
+                          location: ${location}
+                          appointment_date: 2023-07-31
+                          # appointment_date: ${appointment_date}
+                icon: solidHeart
+                library: fontAwesome
+                styles: { size: 20, color: 0xFFF19D39 }
+
+      - Carousel:
+          styles: { padding: 8 2 16 16, height: 36, gap: 8, layout: multiple, multipleItemWidthRatio: .28 }
+          item-template:
+            data: ${doctor.appointments}
+            name: slots
+            template:
+              SlotCard:
+                inputs:
+                  slot: ${slots}
+
+SlotCard:
+  inputs: [slot]
+  Row:
+    onTap:
+      navigateScreen:
+        name: ReviewAndConfirm
+        inputs:
+          doctor: ${doctor}
+          slot: ${slot}
+      
+    styles:
+      backgroundColor: 0xFFFDF8E9
+      borderColor: 0x99F19D39
+      borderRadius: 4
+      padding: 8
+
+    children:
+      - Text:
+          text: ${slot.time_slot}
+          styles:
+            fontWeight: w500
+            color: 0xFFF19D39
+
+
+API:  
+  getDoctors:
+    inputs: [doc_type_val, location, appointment_date]
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/searchDoctorsWithSlots?doc_type=${doc_type_val}&location=${location}&appointment_date=${appointment_date}&uid=${ensemble.storage.get("uid")}
+    method: "GET"
+
+  # Add to favourite values
+  AddToFavourite:
+    inputs: [docID,docName]    
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/AddFavoriteDoctor?uid=${ensemble.storage.get("uid")}
+    method: "POST"
+    body:
+       { 
+            "doctor_id": "${docID}"        
+       }
+    onResponse:
+      showToast:
+        message: ${docName} was added to your favorite doctors
+        options:
+          dismissable: true
+          type: success          
+          duration: 3     
+
+  # Remove from favourite 
+  ReomveFavourite:
+    inputs: [docID,docName]    
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/DeleteFromFavouriteDoctor?doctor_id=${docID}&uid=${ensemble.storage.get("uid")}
+    method:  "GET" 
+    onError:      
+      navigateScreen:
+        name: Home  
+    onResponse:
+      showToast:
+        message: ${docName} was removed from your favorite doctors        
+        options:
+          dismissable: true
+          type: warning
+          duration: 3
+
+    

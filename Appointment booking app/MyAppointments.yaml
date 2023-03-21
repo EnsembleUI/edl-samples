@@ -1,0 +1,359 @@
+View:
+
+  # For demo purposes, we skip sign in page and log user in with a test account
+  onLoad:
+    executeCode:
+      body: |
+        //@code        
+        if(ensemble.storage.get('uid') == null) {
+          ensemble.invokeAPI('login');
+        }
+
+  styles: 
+    scrollableView: true
+
+  header:
+    title: CustomHeader
+    styles:
+      titleBarHeight: 108
+      showNavigationIcon: false
+      backgroundColor: 0xFFF4D66C
+
+
+  Column:
+    styles: {  padding: 24 }
+    children:
+
+      # loading widget displayed before getUpcomingAppointments API response is ready
+      - Column:
+          visible: "${ getUpcomingAppointments.body == null ? true : false }"
+          children:
+            - Row:
+                styles: { mainAxis: center }
+                children:
+                  - Progress
+
+      # by default, display upcoming
+      - Column:
+          id: upcoming
+          children:
+            - UpcomingAppointments
+
+      # hide past until user changes the tab
+      # see TabBar's onTabSelection for the logic
+      - Column:
+          visible: false
+          id: past
+          children:
+            - PastAppointments
+          
+
+
+# this widget is passed to the screen header
+CustomHeader:
+  Column:
+    styles: 
+      padding: 24 12 0 12
+      gap: 8
+      backgroundColor: 0xFFF4D66C
+      fontFamily: 'Clarika'
+    children:
+      - Text:
+          styles: {fontWeight: bold, fontSize: 24, color: black }
+          text: Appointments
+      - TabBarOnly:
+          id: tabBar
+          onTabSelection: |-
+            //@code
+            if (this.selectedIndex == 1) {
+              upcoming.visible = false;
+              past.visible = true;
+            } else {
+              upcoming.visible = true;
+              past.visible = false;
+            }
+          styles: 
+            tabPadding: 0
+            activeTabColor: black
+            indicatorColor: black
+            tabFontSize: 16
+            tabPosition: stretch
+
+          items:
+            - label: Upcoming
+              body:
+                Text:
+                  text: test
+          
+            - label: Past
+              body:
+                Text:
+                  text: test
+
+
+
+UpcomingAppointments:
+  onLoad:
+    invokeAPI:
+      name: getUpcomingAppointments
+  Column:
+    styles: { gap: 16 }
+    item-template:
+      data: ${getUpcomingAppointments.body}
+      name: doctor
+      template:
+        UpcomingAppointmentCard:            
+          inputs:
+            doctor: ${doctor}
+
+
+PastAppointments:
+  onLoad:
+    invokeAPI:
+      name: getPastAppointments
+  Column:
+    styles: { gap: 16 }
+    item-template:
+      data: ${getPastAppointments.body}
+      name: doctor
+      template:
+        PastAppointmentCard:            
+          inputs:
+            doctor: ${doctor}
+
+UpcomingAppointmentCard:
+  inputs: [doctor]
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF
+    children:
+      - DoctorCard:
+          inputs:
+            doctor: ${doctor}
+      - Divider:
+          styles: { color: 0xFFEDEDED }
+      - Row:
+          styles: { backgroundColor: 0xFFffffff, mainAxis: center, padding: 16 8, borderRadius: 0 0 16 16 }
+          children:
+            - Column:   
+                onTap:
+                  navigateModalScreen:
+                    name: DoctorProfile
+                    inputs:
+                      id: ${doctor.id}
+                children:
+                  - CustomButton:
+                      inputs:
+                        icon: info
+                        label: Details
+            - Column:   
+                onTap:
+                  openUrl:
+                    url: https://www.google.com/maps/dir/?api=1&destination=${doctor.lat},${doctor.lng}
+                children:
+                  - CustomButton:
+                      inputs:
+                        icon: map
+                        label: Direction
+            - CustomButton:
+                inputs:
+                  icon: today
+                  label: Modify
+
+
+
+PastAppointmentCard:
+  inputs: [doctor]
+  Column:
+    styles:
+      shadowColor: 0x11000000
+      crossAxis: center
+      shadowRadius: 3
+      borderRadius: 16
+      backgroundColor: 0xFFFFFFFF
+      borderColor: 0xFFEFEFEF
+    children:
+      - DoctorCard:
+          inputs:
+            doctor: ${doctor}
+      - Divider:
+          styles: { color: 0xFFEDEDED }
+      - Row:
+          styles: { backgroundColor: 0xFFffffff, mainAxis: center, padding: 8, borderRadius: 0 0 16 16 }
+          children:           
+            - Column:   
+                onTap:
+                  navigateModalScreen:
+                    name: DoctorProfile
+                    inputs:
+                      id: ${doctor.id}
+                children:
+                  - CustomButton:
+                      inputs:
+                        icon: info
+                        label: Details    
+            - Column:
+                onTap:
+                  navigateModalScreen:
+                    name: RateYourExperience  
+                    inputs:
+                      doctor: ${doctor}
+                children:
+                  - CustomButton:               
+                      inputs:
+                        icon: star
+                        label: Rate your experience
+            - CustomButton:
+                inputs:
+                  icon: today
+                  label: Book again                  
+
+
+DoctorCard:
+  inputs: [doctor]
+  Column:   
+    children:
+      - Row:
+          styles: { padding: 16 16 8 16 }
+          children:
+            - Image:
+                styles: {  height: 68, borderRadius: 40, margin: 0 12 0 0 }
+                source: ${doctor.doc_photo_path}
+            - Column:
+                styles: { gap: 2 }
+                children:
+                  - Text:
+                      styles: 
+                        fontWeight: w500
+                        fontSize: 16
+                      text: ${doctor.name}
+                  - Text:
+                      styles:
+                        textAlign: center
+                        fontSize: 13
+                        fontWeight: w400
+                      text: ${doctor.slot.appointment_date.prettyDate()} at ${doctor.slot.time_slot}
+                  - Text:
+                      styles:
+                        fontWeight: w500
+                        color: 0xFFA0A2B3
+                        fontSize: 13
+                      text: ${doctor.slot.booking_status}
+            - Spacer
+            - Icon:
+                visible: "${doctor.is_favorite == false ? true : false}"
+                onTap:
+                  invokeAPI:
+                    name: AddToFavourite                    
+                    inputs:
+                      docID: ${doctor.id}
+                      docName: ${doctor.name}
+                    onResponse:
+                      navigateScreen:
+                        name: MyAppointments
+                icon: heart
+                library: fontAwesome
+                styles: { size: 20, color: 0xFFF19D39 }
+            - Icon:                
+                visible: "${doctor.is_favorite == false ? false : true}"
+                onTap:
+                  invokeAPI:
+                    name: ReomveFavourite
+                    inputs:
+                      docID: ${doctor.id}  
+                      docName: ${doctor.name}                 
+                    onResponse:
+                      navigateScreen:
+                        name: MyAppointments 
+                icon: solidHeart
+                library: fontAwesome
+                styles: { size: 20, color: 0xFFF19D39 }
+
+
+CustomButton:
+  inputs:
+    - icon
+    - label
+  Column:   
+    styles: { gap: 6, crossAxis: center, width: 100 }
+    children:
+      - Column:
+          styles: { backgroundColor: white , borderColor: 0xFFF0F0F0, borderWidth: 2, borderRadius: 50, padding: 12 }
+          children:                                      
+            - Icon:
+                icon: ${icon}
+                styles: { size: 25,  color: 0xFFF19D39 }                                  
+      - Text:
+          styles: { fontWeight: w500, color: grey, fontSize: 13, textAlign: center}
+          text: ${label} 
+
+API:  
+  getUpcomingAppointments:
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/myAppoinmentsPromiseUpcoming?booked_uid=${ensemble.storage.get("uid")}
+    method: "GET"  
+    onError:      
+      navigateScreen:
+        name: Landing
+
+  getPastAppointments:
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/myAppoinmentsPromisePast?booked_uid=${ensemble.storage.get("uid")}
+    method: "GET"  
+    onError:      
+      navigateScreen:
+        name: Landing  
+
+  # Add to favourite values
+  AddToFavourite:
+    inputs: [docID,docName]    
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/AddFavoriteDoctor?uid=${ensemble.storage.get("uid")}
+    method: "POST"
+    body:
+       { 
+            "doctor_id": "${docID}"        
+       }
+    onResponse:
+      showToast:
+        message: ${docName} was added to your favorite doctors
+        options:
+          dismissable: true
+          type: success          
+          duration: 3       
+  
+  # Remove from favourite 
+  ReomveFavourite:
+    inputs: [docID,docName]    
+    uri: https://us-central1-appointment-booking-app-ecf27.cloudfunctions.net/DeleteFromFavouriteDoctor?doctor_id=${docID}&uid=${ensemble.storage.get("uid")}
+    method: "GET" 
+    onResponse:
+      showToast:
+        message: ${docName} was removed from your favorite doctors
+        options:
+          dismissable: true
+          type: warning
+          duration: 5
+    onError:
+      navigateScreen:
+        name: Home      
+
+
+  # This API is called on the view's onload so we can skip logging in manually
+  login:
+    uri: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBHH7crKsWUBZTAFmc3T-sCIkwrSJJmjRA'
+    method: 'POST'
+    parameters:
+      email: "demo@ensembleui.com"
+      password: "password"
+      returnSecureToken: true
+    onResponse: |-
+      //@code
+      ensemble.storage.set('email', response.body.email);
+      ensemble.storage.set('displayName', response.body.displayName);
+      ensemble.storage.set('idToken', response.body.idToken);
+      ensemble.storage.set('refreshToken', response.body.refreshToken);
+      ensemble.storage.set('uid', response.body.localId);    
+   

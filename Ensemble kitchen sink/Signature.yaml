@@ -1,0 +1,30 @@
+View:
+  title: Signature
+  Column:
+    styles: { gap: 24, padding: 24, scrollable: true}
+    children:
+      - Column:
+          styles: { mainAxis: spaceAround, crossAxis: center, gap: 20 }
+          children:
+            - Text:
+                text: Use your mouse or finger to draw in the box below
+            - Signature:
+                styles: 
+                  penColor: red
+                  backgroundColor: 0xFFDDDDDD
+                  width: 300
+                  height: 350
+                  penStrokeWidth: 2
+
+
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home

@@ -1,0 +1,53 @@
+View:
+  header:  
+    title: App Header
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 24, fontSize: 17 }
+    children:
+
+      - Capability:
+          inputs:
+            name: App Header basic example
+            desc: Basic header with simple text as the title
+            screen: 'App Header basic example'
+
+      - Capability:
+          inputs:
+            name: App Header using widget
+            desc: Header that takes a widget as the title
+            screen: 'App Header using widget'
+
+      - Capability:
+          inputs:
+            name: App Header with flexible background
+            desc: Header that takes a widget for the flexibleBackground
+            screen: 'App Header with flexible background'
+
+      - Capability:
+          inputs:
+            name: App Header - Widget title with menu
+            desc: Header that takes a widget as the title, and include a separate menu icon. Tapping the menu exposes a drawer menu.
+            screen: 'App Header - Widget title with menu'
+
+
+
+Capability:
+  inputs: [name, screen, desc]
+  Column:
+    styles: { gap: 8, padding: 8 0, crossAxis: stretch }
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    children:
+      - Text:
+          text: ${name}
+          styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 17 }
+      - Text:
+          text: ${desc}
+          styles: { color: 0xFF909090, fontSize: 14 }
+      - Divider:
+          styles:
+            margin: 16 0 0 0

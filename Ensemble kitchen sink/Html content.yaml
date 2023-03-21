@@ -1,0 +1,22 @@
+View:
+  styles:
+    scrollableView: true
+  header:
+    title: HTML content
+  Column:
+    styles:
+      padding: 20
+    children:
+      - Html:
+          text: Welcome to <a href='https://ensembleui.com'>Ensemble</a>
+      - Html:
+          text: |-
+            <h1>Showing an HTML block</h1>
+            <p>Notice the use of <b>|-</b> for multiline. A single indent is required for multiline.</p>
+            <h3>Features</h3>
+            <ul>
+              <li>It actually works</li>
+              <li>It exists</li>
+              <li>It doesn't cost much!</li>
+            </ul>
+  

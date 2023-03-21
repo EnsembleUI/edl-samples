@@ -1,0 +1,89 @@
+View:
+  header:
+    title: FinicityConnect
+  Column: 
+    styles: 
+      padding: 20
+      gap: 20
+    children:
+      - Button:
+          label: Initiate Finicity Connect
+          onTap:
+            invokeAPI:
+              name: getToken
+              onResponse:
+                invokeAPI:
+                  name: getCustomer
+                  inputs:
+                    token: ${response.body.token}
+                  onResponse:
+                    invokeAPI:
+                      name: getConnectLiteURL
+                      inputs:
+                        customerId: ${response.body.id}
+                        token: ${getToken.body.token}
+      - Text:
+          id: status
+
+      - FinicityConnect:
+          id: connect
+          uri: ${getConnectLiteURL.body.link}
+          # see this for details - https://github.com/EnsembleUI/ensemble/issues/56
+          # make sure to put quotes around the overlay value. You may use any HTML color code - hex, rgb or string. 
+          # examples - 
+          # overlay: "'#008000'"
+          # overlay: "'blue'"
+          # overlay: "'rgba(255,255,255, 0)'"
+          overlay: "'rgba(255,255,255, 0)'"
+          left: 0
+          top: 120
+          position: fixed
+          width: 400
+          height: 500
+          onSuccess: |
+            //@code
+            status.text += 'onSuccess - Reason: ' + event.reason + '\n';
+          onCancel: |
+            //@code
+            status.text += '; onCancel - Reason: ' + event.reason + '\n';                 
+          onError: |
+            //@code
+            status.text += '; onError - Error: ' + event.reason + '\n';       
+          onLoaded: |
+            //@code
+            status.text += '; onLoaded was called\n';
+          onRoute: |
+            //@code
+            status.text += '; onRoute - Screen: ' + event.screen + '\n'; 
+          onUser: |
+            //@code
+            status.text += '; onUser - event: ' + JSON.stringify(event) + '\n';                    
+
+
+API:
+
+  getToken:
+    uri: 'https://studio.ensembleui.com/finicity/api/demoAuthentication'
+    method: 'GET'
+    authorization: none
+
+
+  getCustomer:
+    inputs: [ token ]
+    uri: https://studio.ensembleui.com/finicity/api/testing?token=${token}
+    method: 'GET'
+    authorization: none
+
+
+  getConnectLiteURL:
+    inputs: [ customerId, token ]
+    uri: https://studio.ensembleui.com/finicity/api/proxy
+    method: 'GET'
+    authorization: none
+    parameters:
+      uri: '/connect/v2/generate/lite'
+      method: 'post'
+      token: '${token}'
+      partnerId: 2445583966811
+      customerId: "${customerId}"
+      institutionId: 102105

@@ -1,0 +1,26 @@
+View:
+  styles:
+    scrollableView: true
+  header:
+    title: Date
+  Column:
+    styles: { gap: 24, padding: 24 }
+    children:
+
+
+        # 1
+        - Time:
+            label: Example 1 - Time picker
+            hintText: Select a time
+            required: true
+
+        # 2 onChange
+        - Time:
+            label: Example 3 - onChange
+            hintText: Select a time
+            onChange: |
+                //@code
+                onChangeDemo.text = 'You selected: ' + this.value;
+
+        - Text:
+            id: onChangeDemo

@@ -1,0 +1,56 @@
+View:
+  header:
+    title: "APIs: GET"
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getPeople
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:       
+      ## Example 1
+      - Text:
+          text: 1. GET on load and display a value
+      - Text:
+          text: ${getPeople.body.results.length} records were retrieved from API
+      - Markdown:
+          text: |
+            Here's the API response body:
+            ```
+            ${getPeople.body}
+            ```
+
+      - Divider
+      
+      ## Example 2
+      - Text:
+          text: 2. GET and bind to an item-template
+      - Button:
+          label: Call API
+          onTap:
+            invokeAPI:
+              name: getPeople2
+      - Column:
+          item-template:
+            data: ${getPeople2.body.results}
+            name: item
+            template:
+              Text:
+                text: ${item.name.first}
+      - Divider
+
+     
+        
+
+API:
+
+  getPeople:
+    uri: https://randomuser.me/api/?results=6
+    method: GET
+
+  getPeople2:
+    uri: https://randomuser.me/api/?results=5
+    method: GET

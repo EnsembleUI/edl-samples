@@ -1,0 +1,32 @@
+View:
+  styles:
+    backgroundColor: 0xEE000000
+    ignoreSafeArea: true
+  Column:
+    styles: 
+      mainAxis: center
+      fontFamily: Jost
+      gap: 24
+    children:
+      - NavItem:
+          inputs:
+            label: Dashboard
+            screen: Dashboard
+      - NavItem:
+          inputs:
+            label: Transactions
+            screen: Transactions
+
+
+NavItem:
+  inputs: [ label, screen ]
+  Row:
+    onTap:
+      navigateScreen:
+        name: ${screen}
+    styles: 
+      mainAxis: center
+    children:
+      - Text:
+          text: ${label}
+          styles: { color: 0xFF51AE55, fontSize: 30 }

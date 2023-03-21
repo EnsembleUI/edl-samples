@@ -1,0 +1,55 @@
+View:
+  title: Map
+  onLoad: 
+    invokeAPI:
+      name: getHotels
+  Column:
+    styles: { padding: 0 0 24 0 }
+    children:
+      - Map:
+          styles: { expanded: true, markerWidth: 60, markerHeight: 24 }
+          markers:
+            data: ${getHotels.body.records}
+            name: hotel
+            location:
+              lat: ${hotel.fields.lat}
+              lng: ${hotel.fields.lng}
+            widget:
+              Column:
+                styles: { backgroundColor: white, borderRadius: 100, padding: 4, shadowColor: 0xFFDDDDDD, shadowOffset: [0,1], shadowRadius: 4, crossAxis: center }
+                children:
+                  - Text:
+                      text: $${hotel.fields.price}
+                      styles: { fontWeight: bold }
+            selectedWidget:
+              Column:
+                styles: { backgroundColor: blue, borderRadius: 100, padding: 4, shadowColor: 0xFFDDDDDD, shadowOffset: [0,1], shadowRadius: 4, crossAxis: center }
+                children:
+                  - Text:
+                      text: $${hotel.fields.price}
+                      styles: { fontWeight: bold, color: white }
+            selectedWidgetOverlay:
+              Row:
+                styles: { fontSize: 13, backgroundColor: white, borderWidth: 1, borderColor: 0xFFE7E7E7 }
+                children:
+                  - Image:
+                      source: ${hotel.fields.photo[0].thumbnails.large.url}
+                      styles: { width: 120 }
+                  - Column:
+                      styles: { padding: 16, gap: 4 }
+                      children:
+                        - Text:
+                            text: ${hotel.fields.name}
+                            styles: { fontWeight: bold, fontSize: 15 }
+                        - Text:
+                            text: ${hotel.fields.address}
+                            styles: { fontSize: 15 }
+
+
+
+API:
+  getHotels:
+    method: GET
+    uri: https://api.airtable.com/v0/appdtgVzmD077CbHB/Hotels
+    headers:
+      Authorization: Bearer keyyWz426zsnMKavb

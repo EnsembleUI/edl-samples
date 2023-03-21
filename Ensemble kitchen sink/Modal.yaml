@@ -1,0 +1,31 @@
+View:
+  header:
+    title: Modal
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      -  Button:
+          label: Show Modal
+          onTap: 
+            navigateModalScreen:
+              name: Button
+
+      -  Button:
+          label: Show Dialog
+          onTap: 
+            showDialog:
+              widget: MyCustomView
+              options:
+                minWidth: 200
+
+
+
+MyCustomView:
+  Column:
+    styles: { margin: 20 }
+    children:
+      - Text:
+          text: My custome view

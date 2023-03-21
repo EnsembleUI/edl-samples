@@ -1,0 +1,44 @@
+View:
+  styles:
+    ignoreSafeArea: true
+  header:
+    styles:
+      backgroundColor: 0xFFFD451C
+    title: Footer basic example
+
+  footer:
+    children:
+      - Column:
+          styles:
+            crossAxis: center
+          children:
+            - Row:
+                styles:
+                  gap: 15
+                  padding: 15 0
+                  crossAxis: center
+                children:
+                  - Button:
+                      styles:
+                        backgroundColor: 0xFFFD451C
+                        borderRadius: 40
+                        padding: 20
+                        expanded: true
+                      label: Add to Cart
+                  - Column:
+                      styles:
+                        backgroundColor: 0xFF282A33
+                        padding: 12
+                        borderRadius: 40
+                      children:
+                        - Icon:
+                            styles:
+                              color: white
+                            icon: local_mall
+          
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Text:
+          text: Use View's footer property to set and customize the app footer
+  

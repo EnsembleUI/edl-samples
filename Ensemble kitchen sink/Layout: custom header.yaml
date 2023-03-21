@@ -1,0 +1,29 @@
+View:
+
+  header:
+    title: CustomHeader
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: 
+      mainAxis: center
+      crossAxis: center
+    children:
+      - Text:
+          text: Content goes here
+
+
+CustomHeader:
+  Row:
+    styles:
+      mainAxis: spaceBetween
+    children:
+      - Text:
+          text: "Layout: custom header"
+      - Icon:
+          icon: menu
+          onTap:
+            navigateModalScreen:
+              name: Home

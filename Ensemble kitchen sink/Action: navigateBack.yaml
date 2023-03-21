@@ -1,0 +1,17 @@
+View:
+  title: "Action: navigateBack"
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:      
+      - Markdown:
+          text: You can open a new screen above the current one and use "navigateScreen" to navigate back to this main screen. 
+      -  Button:
+          label: Show Detail Page
+          onTap:
+            navigateModalScreen:
+              name: 'Action: navigateBackModal'
+             
+            

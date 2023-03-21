@@ -1,0 +1,162 @@
+View:
+
+  # For demo purposes, we skip sign in page and log user in with a test account
+  onLoad:
+    invokeAPI:
+      name: login 
+
+  styles:
+    scrollableView: true
+    backgroundColor: 0xFFFEFAF3
+
+  header:
+    flexibleBackground: CustomHeader
+    styles:
+      titleBarHeight: 200
+      showNavigationIcon: false
+      backgroundColor: 0xFFFEFAF3
+      
+
+  Column:
+    children:
+
+      # loading widget displayed before login API response is ready
+      - Column:
+          id: loading
+          visible: "${ login.body == null ? true : false }"
+          children:
+            - Row:
+                styles: { mainAxis: center }
+                children:
+                  - Progress
+
+      # main content displayed after login API response is ready
+      - Column:
+          id: content
+          visible: "${ login.body == null ? false : true }"
+          styles: { gap: 16, padding: 24 }
+          children:
+            - PersonalDetails
+            - ContactDetails
+
+# this widget is passed to the screen header
+CustomHeader:
+  onLoad:
+    invokeAPI:
+      name: getUser
+      inputs:
+        id: Nyb3cPDeFzSyRRykdWVZfUnV40Y2
+  Column:
+    styles: { crossAxis: center, gap: 8, padding: 40, backgroundColor: 0xFFF4D66C }
+    children:
+      - Spacer:
+          styles: 
+            size: ${device.safeAreaTop}
+      - Image:
+          source:  ${getUser.body[0].document.fields.user_photo_path.stringValue}
+          styles: { width: 80, borderRadius: 80, borderColor: white, borderWidth: 4 }
+      - Text:
+          styles: { fontSize: 28, color: black }
+          text: ${getUser.body[0].document.fields.name.stringValue}
+
+
+PersonalDetails:     
+  Column:
+    styles: { gap: 16, padding: 24 16, borderRadius: 16,shadowColor: 0xFFEEEBDC, shadowOffset: [ 1, 1 ], shadowRadius: 4, backgroundColor: 0xFFFFFFFF }
+    children:
+      - Text:
+          styles: { fontSize: 16, fontWeight: bold, color: 0xFF3b3c3d }
+          text: Personal details
+      - Divider:
+          styles: { color: 0xFFEDEDED }
+      - DetailRow:
+          inputs:
+            label: Name
+            value: ${getUser.body[0].document.fields.name.stringValue}
+      - DetailRow:
+          inputs:
+            label: Date of Birth
+            value: ${getUser.body[0].document.fields.dob.timestampValue.prettyDate()}
+      - DetailRow:
+          inputs:
+            label: Gender
+            value: ${getUser.body[0].document.fields.gender.stringValue}        
+                  
+
+
+ContactDetails: 
+  Column:
+    styles: { gap: 16, padding: 24 16, borderRadius: 16,shadowColor: 0xFFEEEBDC, shadowOffset: [ 1, 1 ], shadowRadius: 4, backgroundColor: 0xFFFFFFFF }
+    children:
+      - Text:
+          styles: { fontSize: 16, fontWeight: bold, color: 0xFF3b3c3d }
+          text: Contacts details
+      - Divider:
+          styles: { color: 0xFFEDEDED }
+      - DetailRow:
+          inputs:
+            label: Email
+            value: ${getUser.body[0].document.fields.email.stringValue}
+      - DetailRow:
+          inputs:
+            label: Phone
+            value: ${getUser.body[0].document.fields.mobile_no.stringValue}      
+
+DetailRow:
+  inputs:
+    - label
+    - value
+  Column:
+    children:
+      - Row:
+          styles: { mainAxis: spaceBetween }
+          children:
+            - Text:
+                text: ${label}
+                styles: { color: grey }
+            - Text:
+                text: ${value}
+          
+API:
+
+  login:
+    uri: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBHH7crKsWUBZTAFmc3T-sCIkwrSJJmjRA'
+    method: POST
+    parameters:
+      email: "demo@ensembleui.com"
+      password: "password"
+      returnSecureToken: true
+    onResponse: |-
+      //@code
+      ensemble.storage.set('email', response.body.email);
+      ensemble.storage.set('displayName', response.body.displayName);
+      ensemble.storage.set('idToken', response.body.idToken);
+      ensemble.storage.set('refreshToken', response.body.refreshToken);
+      ensemble.storage.set('uid', response.body.localId);
+
+
+  getUser:
+    inputs:
+      - id
+    uri: ${env.APIBaseURL}:runQuery
+    method: POST
+    headers:
+      Authorization: 'Bearer ${ensemble.storage.get("idToken")}'
+    body:
+      "structuredQuery": {
+        "from": [{
+          "collectionId": "users",
+          "allDescendants": true
+        }],
+        "where": {
+          "fieldFilter": {
+            "field": {
+              "fieldPath": "uid"
+            },
+            "op": "EQUAL",
+            "value": {
+              "stringValue": '${id}'
+            }
+          }
+        }
+      }

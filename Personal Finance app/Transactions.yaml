@@ -1,0 +1,87 @@
+View:
+
+  styles:
+    backgroundColor: 0xFF0F0E1C
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getTransactions
+
+  header:
+    title: CustomHeader
+    styles:
+      backgroundColor: 0xFF0F0E1C
+      showNavigationIcon: false
+
+  Column:
+    styles:
+      fontFamily: Jost
+    children:
+      - Column:
+          styles: { padding: 16 }
+          item-template:
+            data: ${getTransactions.body.data}
+            name: t
+            template:
+              TransactionRow:
+                inputs:
+                  t: ${t}
+
+
+
+
+CustomHeader:
+  Column:
+    styles: { gap: 8 }
+    children:
+      - Row:
+          styles: { mainAxis: spaceBetween, crossAxis: center }
+          children:
+            - Text:
+                text: Transactions
+                styles: { fontSize: 18 }
+            - Column:
+                onTap:
+                  navigateModalScreen:
+                    name: Menu
+                children:
+                  - Image:
+                      source: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fpersonal-finance%2Fmenu.png?alt=media&token=d8b7e6fe-64ae-45d3-a2e5-37ed8fe0a4fc
+                      styles: { width: 24 }
+
+
+
+TransactionRow:
+  inputs: [ t ]
+  Column:
+    children:
+      - Row:
+          styles: { crossAxis: center, padding: 12 0 }
+          children:
+            - Column:
+                styles: { expanded: true }
+                children:
+                  - Text:
+                      text: ${t.name}
+                      styles: { color: white, fontSize: 16, overflow: ellipsis }
+                  - Text:
+                      text: ${t.category}
+                      styles: { fontSize: 15, color: 0x66FFFFFF }  
+            - Spacer:
+                styles: { size: 16 }
+            - Text:
+                text: ${t.amount.prettyCurrency()}
+                styles: { color: white, fontSize: 16 }
+            # - Icon:
+            #     icon: chevron_right
+            #     styles: { color: 0x66FFFFFF }
+            
+      - Divider:
+          styles:
+            color: 0x11FFFFFF
+
+API:
+  getTransactions:
+    uri: https://us-central1-fir-apps-services.cloudfunctions.net/transactions
+    method: GET

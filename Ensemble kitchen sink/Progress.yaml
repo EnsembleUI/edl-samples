@@ -1,0 +1,51 @@
+View:
+  header:
+    title: Progress
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Progress:
+          display: circular
+          styles:
+            size: 24
+
+      - Spacer:
+          styles:
+            size: 24
+      
+      - Progress:
+          display: linear
+          styles:
+            color: blue
+      
+      - Spacer:
+          styles:
+            size: 24
+
+      - Markdown:
+          text: Set the `countdown` property to control how long it takes to fill the indicator.
+      - Progress:
+          display: linear
+          countdown: 20
+
+      - Spacer:
+          styles:
+            size: 24
+
+      - Markdown:
+          text: Set the `onCountdownComplete` property to fire an action when the indicator is completed.
+      - Progress:
+          display: linear
+          countdown: 20
+          onCountdownComplete: |
+            //@code
+            countdownStatus.text = 'Completed';
+      
+      - Text:
+          text: In progress
+          id: countdownStatus
+      
+
+    

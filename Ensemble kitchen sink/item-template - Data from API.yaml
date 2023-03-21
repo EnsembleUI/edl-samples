@@ -1,0 +1,60 @@
+View:
+  title: Basic Example of Data from API
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getCars
+    
+  # main content
+  Column:
+    styles:
+      padding: 10
+    children:
+      - Markdown:
+          text: |
+            **item-template** is an attribute that enables rending of a template, based on a set of data. It is commonly used to display the data from an API.
+
+            item-template has following properties:
+
+            - **data:** Bind to an array of data from an API response or a variable
+            - **name:** Set the name to reference as you iterate through the array of data
+            - **template:** The widget to render for each item
+
+            Here's the API response body:
+            ```
+            ${getCars.body}
+            ```
+            
+      - Divider:
+          styles:
+            margin: 10 0
+
+    item-template:
+      data: ${getCars.body.records}
+      name: carItem
+      template:
+        Cars:
+          inputs:
+            car: ${carItem.fields}
+
+Cars:
+  inputs:
+    - car
+  Column:
+    children:
+      - Text:
+          text: ${car.Name}
+          styles:
+            fontWeight: bold
+
+
+
+API:
+
+  getCars:
+    uri: https://api.airtable.com/v0/appznriSqyr61F6c4/tblQY1HL5LIYqCetl
+    method: GET
+    headers:
+      Authorization: 'Bearer keyZEtlGddyj7dEmw'

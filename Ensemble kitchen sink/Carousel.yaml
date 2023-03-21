@@ -1,0 +1,193 @@
+View:
+  onLoad: 
+    invokeAPI:
+      name: getHotels
+  styles:
+    scrollableView: true
+  header:
+    title: Carousel
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+
+      - Text:
+          text: Carousel with static content
+      - Text:
+          id: status
+          text: Carousel's initial selected index is ${carousel.selectedIndex}
+
+      - Carousel:
+          id: carousel
+          styles: 
+            height: 100
+            gap: 20
+            layout: auto
+            borderColor: blue
+            padding: 10
+            borderWidth: 2
+            indicatorType: rectangle
+            indicatorPosition: top
+            indicatorWidth: 30
+            indicatorHeight: 2
+          onItemChange: |
+            //@code
+            status.text = 'Selected index is now ' + this.selectedIndex;
+
+          children:
+            - Column:
+                styles: { backgroundColor: white, borderColor: red, crossAxis: stretch, mainAxis: spaceAround }
+                children:
+                  - Text:
+                      text: One
+            - Column:
+                styles: { backgroundColor: white, borderColor: red, crossAxis: stretch, mainAxis: spaceAround }
+                children:
+                  - Text:
+                      text: Two
+            - Column:
+                styles: { backgroundColor: white, borderColor: red, crossAxis: stretch, mainAxis: spaceAround }
+                children:
+                  - Text:
+                      text: Three
+
+      
+
+      - Divider
+
+      - Text:
+          text: Carousel with dynamic data
+      - Carousel:
+          styles: 
+            height: 220
+            gap: 20
+            layout: auto
+            borderColor: blue
+            padding: 10
+            borderWidth: 2
+            indicatorType: circle
+            indicatorPosition: bottom
+            indicatorWidth: 6
+            indicatorHeight: 6
+          item-template:
+            data: ${getHotels.body.hotels}
+            name: hotel
+            template:
+              HotelCard:
+                inputs:
+                  hotel: ${hotel}
+
+      - Divider:
+
+      - Text:
+          text: Displaying multiple items
+      - Carousel:
+          styles:
+            margin: 0
+            gap: 8
+            layout: multiple
+            multipleItemWidthRatio: .34
+            height: 108
+          children:
+            - AccountSubSummary:
+                inputs:
+                  label: Investments
+                  value: $121,908
+                  bgColor: 0xFFEDF7F5
+                  icon: "💰"
+            - AccountSubSummary:
+                inputs: 
+                  label: Cash
+                  value: $19,500
+                  bgColor: 0xFFF3F6EC
+                  icon: "💵"    
+            - AccountSubSummary:
+                inputs:
+                  label: Credit Cards
+                  value: -$250
+                  bgColor: 0xFFFEF4E6
+                  icon: "💳"
+            - AccountSubSummary:
+                inputs:
+                  label: Loans
+                  value: 0
+                  bgColor: 0xFFFAEDE6
+                  icon: "🏦"
+          
+AccountSubSummary:
+  inputs: [ label, value, icon, bgColor ]
+  Column:
+    styles:
+      padding: 8 12
+      backgroundColor: ${bgColor}
+      borderRadius: 12
+      gap: 4
+      borderColor: white
+      borderWidth: 1
+    children:
+      - Markdown:
+          text: |
+            ## ${icon}
+      - Column:
+          styles:
+            gap: 2
+          children:
+            - Text:
+                text: ${label}
+                styles: 
+                  fontSize: 11
+                  fontWeight: w500
+                  color: 0xFF141413
+            - Text:
+                text: ${value}
+                styles:
+                  fontSize: 15
+                  color: 0xFF141413
+                  fontWeight: w500
+
+
+HotelCard:
+  inputs:
+    - hotel
+  Column:
+    styles: 
+      borderRadius: 12
+      backgroundColor: 0xFFFFFFFF
+      shadowColor: 0xFFCCCCCC
+      shadowRadius: 3
+      height: 210
+    children:
+      - Image:
+          styles: { fit: fitHeight, borderRadius: 8 }
+          source: ${hotel.photo}
+      - Row:
+          styles: { mainAxis: spaceBetween }
+          children:
+            - Column:
+                styles: { padding: 10 15 5 15, gap: 5 }
+                children:
+                  - Text:
+                      styles: { fontSize: 18, fontWeight: bold }
+                      text: ${hotel.name}
+                  - Text:
+                      styles: { fontSize: 15, color: 0xFF999999 }
+                      text: ${hotel.location}
+            - Spacer
+            - Column:
+                styles: { crossAxis: end, padding: 10 15 5 15, gap: 5 }
+                children:
+                  - Text:
+                      styles: { fontSize: 18, fontWeight: bold }
+                      text: ${hotel.price}
+                  - Text:
+                      styles: { fontSize: 15, color: 0xFF999999 }
+                      text: per night
+          
+API:
+  getHotels:
+    authorization: none
+    uri: 'https://dc7ghx6kqg.execute-api.us-west-1.amazonaws.com/dev/hotels/search'
+    method: 'POST'
+    parameters:
+      city: 'New York'
+      fromDate: ''
+      toDate: ''

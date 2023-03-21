@@ -1,0 +1,42 @@
+View:
+  header:  
+    title: Example layouts and styling
+  styles:
+      backgroundColor: white
+      scrollableView: true
+  Column:
+    styles: { padding: 24, gap: 16, fontSize: 17}
+    children:
+      - CapabilityNoDesc:
+          inputs:
+              name: Card layouts
+              screen: 'Layout: card'
+      - CapabilityNoDesc:
+          inputs:
+              name: Loading overlay
+              screen: 'Layout: loading overlay'
+      - CapabilityNoDesc:
+          inputs:
+              name: Backgrounds
+              screen: 'Styling: background'
+      - CapabilityNoDesc:
+          inputs:
+              name: Shadows
+              screen: 'Styling: shadows'
+
+       
+CapabilityNoDesc:
+  inputs: [name, screen]
+  Column:
+    children:
+      - Column:
+          styles: { gap: 4, padding: 8 0 16 0, crossAxis: stretch }
+          onTap:
+            navigateScreen:
+              name: ${screen}
+          children:
+              - Text:
+                  text: ${name}
+                  styles: { color: 0xFF08B48F, fontWeight: w600, fontSize: 15 }
+      - Divider
+

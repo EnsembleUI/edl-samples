@@ -1,0 +1,28 @@
+View:
+  title: "Action: navigateModalScreen"
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Markdown:
+          text: You can open new screen on above the main screen using action `navigateModalScreen`
+      -  Button:
+          label: Show Modal
+          onTap:
+            navigateModalScreen:
+              name: Actions & events
+      - Markdown:
+          text: You can navigateModalScreen from code blocks using `ensemble.navigateModalScreen('ScreenName');`.
+      - Button:
+          label: Show Modal Using Code
+          onTap:
+            executeCode:
+              body: |
+                //@code
+
+                // no inputs
+                ensemble.navigateModalScreen('Actions & events');
+              
+  

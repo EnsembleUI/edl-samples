@@ -1,0 +1,41 @@
+View:         
+       
+  Column:    
+    styles: { gap: 8, padding: 30, crossAxis: center , backgroundColor: 0xFFF4FAF4}
+    children:
+      - Spacer
+      - Image:
+          styles: {  height: 82, borderRadius: 82 }
+          source: ${doctor.doc_photo_path}
+      - Spacer:
+          styles: { size: 8 }
+      - Text:
+          styles: {fontWeight: w500, fontSize: 28, textAlign: center }
+          text: Appointment Booked !
+      - Text:
+          styles: {color: black, fontWeight: w500, fontSize: 18, textAlign: center }
+          text: Your are schuduled with ${doctor.name} on ${slot.appointment_date.prettyDate()} at ${slot.time_slot} 
+      
+      - Row:
+          styles: { mainAxis: spaceAround, padding: 24 24 0 24}
+          children:
+            - Button:
+                styles: { expanded: true, fontSize: 18 , fontWeight: w700, borderRadius: 36}
+                label: Add to Calendar
+                enabled: false
+                
+      - Row:
+          styles: { mainAxis: spaceAround, padding: 24  }
+          children:
+            - Button:
+                styles: { expanded: true, outline: true, borderColor: 0xFFF19D39, borderWidth: 2, 
+                      color: 0xFFF19D39, fontSize: 18, fontWeight: w700, borderRadius: 36  }
+                label: View Appointments
+                onTap:
+                    navigateScreen:
+                        name: MyAppointments
+      - Spacer
+
+
+
+            

@@ -1,0 +1,20 @@
+View:
+  header:
+    title: List View Detail Page
+      
+  Column:
+    scrollable: true
+    styles: { padding: 16 16 10 16 }
+    children:
+      - Text:
+          text: ${doc_type.firstName}
+          styles: { fontWeight: w500, fontSize: 14, color: 0xFF404040 }
+      - Text:
+          text: ${doc_type.lastName}
+          styles: { fontWeight: w500, fontSize: 14, color: 0xFF404040 }
+      - Text:
+          text: ${doc_type.email}
+          styles: { fontWeight: w500, fontSize: 14, color: 0xFF404040 }
+      - Text:
+          text: ${doc_type.age}
+          styles: { fontWeight: w500, fontSize: 14, color: 0xFF404040 }

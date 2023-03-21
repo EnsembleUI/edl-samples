@@ -1,0 +1,55 @@
+View:
+  styles:
+    ignoreSafeArea: true
+
+  header:
+    title: Footer headings example
+    
+  footer:
+    styles:
+      backgroundColor: 0xFFDEDEDE
+    children:
+      - Row:
+          styles:
+            mainAxis: spaceBetween
+          children:
+            - FootColumn:
+                inputs:
+                  header: Heading 1
+                  items: [ "Text 1", "Text 2" ]
+            - FootColumn:
+                inputs:
+                  header: Heading 2
+                  items: [ "Text 3", "Text 4" ]
+            - FootColumn:
+                inputs:
+                  header: Heading 3
+                  items: [ "Text 5", "Text 6" ]
+
+          
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+      - Text:
+          text: Use View's footer property to set and customize the app footer
+
+
+FootColumn:
+  inputs:
+    - header
+    - items
+  Column:
+    children:
+      - Text:
+          styles:
+            fontWeight: bold
+            fontSize: 15
+            margin: 5 0
+          text: ${header}
+      - Column:
+          item-template:
+            data: ${items}
+            name: i
+            template:
+              Text:
+                text: ${i}

@@ -1,0 +1,62 @@
+View:
+  header:
+    title: WeeklyScheduler
+  styles:
+    scrollableView: true
+
+  onLoad:
+    action: executeCode
+    body: |
+      //@code
+      myScheduler.addSelectedRange(0,10800);
+      myScheduler.addSelectedRange(390600,403200);
+      myScheduler.refresh();
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Text:
+          text: Hello world!
+      - WeeklyScheduler:
+          id: myScheduler
+          slotWidth: 13
+          slotHeight: 13
+          dayLabels: ['Sun','Mon','Tues','Wed','Thurs','Fri','Sat']
+          selectedColor: blue
+          unselectedColor: green
+          paddingBetweenDays: 8
+          gapBetweenSlots: 3
+          displayDayLabels: true
+          dayLabelStyles: {  fontWeight: bold, color: 0xFF0BA182, fontSize: 14 }
+          dayLabelBoxWidth: 50
+          dayLabelBoxHeight: 18
+          displayVerticalDividers: true
+          verticalDividerIndices: [0,4,8,12,16,20,24]
+          gapToLeaveForDivider: 8
+          verticalDividerLabels: ['0','4','8','12','16','20','24']
+      - Button:
+          label: Display selected ranges
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                  var selectedRanges = myScheduler.getSelectedRanges();
+                  var text = '';
+                  selectedRanges.map(function(range) {
+                    text += 'start: '+range.startTime+'; end: '+range.endTime + '\n';
+                  });
+                  ranges.text = text;
+
+      - Text:
+          id: ranges
+          text: no range
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+          - Button:
+              styles: { outline: true, padding: 20 }
+              label: View all available widgets
+              onTap:
+                  navigateScreen:
+                    name: Home

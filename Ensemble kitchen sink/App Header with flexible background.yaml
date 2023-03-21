@@ -1,0 +1,60 @@
+View:  
+  header:    
+    title: CustomHeader
+    flexibleBackground: HeaderBackground 
+    styles:
+      showNavigationIcon: true
+      color: green
+      titleBarHeight: 72
+      flexibleMaxHeight: 400
+      backgroundColor: 0xFF0E154D
+
+      
+  styles:
+    scrollableView: true
+   
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Markdown:    
+          text: |
+            Use View's header property to set and customize the app header
+      - Markdown:
+          text: |
+            This screen includes Text header, `Hi there!`.
+
+            It also includes a Lottie animation as the background. The backghround area shrinks as you scroll up.
+      - SampleContent
+      - SampleContent
+      - SampleContent
+      - SampleContent
+      - SampleContent
+
+
+
+CustomHeader:
+  Text:
+      text: Hi there!
+      styles: { fontWeight: bold, fontSize: 24 }
+
+
+HeaderBackground: 
+    Column:
+      children:
+        - Lottie:
+            source: https://assets1.lottiefiles.com/packages/lf20_ntrhqntu.json
+            styles:
+              width: ${device.width}
+              height: ${device.width}
+  
+          
+SampleContent:
+  Row:
+    styles:
+      backgroundColor: 0xFFCCDFE5
+      borderRadius: 16
+      gap: 8
+    children:
+      - Spacer:
+          styles:
+            size: 100

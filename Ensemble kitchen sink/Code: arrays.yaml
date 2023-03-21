@@ -1,0 +1,311 @@
+View:
+  
+  header:
+    title: Array Functions
+  
+  styles:
+    scrollableView: true
+
+  Column:
+    styles: { gap: 16, padding: 24 }
+    children:
+
+      # map
+      - Markdown:
+          text: |
+            #### map()
+
+            `[1,2,3].map(funtion(i) { sum = sum + i});`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3];
+            var sum = 0;
+            arr.map(function(item) {
+              sum = sum + item;
+            });
+            sumResult.text = "> Total is " + sum;
+      - Markdown:
+          id: sumResult
+      - Divider
+
+     # indexOf
+      - Markdown:
+          text: |
+            #### indexOf()
+
+            `["a","b","c","b"].indexOf("b");`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = ["a","b","c","b"];
+            var i = arr.indexOf("b");
+            indexOfResult.text = "> Index of b is " + i;
+      - Markdown:
+          id: indexOfResult
+      - Divider
+
+      # lastIndexOf
+      - Markdown:
+          text: |
+            #### lastIndexOf()
+
+            `["a","b","c","b"].lastIndexOf("b");`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = ["a","b","c","b"];
+            var i = arr.lastIndexOf("b");
+            lastIndexOfResult.text = "> lastIndexOf of arr is " + i;
+      - Markdown:
+          id: lastIndexOfResult
+      - Divider
+
+      # filter
+      - Markdown:
+          text: |
+            #### filter()
+
+            `["Sam","John","Peter"].filter(function(n) { n.length > 3});` 
+            
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = ["Sam","John","Peter"];
+            var newArr = arr.filter( function(n) { n.length > 3});
+            filterResult.text = "> Names with more than 3 characters are " + newArr;
+      - Markdown:
+          id: filterResult
+      - Divider
+
+      # forEach
+      - Markdown:
+          text: |
+            #### forEach()
+
+            `[1,2,3].forEach(funtion(i) { sum = sum + i});`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3];
+            var sum = 0;
+            arr.forEach(function(item) {
+              sum = sum + item;
+            });
+            forEachResult.text = "> Total is " + sum;
+      - Markdown:
+          id: forEachResult
+      - Divider
+
+      # Push / add
+      - Markdown:
+          text: |
+            #### push(); add()
+
+            `[1,2,3].push(4);` 
+
+            `[1,2,3,4].add(5);`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3];
+            arr.push(4);
+            arr.add(5);
+            pushResult.text = "> Final Array " + arr;
+      - Markdown:
+          id: pushResult
+      - Divider
+
+      # unique
+      - Markdown:
+          text: |
+            #### unique()
+
+            `[1,2,3,1,2,4,5].unique();`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3,1,2,4,5];           
+            uniqueResult.text = "> Unique list: " + arr.unique();
+      - Markdown:
+          id: uniqueResult
+      - Divider
+
+      # sort
+      - Markdown:
+          text: |
+            #### sort()
+
+            `[2,1,3,4,6,5].sort();`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [2,1,3,4,6,5];           
+            sortResult.text = "> Sorted list: " + arr.sort();
+      - Markdown:
+          id: sortResult
+      - Divider
+
+      # sortF
+      - Markdown:
+          text: |
+            #### sortF()
+
+            `[2,1,3,4,6,5].sortF();`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [2,1,3,4,6,5];           
+            sortfResult.text = "> Sorted list: " + arr.sortF();
+      - Markdown:
+          id: sortfResult
+      - Divider
+
+      # at
+      - Markdown:
+          text: |
+            #### at(index)
+
+            `[1,2,3,4,5,6].at(2);`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3,4,5,6];           
+            atResult.text = "> Value at index 2 is : " + arr.at(2);
+      - Markdown:
+          id: atResult
+      - Divider
+
+      # concat
+      - Markdown:
+          text: |
+            #### concat(List arr)
+
+            `[1,2,3].concat(['a', 'b', 'c']);`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3];     
+            var arr1 = ['a', 'b', 'c'];      
+            concatResult.text = "> Concatenated Result Is : " + arr.concat(arr1);
+      - Markdown:
+          id: concatResult
+      - Divider
+
+      # includes
+      - Markdown:
+          text: |
+            #### includes(obj)
+
+            `[1,2,3,4].includes(2);`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3,4];    
+            var output= arr.includes(2);                 
+            includesResult.text = "> Result : " + output; 
+      - Markdown:
+          id: includesResult
+      - Divider
+
+      # contains
+      - Markdown:
+          text: |
+            #### contains(obj)
+
+            `[1,2,3,4].contains(3);`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [1,2,3,4];    
+            var output= arr.contains(3);                 
+            containsResult.text = "> Result : " + output; 
+      - Markdown:
+          id: containsResult
+      - Divider
+
+       # join
+      - Markdown:
+          text: |
+            #### join(separator)
+
+            `["Orange", "Apple", "Mango"].join(" and ");`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = ["Orange", "Apple", "Mango"];    
+            var output= arr.join(" and ");                 
+            joinResult.text = "> Result : " + output; 
+      - Markdown:
+          id: joinResult
+      - Divider
+
+      # pop
+      - Markdown:
+          text: |
+            #### pop()
+
+            `["Orange", "Apple", "Mango","Banana"].pop();`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = ["Orange", "Apple", "Mango","Banana"];    
+            var output= arr.pop();                 
+            popResult.text = "> Result : " + output; 
+      - Markdown:
+          id: popResult
+      - Divider
+
+       # reduce
+      - Markdown:
+          text: |
+            #### reduce(Function f)
+
+            ` [175, 50, 25].reduce(function(total, i) {
+              return total - i;
+            });`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr =  [175, 50, 25];    
+            var output= arr.reduce(function(total, i) {
+              return total - i;
+            });                 
+            reduceResult.text = "> Result : " + output; 
+      - Markdown:
+          id: reduceResult
+      - Divider
+
+      # reverse
+      - Markdown:
+          text: |
+            #### reverse()
+
+            `[2,1,3,4,6,5].reverse();`             
+      - Button:
+          label: Test
+          onTap: |
+            //@code
+            var arr = [2,1,3,4,6,5];           
+            reverseResult.text = "> Reversed list: " + arr.reverse();
+      - Markdown:
+          id: reverseResult
+      - Divider
+    
+    

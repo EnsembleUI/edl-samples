@@ -1,0 +1,19 @@
+View:
+  title: "Action: navigateScreen inputs demo"
+  styles:
+    scrollableView: true
+
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - Markdown:
+          text: I got this input from previous screen
+
+      - Markdown:
+          text: ${message}
+
+      -  Button:
+          label: Go back
+          onTap: 
+            navigateBack:

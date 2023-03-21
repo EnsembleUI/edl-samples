@@ -1,0 +1,53 @@
+View:
+  header:
+    title: "Event: onLoad"
+  styles:
+    scrollableView: true
+  onLoad:
+    invokeAPI:
+      name: getNewYorkTime
+  Column: 
+    styles: { gap: 24, padding: 24 }
+    children:
+
+      - Markdown:
+          text: |
+            #### onLoad of the view
+
+            Define the `onLoad` property for your view when you want to perform an action as the screen loads.
+
+            On this screen, we user `onLoad` to invoke an API.
+      - Text:
+          text: Current Time in New York is ${getNewYorkTime.body.datetime} 
+
+      - Divider
+
+      - Markdown:
+          text: |
+            #### onLoad of a custom widget
+
+            Any widget you define in Ensemble can also include the `onLoad` property.
+
+      - LondonTimeZone
+
+
+## custom widgets onload 
+LondonTimeZone:
+  onLoad:
+    invokeAPI:
+      name: getLondonTime
+  Text:
+    text: Current Time in London is ${getLondonTime.body.datetime} 
+
+
+API:
+
+  getNewYorkTime:
+    uri: https://worldtimeapi.org/api/timezone/America/New_York
+    method: GET
+
+  getLondonTime:
+    uri: https://worldtimeapi.org/api/timezone/Europe/London
+    method: GET
+
+  

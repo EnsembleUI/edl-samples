@@ -1,0 +1,170 @@
+View:
+  header:
+    title: ChartJS
+  styles:
+    scrollableView: true
+  onLoad:
+    invokeAPI:
+      name: getNYCPopulation
+      onResponse: |
+        //@code
+        popChart.config = {
+              "type": "line",
+              "data": {
+                "labels": response.body.path('$..Year',null),
+                "datasets": [{
+                  "label": "My First dataset",
+                  "backgroundColor": "rgb(255, 99, 132)",
+                  "borderColor": "rgb(255, 99, 132)",
+                  "data": response.body.path('$..Population',null)
+                }]
+              },
+          "options": {
+            "plugins": {
+              "tooltip": {
+                "callbacks": {
+                  "label": function signalTooltip (context) {
+                    return( "My test tooltip: channel: " + context.dataset.label);
+                  }
+                }
+              },
+              "legend": {
+                "display": true
+              },
+              "filler": {
+                "propagate": false,
+              },
+            },
+            "interaction": {
+              "intersect": true,
+            },
+            "tension": 0.4
+          }             
+            };
+          
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      
+      - Text:
+          text: LineChart
+          styles: { font: title }
+
+      - Button:
+          label: Add Data
+          onTap:
+            executeCode:
+              body: | 
+                //@code
+                testLineChart.addLabels(['July','August','September']);
+                testLineChart.addData(0,[20,30,40]);
+                testLineChart.addData(1,[5,45,25]);
+                testLineChart.update();   
+      - ChartJs:
+          id: testLineChart
+          styles: {width: 300}
+          type: 'line'
+          config: |
+            {
+              type: 'line',
+              data: {
+                labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                ],
+                datasets: [{
+                  label: 'My First dataset',
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                  borderWidth: 1,
+                  data: [0, 10, 5, 2, 20, 45],
+                  fill: 'start'
+                  
+                },
+                {
+                  label: 'My Second dataset',
+                  backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+                data: [5, 12, 7, 0, 18, 25],
+                fill: 'start'
+                }
+                
+                ]
+              },
+                options: {
+                  plugins: {
+                    filler: {
+                      propagate: false,
+                    }
+                  },
+                  interaction: {
+                    intersect: false,
+                  },
+                  tension: 0.4
+                }
+            }
+
+      - Text:
+          text: Pop Chart
+      - ChartJs:
+          id: popChart
+          styles: {width: 850, height: 400}
+
+      - ChartJs:
+          id: bindingChart
+          styles: {width: 850, height: 400}
+          config: |
+            {
+              type: "line",
+              data: {
+                labels: ${getNYCPopulation.body.path('$..Year',null)},
+                datasets: [{
+                  label: "My First dataset",
+                  backgroundColor: "rgb(255, 99, 132)",
+                  borderColor: "rgb(255, 99, 132)",
+                  data: ${getNYCPopulation.body.path('$..Population',null)}
+                }]
+              }
+            }
+
+
+        
+
+API:
+  getNYCPopulation:
+    authorization: none
+    uri: 'https://api.airtable.com/v0/appdtgVzmD077CbHB/ChartData?api_key=keyyWz426zsnMKavb&sort%5B0%5D%5Bfield%5D=Year&sort%5B0%5D%5Bdirection%5D=asc'
+    method: 'GET'

@@ -1,0 +1,52 @@
+View:
+  header:
+    title: 'Code: JSON path'
+  styles:
+    scrollableView: true
+
+  onLoad: 
+    invokeAPI:
+      name: getNYCPopulation
+      onResponse: |
+        //@code
+
+        var yearsArray = response.body.path('$..Year',function (match) {match});
+        result.text = yearsArray ;
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+      - Markdown:
+          text: |
+            JSONPath is a query language for JSON.
+
+            In this example, we return all the values for the property `Year`.
+            ```
+              getNYCPopulation.body.path(
+                $..YEAR',
+                function(match) {
+                  return (match+'')
+                }
+              );
+            ``` 
+
+            **Result is an array of years**
+
+      - Text:
+          id: result
+
+      - Divider
+
+      - Markdown:
+          text: |
+            
+            Here's what the original JSON looks like
+            ```
+            ${getNYCPopulation.body}
+            ```
+
+API:
+  getNYCPopulation:
+    authorization: none
+    uri: 'https://api.airtable.com/v0/appdtgVzmD077CbHB/ChartData?api_key=keyyWz426zsnMKavb&sort%5B0%5D%5Bfield%5D=Year&sort%5B0%5D%5Bdirection%5D=asc'
+    method: 'GET'

@@ -1,0 +1,98 @@
+View:
+  title: TabBar
+  Column:
+    styles: { gap: 16, padding: 24, scrollable: true }
+    children:
+
+      - TabBar:
+          selectedIndex: 2
+          styles:
+            activeTabColor: green
+            indicatorColor: green
+            tabFontSize: 16
+            tabFontWeight: bold
+            tabPadding: 10
+          items:
+            - label: First Tab
+              widget: 
+                Column:
+                  styles: { padding: 30, crossAxis: center}
+                  children:
+                    - Text:
+                        text: First Tab content
+
+            - label: Second Tab
+              widget: SecondTab
+            - label: Third Tab
+              widget: ThirdTab
+
+      - Divider
+
+      - TabBar:
+          styles:
+            tabPosition: stretch
+            tabPadding: 0
+          items:
+            - label: Stretch Tab 1
+              icon: fiveHundredPx fontAwesome
+              widget: 
+                Column:
+                  styles: { padding: 30, crossAxis: center}
+                  children:
+                    - Text:
+                        text: First Tab content
+            - label: Stretch Tab 2
+              icon:
+                name: home
+                size: 30
+              widget: 
+                Column:
+                  styles: { padding: 30, crossAxis: center}
+                  children:
+                    - Text:
+                        text: Second Tab content
+
+
+
+      - Divider
+      - Row:
+          styles: { mainAxis: spaceAround }
+          children:
+            - Button:
+                styles: { outline: true, padding: 20 }
+                label: View all available widgets
+                onTap:
+                  navigateScreen:
+                    name: Home
+
+
+
+SecondTab:
+  onLoad:
+    invokeAPI:
+      name: getNYCTime
+  Column:
+    styles: { padding: 30, crossAxis: center, gap: 10 }
+    children:
+      - Text:
+          text: "Second tab content with an onLoad that gets the following from an API:"
+          styles: { textAlign: center }
+      - Text:
+          text: ${getNYCTime.body.datetime}
+    
+
+ThirdTab:
+  Column:
+    styles: { padding: 30, crossAxis: center, gap: 10 }
+    children:
+      - Text:
+          text: Third tab
+          styles: { textAlign: center }
+    
+
+
+API:
+  getNYCTime:
+    authentication: none
+    method: GET
+    uri: https://worldtimeapi.org/api/timezone/America/New_York

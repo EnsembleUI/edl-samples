@@ -1,0 +1,79 @@
+View:
+  header:
+    title: Flex
+  styles:
+    scrollableView: true
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+
+        - Markdown:
+            text: |
+              Flex can switch between Row or Column using the direction property. The supported params and behaviors are the same as Row or Column.
+              
+              Flex is commonly used when the layout needs to change depending on device screen size. To acheive that, make the direction property's value conditional:
+
+  
+              `device.width > 400 ? "horizontal" : "vertical"`
+
+        - Divider
+
+        - Markdown:
+            text: |
+              Flex with `direction: vertical`. This is the default value.
+        - Flex:
+            styles:
+              direction: vertical
+              gap: 4
+            children:
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-86a5d8727436
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-fac1c5b4e853
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1551651057-f3f83700a831
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+        - Divider
+
+        - Markdown:
+            text: |
+              Flex with `direction: horizontal`. This is the default value.
+        - Flex:
+            styles:
+              direction: horizontal
+              gap: 8
+            children:
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-86a5d8727436
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-fac1c5b4e853
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1551651057-f3f83700a831
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+        - Divider
+
+
+
+        - Markdown:
+            text: |
+              Flex with conditional direction
+        - Flex:
+            styles:
+              direction: '${device.width > 400 ? "horizontal" : "vertical"}'
+              gap: 4
+            children:
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-86a5d8727436
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1550684848-fac1c5b4e853
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+              - Image:
+                  source: https://images.unsplash.com/photo-1551651057-f3f83700a831
+                  styles: { width: 90, height: 90, borderRadius: 90, fit: cover }
+        - Divider
+

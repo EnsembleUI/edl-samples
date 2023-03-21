@@ -1,0 +1,112 @@
+View:
+  title: Filter Data
+  styles:
+    scrollableView: true
+
+  onLoad:
+    invokeAPI:
+      name: getCars
+
+  # main content
+  Column:
+    styles:
+      padding: 20
+    item-template:
+      data: ${getCars.body}
+      name: carItem
+      template:
+        Cars:
+          inputs:
+            car: ${carItem.fields}
+    children:
+      - FilterData
+
+FilterData:
+  Column:
+    styles:
+      crossAxis: center
+    children:
+      - Text:
+          text: Filter data based on an item in storage
+          styles:
+            fontSize: 17
+            fontWeight: bold
+            margin: 10
+
+      - Markdown:
+          text: |
+            To filter data first store data in local storage with ensemble.storage.set('variableName', 'variableValue')
+            Then get the varible stored in local storage with ensemble.storage.get('varibleName'), this will provide you the varible value
+            Now use JavaScript ES5 to filter the data
+
+      - Text:
+          text: You can click on these buttons and see how we're filtering the data based on data in storage
+
+      - Button:
+          label: Show All Cars
+          styles:
+            margin: 10 0
+          onTap:
+            executeCode:
+              body: |
+                //@code
+                ensemble.storage.make = "";
+              onComplete:
+                invokeAPI:
+                  name: getCars
+      
+      - Row:
+          styles:
+            mainAxis: spaceBetween
+            margin: 10 0
+          children:
+            - Button:
+                label: Show Only Audi
+                onTap:
+                  executeCode:
+                    body: |
+                      //@code
+                      ensemble.storage.set('make', 'Audi');
+                    onComplete:
+                      invokeAPI:
+                        name: getCars
+            
+            - Button:
+                label: Show Only Chevrolet
+                onTap:
+                  executeCode:
+                    body: |
+                      //@code
+                      ensemble.storage.set('make', 'Chevrolet');
+                    onComplete:
+                      invokeAPI:
+                        name: getCars
+
+Cars:
+  inputs:
+    - car
+  Column:
+    children:
+      - Text:
+          text: ${car.Name}
+          styles:
+            fontWeight: bold
+
+API:
+
+  getCars:
+    uri: https://api.airtable.com/v0/appznriSqyr61F6c4/tblQY1HL5LIYqCetl
+    method: GET
+    headers:
+      Authorization: 'Bearer keyZEtlGddyj7dEmw'
+    onResponse: |
+      //@code
+      if (ensemble.storage.get('make') != '') {
+        var Filter = response.body.records.filter(function(car) {
+            return car.fields.Make == ensemble.storage.get('make');
+          });
+          response.body = Filter
+      } else {
+        response.body = response.body.records
+      };
+      

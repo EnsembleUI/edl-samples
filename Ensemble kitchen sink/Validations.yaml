@@ -1,0 +1,47 @@
+View:
+  header:
+    title: Validation
+  styles:
+    scrollableView: true
+    
+  Column: 
+    styles: { gap: 16, padding: 24 }
+    children:
+      - Text:
+          text: Press submit to see validation errors
+      - Form:
+          styles: { gap: 16 }
+          children:
+          - TextInput:
+              label: By default, I am not required
+          - TextInput:
+              label: Required field
+              required: true
+          - TextInput:
+              inputType: email
+              label: Email
+              required: true
+          - TextInput:
+              inputType: phone
+              label: Phone
+              required: true
+          - TextInput:
+              inputType: ipAddress
+              label: IP Address
+              required: true
+          - TextInput:
+              label: Required and between 3 to 10 characters
+              validator:
+                minLength: 3
+                maxLength: 10
+              required: true
+          - TextInput:
+              label: Regex validation
+              validator:
+                regex: ^[0-9]*$
+                regexError: Enter one or more digits
+              required: true
+          - Button:
+              label: Submit
+              validateForm: true
+

@@ -1,0 +1,132 @@
+View:
+  header:
+    title: Flow
+  styles:
+    scrollableView: true
+  
+  Column: 
+    styles: { gap: 16, padding: 24 }  
+    children:
+
+        - Markdown:
+            text: |
+              Flow is a container widget that wraps its children.
+
+              Default direction is `horizontal`, and you can set it to `vertical`.
+
+        - Flow:
+            styles:
+              gap: 8
+              lineGap: 8
+            children:
+              - SimpleTag:
+                  inputs:
+                    label: Travel
+              - SimpleTag:
+                  inputs:
+                    label: Nature
+              - SimpleTag:
+                  inputs:
+                    label: Technology
+              - SimpleTag:
+                  inputs:
+                    label: Cities
+              - SimpleTag:
+                  inputs:
+                    label: Plants
+              - SimpleTag:
+                  inputs:
+                    label: Food & Drink
+              - SimpleTag:
+                  inputs:
+                    label: Architecture
+              - SimpleTag:
+                  inputs:
+                    label: People
+              - SimpleTag:
+                  inputs:
+                    label: Athletics
+
+        - Divider
+
+        - Flow:
+            styles:
+              gap: 8
+              lineGap: 8
+            children:
+              - BoldTag:
+                  inputs:
+                    label: Travel
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_travel.png?alt=media&token=0f63b0d1-7353-4623-b1d5-1a2e73a95fb9
+              - BoldTag:
+                  inputs:
+                    label: Nature
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_nature.png?alt=media&token=56afa509-1e2a-4a1f-b5c8-4d617a00c158
+              - BoldTag:
+                  inputs:
+                    label: Technology
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_tech.png?alt=media&token=eba1c6be-840d-43e2-a48c-59e17591ddc5
+              - BoldTag:
+                  inputs:
+                    label: Cities
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_cities.png?alt=media&token=b2993772-3c42-4aaa-b91f-4173e3338ad1
+              - BoldTag:
+                  inputs:
+                    label: Plants
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_plants.png?alt=media&token=a24f395e-b420-4f43-a6d6-fb9458e24c90
+              - BoldTag:
+                  inputs:
+                    label: Food & Drink
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_plants.png?alt=media&token=a24f395e-b420-4f43-a6d6-fb9458e24c90
+              - BoldTag:
+                  inputs:
+                    label: Architecture
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_architecture.png?alt=media&token=2fdc462e-3016-4d05-9b05-a4d11a9a009c
+              - BoldTag:
+                  inputs:
+                    label: People
+                    background: https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_plants.png?alt=media&token=a24f395e-b420-4f43-a6d6-fb9458e24c90
+              - BoldTag:
+                  inputs:
+                    label: Athletics
+                    background: 'https://firebasestorage.googleapis.com/v0/b/ensemble-web-studio.appspot.com/o/demo_apps%2Fkitchen-sink%2Fflow_plants.png?alt=media&token=a24f395e-b420-4f43-a6d6-fb9458e24c90'
+
+
+
+SimpleTag:
+  inputs:
+    - label
+  Column:
+    styles:
+      padding: 4 8
+      borderRadius: 4
+      borderWidth: 2
+      backgroundColor: white
+      borderColor: 0xFFCCDFE5
+    children:
+      - Text:
+          text: ${label}
+
+
+BoldTag:
+  inputs:
+    - label
+    - background
+  Column:
+    styles:
+      padding: 8 20
+      height: 50
+      borderRadius: 50
+      backgroundImage: ${background}
+      crossAxis: center
+      mainAxis: center
+    children:
+      - Text:
+          text: ${label}
+          styles:
+            color: white
+            fontWeight: w500
+            shadowColor: 0x33000000
+            shadowOffset: [ 0, 0 ]
+            shadowRadius: 2
+
